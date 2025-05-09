@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->setupModels();
         $this->setupMorphMap();
+        $this->setupTelescope();
 
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
@@ -46,5 +47,13 @@ class AppServiceProvider extends ServiceProvider
 
             'user' => \App\Models\User::class,
         ]);
+    }
+
+    private function setupTelescope()
+    {
+        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 }
