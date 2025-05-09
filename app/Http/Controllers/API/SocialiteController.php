@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Actions\AuthActions;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
@@ -56,30 +57,12 @@ class SocialiteController extends Controller
 
     protected function authenticateSocialiteUser($socialiteUser, $provider)
     {
-        $userEmail = $socialiteUser->getEmail();
-
-        /** @var User $user */
-        $user = User::firstOrCreate([
-            'email' => $userEmail,
-        ], [
-            'name' => uniqid('user_'),
-            'email_verified_at' => now(),
-            'password' => null,
-        ]);
+        $user = AuthActions::getOrCreateUserUsingEmail($socialiteUser->getEmail());
 
         if ($user->wasRecentlyCreated) {
-            // If the user was just created, you might want to send a welcome email or perform other actions.
+            event(new UserRegistered($user));
         }
 
-        $token = $user->createToken(
-            "Social Login with {$provider}"
-        );
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Authentication Successful',
-            'token' => $token->plainTextToken,
-            // 'user' => new AuthUserResource($user),
-        ]);
+        return AuthActions::authenticateUserAndRespond($user, "Social Login with {$provider}");
     }
 }
