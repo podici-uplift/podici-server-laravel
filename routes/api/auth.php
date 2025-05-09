@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthUserController;
 use App\Http\Controllers\API\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -7,4 +8,10 @@ Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::
     Route::post('callback/{provider}', 'handleProviderCallback')->name('callback');
 
     Route::post('token/{provider}', 'authFromToken')->name('token');
+});
+
+Route::prefix('user')->name('user.')->middleware(['auth:sanctum'])->controller(AuthUserController::class)->group(function () {
+    Route::get('profile', 'profile')->name('profile');
+
+    Route::post('logout', 'logout')->name('logout');
 });
