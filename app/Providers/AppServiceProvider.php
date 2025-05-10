@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->setupModels();
         $this->setupMorphMap();
         $this->setupTelescope();
+        $this->setupPassword();
 
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
@@ -55,5 +57,16 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+    }
+
+    private function setupPassword()
+    {
+        Password::defaults(function () {
+            $rule = Password::min(8);
+
+            return $this->app->environment(['prod', 'production'])
+                ? $rule->mixedCase()->numbers()->symbols()->uncompromised()
+                : $rule;
+        });
     }
 }

@@ -11,7 +11,14 @@ Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::
 });
 
 Route::prefix('user')->name('user.')->middleware(['auth:sanctum'])->controller(AuthUserController::class)->group(function () {
-    Route::get('profile', 'profile')->name('profile');
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'getProfile')->name('get');
+        Route::put('/', 'updateProfile')->name('update');
+
+        // DOB update needs KYC
+        Route::post('update-password', 'updatePassword')->name('password.update');
+        Route::post('update-username', 'updateUsername')->name('username.update');
+    });
 
     Route::post('logout', 'logout')->name('logout');
 });

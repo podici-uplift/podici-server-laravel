@@ -12,8 +12,8 @@ class AuthActions
         return User::firstOrCreate([
             'email' => $email,
         ], [
-            'name' => uniqid('user_'),
             'email_verified_at' => now(),
+            'last_activity_at' => now(),
             'password' => null,
         ]);
     }
