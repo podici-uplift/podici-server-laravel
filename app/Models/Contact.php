@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\ContactType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+
+class Contact extends Model
+{
+    /** @use HasFactory<\Database\Factories\ContactFactory> */
+    use HasFactory;
+
+    protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'type' => ContactType::class,
+            'is_primary' => 'boolean'
+        ];
+    }
+
+    public function contactable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+}

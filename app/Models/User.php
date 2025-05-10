@@ -5,9 +5,13 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
+use App\Models\Traits\HasContacts;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,7 +19,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, HasUlids, Notifiable;
+    use HasApiTokens, HasFactory, HasUlids, Notifiable, HasContacts;
 
     /**
      * The attributes that are mass assignable.
@@ -61,15 +65,26 @@ class User extends Authenticatable
         );
     }
 
-    /**
-     * Get the user's first name.
-     */
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
             get: fn() => !is_null($this->phone_verified_at),
         );
     }
+
+    /**
+     * Relationships
+     */
+
+    public function shop(): HasOne
+    {
+        return $this->hasOne(Shop::class);
+    }
+
+
+    /**
+     * Methods
+     */
 
     public function recordAction(UserAction $action)
     {
