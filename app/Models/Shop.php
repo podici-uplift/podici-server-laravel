@@ -6,6 +6,7 @@ use App\Enums\ShopStatus;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasShortUlid;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Shop extends Model
 {
     /** @use HasFactory<\Database\Factories\ShopFactory> */
-    use HasFactory, HasContacts, HasShortUlid, HasCategories;
+    use HasFactory, HasUlids, HasContacts, HasShortUlid, HasCategories;
 
     protected $guarded = [];
 

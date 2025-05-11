@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categorizables', function (Blueprint $table) {
-            $table->id();
             $table->foreignUlid('category_id')->constrained('categories');
             $table->ulidMorphs('categorizable');
             $table->timestamps();

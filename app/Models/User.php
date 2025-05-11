@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\HasShortUlid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, HasUlids, Notifiable, HasContacts;
+    use HasApiTokens, HasFactory, HasUlids, HasShortUlid, Notifiable, HasContacts;
 
     /**
      * The attributes that are mass assignable.

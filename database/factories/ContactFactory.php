@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\ContactType;
+use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'contactable' => Shop::factory(),
+            'type' => fake()->randomElement(ContactType::cases()),
+            'label' => fake()->realText(24),
+            'value' => fake()->url(),
+            'is_primary' => fake()->boolean()
         ];
     }
 }

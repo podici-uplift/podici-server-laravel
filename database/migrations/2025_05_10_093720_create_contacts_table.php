@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->ulid()->primary();
+            $table->ulid('id')->primary();
             $table->ulidMorphs('contactable');
             $table->string('type'); // [ContactType]
             $table->string('label')->nullable();
+            $table->string('value');
             $table->boolean('is_primary');
             $table->timestamps();
         });

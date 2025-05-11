@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CategoryStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->words(3, true),
+            'slug' => fake()->slug(3),
+            'description' => fake()->realText(),
+            'status' => fake()->randomElement(CategoryStatus::cases()),
+            'is_adult' => fake()->boolean(),
         ];
     }
 }

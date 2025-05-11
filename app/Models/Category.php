@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use App\Enums\CategoryStatus;
+use App\Models\Traits\HasShortUlid;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
-    use HasFactory;
+    use HasFactory, HasUlids, HasShortUlid;
 
     protected $guarded = [];
 
@@ -20,6 +23,11 @@ class Category extends Model
             'status' => CategoryStatus::class,
             'is_adult' => 'boolean'
         ];
+    }
+
+    public function parentCategory(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     public function shops(): MorphToMany
