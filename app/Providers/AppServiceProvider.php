@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
+use Dedoc\Scramble\Scramble;
+use Dedoc\Scramble\Support\Generator\OpenApi;
+use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->setupMorphMap();
         $this->setupTelescope();
         $this->setupPassword();
+        $this->setupScramble();
 
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
@@ -70,6 +76,17 @@ class AppServiceProvider extends ServiceProvider
             return $this->app->environment(['prod', 'production'])
                 ? $rule->mixedCase()->numbers()->symbols()->uncompromised()
                 : $rule;
+        });
+    }
+
+    private function setupScramble()
+    {
+        Scramble::configure()->routes(function (Route $route) {
+            return Str::startsWith($route->uri, 'api/');
+        })->withDocumentTransformers(function (OpenApi $openApi) {
+            $openApi->secure(
+                SecurityScheme::http('bearer')
+            );
         });
     }
 }

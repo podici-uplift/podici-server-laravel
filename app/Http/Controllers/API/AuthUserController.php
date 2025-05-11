@@ -9,14 +9,16 @@ use App\Events\UsernameSetup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SetupUsernameRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
-use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
+use App\Http\Resources\Auth\UserResource;
+use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
 class AuthUserController extends Controller
 {
     public function getProfile(Request $request)
     {
-        return $request->user()->toResource();
+        return new UserResource($request->user());
     }
 
     public function updateProfile(UpdateProfileRequest $request)
@@ -29,9 +31,7 @@ class AuthUserController extends Controller
 
         event(new ProfileUpdated($user));
 
-        return response()->json([
-            'message' => 'Profile updated successfully',
-        ]);
+        return AppResponse::ok('Profile updated successfully');
     }
 
     public function updateUsername(SetupUsernameRequest $request)
@@ -47,9 +47,7 @@ class AuthUserController extends Controller
 
         event(new UsernameSetup($user));
 
-        return response()->json([
-            'message' => 'Username setup successfully',
-        ]);
+        return AppResponse::ok("Username setup successfully");
     }
 
     public function updatePassword(UpdatePasswordRequest $request)
@@ -65,9 +63,7 @@ class AuthUserController extends Controller
 
         event(new PasswordUpdated($user));
 
-        return response()->json([
-            'message' => 'Password updated successfully',
-        ]);
+        return AppResponse::ok('Password updated successfully');
     }
 
     public function logout(Request $request)

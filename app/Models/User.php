@@ -7,6 +7,8 @@ use App\Enums\UserAction;
 use App\Events\UserActivity;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasShortUlid;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -60,15 +62,28 @@ class User extends Authenticatable
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->password),
+            get: fn() => ! is_null($this->password),
         );
     }
 
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->phone_verified_at),
+            get: fn() => ! is_null($this->phone_verified_at),
         );
+    }
+
+    /**
+     * Scopes
+     */
+    #[Scope]
+    protected function byIdentifier(Builder $query, string $identifier): void
+    {
+        $query->where(function (Builder $query) use ($identifier) {
+            $query->where('email', $identifier)
+                ->orWhere('username', $identifier)
+                ->orWhere('id', $identifier);
+        });
     }
 
     /**
