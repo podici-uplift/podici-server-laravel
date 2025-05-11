@@ -23,7 +23,7 @@ class ContactFactory extends Factory
             'type' => fake()->randomElement(ContactType::cases()),
             'label' => fake()->realText(24),
             'value' => fake()->url(),
-            'is_primary' => fake()->boolean()
+            'is_primary' => fake()->boolean(),
         ];
     }
 }

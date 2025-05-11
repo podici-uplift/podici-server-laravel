@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Shop extends Model
 {
     /** @use HasFactory<\Database\Factories\ShopFactory> */
-    use HasFactory, HasUlids, HasContacts, HasShortUlid, HasCategories;
+    use HasCategories, HasContacts, HasFactory, HasShortUlid, HasUlids;
 
     protected $guarded = [];
 

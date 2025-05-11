@@ -10,9 +10,7 @@ use App\Models\Traits\HasShortUlid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,7 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, HasUlids, HasShortUlid, Notifiable, HasContacts;
+    use HasApiTokens, HasContacts, HasFactory, HasShortUlid, HasUlids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -62,31 +60,28 @@ class User extends Authenticatable
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn() => !is_null($this->password),
+            get: fn () => ! is_null($this->password),
         );
     }
 
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn() => !is_null($this->phone_verified_at),
+            get: fn () => ! is_null($this->phone_verified_at),
         );
     }
 
     /**
      * Relationships
      */
-
     public function shop(): HasOne
     {
         return $this->hasOne(Shop::class);
     }
 
-
     /**
      * Methods
      */
-
     public function recordAction(UserAction $action)
     {
         event(new UserActivity($this, $action));

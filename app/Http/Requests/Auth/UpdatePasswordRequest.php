@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password ;
+use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordRequest extends FormRequest
 {
@@ -27,7 +27,7 @@ class UpdatePasswordRequest extends FormRequest
                 'required',
                 'confirmed',
                 Password::defaults(),
-            ]
+            ],
         ];
     }
 }

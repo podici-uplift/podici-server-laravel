@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Objects\CategoryObject;
 use Database\Seeders\Traits\WithCategorySeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder

@@ -21,7 +21,7 @@ class ShopFactory extends Factory
         return [
             'user_id' => User::factory(),
             'name' => fake()->company(),
-            'slug'=> fake()->slug(),
+            'slug' => fake()->slug(),
             'description' => fake()->realText(),
             'is_adult_shop' => fake()->boolean(),
             'status' => fake()->randomElement(ShopStatus::cases()),

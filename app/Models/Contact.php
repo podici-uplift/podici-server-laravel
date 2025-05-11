@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Contact extends Model
 {
     /** @use HasFactory<\Database\Factories\ContactFactory> */
-    use HasFactory, HasUlids, HasShortUlid;
+    use HasFactory, HasShortUlid, HasUlids;
 
     protected $guarded = [];
 
@@ -20,7 +20,7 @@ class Contact extends Model
     {
         return [
             'type' => ContactType::class,
-            'is_primary' => 'boolean'
+            'is_primary' => 'boolean',
         ];
     }
 

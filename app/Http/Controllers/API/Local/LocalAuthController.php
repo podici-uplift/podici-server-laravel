@@ -16,6 +16,6 @@ class LocalAuthController extends Controller
 
         $user = AuthActions::getOrCreateUserUsingEmail($request->email);
 
-        return AuthActions::authenticateUserAndRespond($user, "Local auth via email");
+        return AuthActions::authenticateUserAndRespond($user, 'Local auth via email');
     }
 }

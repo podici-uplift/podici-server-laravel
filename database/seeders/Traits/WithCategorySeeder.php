@@ -9,8 +9,7 @@ trait WithCategorySeeder
     /**
      * Seed categories into DB
      *
-     * @param array<\App\Objects\CategoryObject> $categories
-     *
+     * @param  array<\App\Objects\CategoryObject>  $categories
      * @return void
      */
     protected function seedCategories(array $categories)

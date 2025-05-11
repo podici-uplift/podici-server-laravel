@@ -12,7 +12,7 @@ test('example', function () {
     $response->assertStatus(200);
 });
 
-test("Can get category Shops", function () {
+test('Can get category Shops', function () {
     $category = Category::factory()->create();
 
     $shop = Shop::factory()->create();
@@ -22,7 +22,7 @@ test("Can get category Shops", function () {
     $this->assertDatabaseHas('categorizables', [
         'category_id' => $category->id,
         'categorizable_id' => $shop->id,
-        'categorizable_type' => $shop->getMorphClass()
+        'categorizable_type' => $shop->getMorphClass(),
     ]);
 
     expect($category->shops->count())->toBe(1);

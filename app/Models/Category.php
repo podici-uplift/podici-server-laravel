@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
-    use HasFactory, HasUlids, HasShortUlid;
+    use HasFactory, HasShortUlid, HasUlids;
 
     protected $guarded = [];
 
@@ -21,7 +21,7 @@ class Category extends Model
     {
         return [
             'status' => CategoryStatus::class,
-            'is_adult' => 'boolean'
+            'is_adult' => 'boolean',
         ];
     }
 

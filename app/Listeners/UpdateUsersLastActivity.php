@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\UserActivity;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class UpdateUsersLastActivity
 {
@@ -23,7 +21,7 @@ class UpdateUsersLastActivity
     {
         $event->user->update([
             'last_activity' => $event->action->name,
-            'last_activity_at' => now()
+            'last_activity_at' => now(),
         ]);
     }
 }

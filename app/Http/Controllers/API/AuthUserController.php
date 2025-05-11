@@ -30,7 +30,7 @@ class AuthUserController extends Controller
         event(new ProfileUpdated($user));
 
         return response()->json([
-            'message' => 'Profile updated successfully'
+            'message' => 'Profile updated successfully',
         ]);
     }
 
@@ -48,7 +48,7 @@ class AuthUserController extends Controller
         event(new UsernameSetup($user));
 
         return response()->json([
-            'message' => "Username setup successfully"
+            'message' => 'Username setup successfully',
         ]);
     }
 
@@ -66,13 +66,13 @@ class AuthUserController extends Controller
         event(new PasswordUpdated($user));
 
         return response()->json([
-            'message' => "Password updated successfully"
+            'message' => 'Password updated successfully',
         ]);
     }
 
     public function logout(Request $request)
     {
-        /** @var \Laravel\Sanctum\PersonalAccessToken $currentToken **/
+        /** @var \Laravel\Sanctum\PersonalAccessToken $currentToken * */
         $currentToken = $request->user()->currentAccessToken();
 
         $currentToken->delete();

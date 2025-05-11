@@ -9,7 +9,7 @@ trait HasShortUlid
     public function shortUlid(): Attribute
     {
         return Attribute::make(
-            get: fn() => str($this->id)
+            get: fn () => str($this->id)
                 ->mask('*', 5, -4)
                 ->replaceMatches('/[*]+/', '-')
                 ->upper()

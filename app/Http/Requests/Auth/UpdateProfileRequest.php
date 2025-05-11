@@ -27,26 +27,26 @@ class UpdateProfileRequest extends FormRequest
         return [
             'phone' => [
                 'string',
-                new PhoneNumber
+                new PhoneNumber,
             ],
             'first_name' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/'
+                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/',
             ],
             'last_name' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/'
+                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/',
             ],
             'other_names' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{0,48}$/'
+                'regex:/^[A-Za-z][A-Za-z\'\s-]{0,48}$/',
             ],
             'gender' => [
                 Rule::enum(Gender::class),
             ],
             'bio' => [
                 'string',
-                'max:248'
+                'max:248',
             ],
         ];
     }

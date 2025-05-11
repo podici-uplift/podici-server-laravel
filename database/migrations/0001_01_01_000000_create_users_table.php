@@ -19,9 +19,9 @@ return new class extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('username')->unique()->nullable();
             $table->timestamp('username_last_updated_at')->nullable();
-            $table->string("first_name")->nullable();
-            $table->string("last_name")->nullable();
-            $table->string("other_names")->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('other_names')->nullable();
             $table->string('gender')->nullable();
             $table->mediumText('bio')->nullable();
             $table->date('dob')->nullable();
