@@ -3,13 +3,13 @@
 namespace App\Objects;
 
 use App\Enums\CategoryStatus;
-use App\Models\Category;
-use DB;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CategoryObject
 {
+    public string $slug;
 
     public function __construct(
         public string $name,
@@ -18,7 +18,7 @@ class CategoryObject
         public CategoryStatus $status = CategoryStatus::ACTIVE,
         public bool $isAdult = false,
     ) {
-        //
+        $this->slug = Str::slug("{$this->parentSlug}-{$this->name}");
     }
 
     public static function make(
@@ -33,33 +33,19 @@ class CategoryObject
 
     public function save(array &$slugIdMap): void
     {
-        $slug = $this->slug();
-
         $parentId = $this->getParentId($slugIdMap);
 
-        $existing = $this->table()->where('slug', $slug)->first();
-
-        if ($existing) {
-            $slugIdMap[$slug] = $existing->id;
-
-            return;
-        }
-
-        $id = Str::lower(Str::ulid()->toString());
-
-        $this->table()->insert([
-            'id' => $id,
+        $this->table()->upsert([
+            'id' => Str::lower(Str::ulid()->toString()),
             'name' => $this->name,
-            'slug' => $slug,
+            'slug' => $this->slug,
             'description' => $this->description,
             'parent_id' => $parentId,
             'status' => $this->status->value,
             'is_adult' => $this->isAdult,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
-
-        $slugIdMap[$slug] = $id;
+        ], ['slug'], ['name', 'description', 'parent_id', 'status', 'is_adult', 'updated_at']);
     }
 
     private function getParentId(array &$slugIdMap): ?string
@@ -68,8 +54,8 @@ class CategoryObject
             return null;
         }
 
-        if ($existingId = data_get($slugIdMap, $this->parentSlug)) {
-            return $existingId;
+        if ($cachedID = data_get($slugIdMap, $this->parentSlug)) {
+            return $cachedID;
         }
 
         $parent = $this->table()->where('slug', $this->parentSlug)->first();
@@ -79,13 +65,6 @@ class CategoryObject
         $slugIdMap[$this->parentSlug] = $parent->id;
 
         return $parent->id;
-    }
-
-    private function slug(): string
-    {
-        return $this->parentSlug
-            ? $this->parentSlug . '-' . Str::slug($this->name)
-            : Str::slug($this->name);
     }
 
     private function table(): Builder
