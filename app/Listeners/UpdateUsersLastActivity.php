@@ -20,7 +20,7 @@ class UpdateUsersLastActivity
     public function handle(UserActivity $event): void
     {
         $event->user->update([
-            'last_activity' => $event->action->name,
+            'last_activity' => $event->action,
             'last_activity_at' => now(),
         ]);
     }

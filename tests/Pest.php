@@ -1,5 +1,10 @@
 <?php
 
+use Pest\TestSuite;
+use Tests\Helpers\HttpPayload;
+use Tests\Helpers\HttpTester;
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,8 +16,8 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+pest()->extend(TestCase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -44,4 +49,19 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function testCase($testCase): TestCase
+{
+    return $testCase;
+}
+
+function httpTester(string $method, string $uri)
+{
+    return new HttpTester($method, $uri);
+}
+
+function httpPayload()
+{
+    return new HttpPayload();
 }

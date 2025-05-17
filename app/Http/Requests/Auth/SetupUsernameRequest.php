@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\Regex\Username;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -39,7 +40,7 @@ class SetupUsernameRequest extends FormRequest
                 'required',
                 'string',
                 Rule::unique('users', 'username'),
-                'regex:/^[a-z][a-z0-9._]{2,19}[a-z0-9_]$/i',
+                new Username
             ],
         ];
     }

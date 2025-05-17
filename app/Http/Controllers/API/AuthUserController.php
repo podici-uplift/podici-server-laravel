@@ -18,36 +18,22 @@ class AuthUserController extends Controller
 {
     public function getProfile(Request $request)
     {
-        return new UserResource($request->user());
+        return AppResponse::resource(
+            new UserResource($request->user()),
+        );
     }
 
     public function updateProfile(UpdateProfileRequest $request)
     {
         $user = $request->user();
 
-        $user->recordAction(UserAction::PROFILE_UPDATE);
-
         $user->update($request->validated());
+
+        $user->recordAction(UserAction::PROFILE_UPDATE);
 
         event(new ProfileUpdated($user));
 
-        return AppResponse::ok('Profile updated successfully');
-    }
-
-    public function updateUsername(SetupUsernameRequest $request)
-    {
-        $user = $request->user();
-
-        $user->recordAction(UserAction::PROFILE_UPDATE);
-
-        $user->update([
-            'username' => $request->validated('username'),
-            'username_last_updated_at' => now(),
-        ]);
-
-        event(new UsernameSetup($user));
-
-        return AppResponse::ok("Username setup successfully");
+        return AppResponse::ok(__('response.action.success'));
     }
 
     public function updatePassword(UpdatePasswordRequest $request)
@@ -63,7 +49,23 @@ class AuthUserController extends Controller
 
         event(new PasswordUpdated($user));
 
-        return AppResponse::ok('Password updated successfully');
+        return AppResponse::ok(__('response.action.success'));
+    }
+
+    public function updateUsername(SetupUsernameRequest $request)
+    {
+        $user = $request->user();
+
+        $user->recordAction(UserAction::PROFILE_UPDATE);
+
+        $user->update([
+            'username' => $request->validated('username'),
+            'username_last_updated_at' => now(),
+        ]);
+
+        event(new UsernameSetup($user));
+
+        return AppResponse::ok(__('response.action.success'));
     }
 
     public function logout(Request $request)

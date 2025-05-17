@@ -2,9 +2,6 @@
 
 use App\Models\Category;
 use App\Models\Shop;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 test('example', function () {
     $response = $this->get('/');

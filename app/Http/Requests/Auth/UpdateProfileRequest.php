@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\Country;
 use App\Enums\Gender;
-use App\Rules\PhoneNumber;
+use App\Rules\Regex\LegalName;
+use App\Rules\Regex\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,26 +29,32 @@ class UpdateProfileRequest extends FormRequest
         return [
             'phone' => [
                 'string',
-                new PhoneNumber,
+                new PhoneNumber(Country::NIGERIA),
+                'required_without_all:phone,first_name,last_name,other_names,gender,bio',
             ],
             'first_name' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/',
+                new LegalName,
+                'required_without_all:phone,last_name,other_names,gender,bio',
             ],
             'last_name' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{1,24}$/',
+                new LegalName,
+                'required_without_all:phone,first_name,other_names,gender,bio',
             ],
             'other_names' => [
                 'string',
-                'regex:/^[A-Za-z][A-Za-z\'\s-]{0,48}$/',
+                new LegalName(true),
+                'required_without_all:phone,first_name,last_name,gender,bio',
             ],
             'gender' => [
                 Rule::enum(Gender::class),
+                'required_without_all:phone,first_name,last_name,other_names,bio',
             ],
             'bio' => [
                 'string',
                 'max:248',
+                'required_without_all:phone,first_name,last_name,other_names,gender',
             ],
         ];
     }
