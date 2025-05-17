@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\Auth\AuthLogoutController;
+use App\Http\Controllers\API\Auth\AuthUserPasswordController;
+use App\Http\Controllers\API\Auth\AuthUserProfileController;
+use App\Http\Controllers\API\Auth\AuthUserUsernameController;
 use App\Http\Controllers\API\AuthUserController;
 use App\Http\Controllers\API\SocialiteController;
 use Illuminate\Support\Facades\Route;
@@ -10,15 +14,14 @@ Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::
     Route::post('token/{provider}', 'authFromToken')->name('token');
 });
 
-Route::prefix('user')->name('user.')->middleware(['auth:sanctum'])->controller(AuthUserController::class)->group(function () {
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', 'getProfile')->name('get');
-        Route::put('/', 'updateProfile')->name('update');
-
-        // DOB update needs KYC
-        Route::post('update-password', 'updatePassword')->name('password.update');
-        Route::post('update-username', 'updateUsername')->name('username.update');
+Route::prefix('user')->name('user.')->middleware(['auth:sanctum'])->group(function () {
+    Route::prefix('profile')->name('profile.')->controller(AuthUserProfileController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::put('/', 'update')->name('update');
     });
 
-    Route::post('logout', 'logout')->name('logout');
+    Route::post('password', AuthUserPasswordController::class)->name('password-update');
+    Route::post('username', AuthUserUsernameController::class)->name('username-update');
+
+    Route::post('logout', AuthLogoutController::class)->name('logout');
 });
