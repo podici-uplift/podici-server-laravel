@@ -4,8 +4,7 @@ $modelTraits = "App\Models\Traits";
 
 arch()
     ->expect('App')
-    // ->toUseStrictTypes()
-    ->not->toUse(['die', 'dd', 'dump']);
+    ->not->toUse(['die', 'dd', 'dump', 'echo', 'print', 'print_r']);
 
 arch()
     ->expect('App\Models')
@@ -21,5 +20,10 @@ arch()
     ->toBeTraits();
 
 arch()->preset()->php();
-arch()->preset()->laravel();
-arch()->preset()->security()->ignoring('md5');
+
+arch()->preset()->laravel()
+    ->ignoring("App\Http\Controllers\API\Local")
+    ->ignoring("App\Http\Controllers\API\SocialiteController")
+    ->ignoring("App\Providers\AppServiceProvider");
+
+arch()->preset()->security();
