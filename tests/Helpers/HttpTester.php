@@ -12,14 +12,11 @@ class HttpTester
 {
     protected ?TestResponse $response = null;
 
-    protected string $uri;
-
     public function __construct(
         protected string $method,
-        protected string $routeName,
-        protected array $routeParameters = []
+        protected string $uri,
     ) {
-        $this->uri = route($routeName, $routeParameters);
+        //
     }
 
     public function send(array $payload = [], array $headers = []): self

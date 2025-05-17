@@ -56,8 +56,14 @@ function testCase($testCase): TestCase
     return $testCase;
 }
 
-function httpTester(string $method, string $uri)
-{
+function httpTester(
+    string $method,
+    string $route,
+    bool $routeIsName = true,
+    array $routeParams = []
+) {
+    $uri = $routeIsName ? route($route, $routeParams) : $route;
+
     return new HttpTester($method, $uri);
 }
 
