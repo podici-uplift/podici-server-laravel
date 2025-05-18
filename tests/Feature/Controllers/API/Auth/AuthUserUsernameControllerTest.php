@@ -59,17 +59,15 @@ describe("Update username", function () {
         expect($user->username)->toBe($newUsername);
     });
 
-    it("Updates with cooldown", function () use ($baseTester) {
+    it("Updates with cooldown", function ($validUsername) use ($baseTester) {
         Event::fake();
 
         $user = User::factory()->create([
             'username_last_updated_at' => null
         ]);
 
-        $newUsername = uniqid("user");
-
         $baseTester()->sendAs($user, [
-            'username' => $newUsername
+            'username' => $validUsername
         ])->expectOk("response.action.success");
 
         Event::assertDispatched(UsernameSetup::class);
@@ -78,6 +76,28 @@ describe("Update username", function () {
 
         $user->refresh();
 
-        expect($user->username)->toBe($newUsername);
-    });
+        expect($user->username)->toBe($validUsername);
+    })->with(UsernameUpdateDataSets::VALID_USERNAMES);
+
+    it("Validates username", function ($invalidUsername) use ($baseTester) {
+        Event::fake();
+
+        $user = User::factory()->create([
+            'username_last_updated_at' => null,
+            'username' => null,
+        ]);
+
+        $baseTester()->sendAs($user, [
+            'username' => $invalidUsername
+        ])->expectValidationError(['username']);
+
+        Event::assertNotDispatched(UsernameSetup::class);
+
+        Event::assertNotDispatched(UserActivity::class);
+
+        $user->refresh();
+
+        expect($user->username)->toBe(null);
+        expect($user->username_last_updated_at)->toBe(null);
+    })->with(UsernameUpdateDataSets::INVALID_USERNAMES);
 });

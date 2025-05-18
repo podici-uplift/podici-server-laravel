@@ -39,6 +39,7 @@ class SetupUsernameRequest extends FormRequest
             'username' => [
                 'required',
                 'string',
+                'max:32',
                 Rule::unique('users', 'username'),
                 new Username
             ],

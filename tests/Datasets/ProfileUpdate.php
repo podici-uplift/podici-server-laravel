@@ -1,6 +1,11 @@
 <?php
 
-dataset('profile-update-form-errors', fn() => [
+class ProfileUpdateDatasets
+{
+    const FORM_ERRORS = "profile-update-form-errors";
+}
+
+dataset(ProfileUpdateDatasets::FORM_ERRORS, fn() => [
     'phone_incorrect' => ['phone', 'xxxyyy'],
 
     'first_name_too_short' => ['first_name', 'F'],

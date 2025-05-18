@@ -41,7 +41,7 @@ describe("Update Profile", function () {
         $baseTester()->sendAs($user, [
             $field => $value
         ])->expectValidationError([$field]);
-    })->with("profile-update-form-errors");
+    })->with(ProfileUpdateDatasets::FORM_ERRORS);
 
     it("Validates payloads with damaged fields", function (string $field, string $value) use ($baseTester) {
         $user = User::factory()->create();
@@ -49,7 +49,7 @@ describe("Update Profile", function () {
         $payload = httpPayload()->profileUpdate()->mod($field, $value)->data();
 
         $baseTester()->sendAs($user, $payload)->expectValidationError([$field]);
-    })->with("profile-update-form-errors");
+    })->with(ProfileUpdateDatasets::FORM_ERRORS);
 
     it("Profile Can update", function () use ($baseTester) {
         Event::fake();
