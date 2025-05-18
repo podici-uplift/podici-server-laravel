@@ -4,8 +4,7 @@ use App\Http\Controllers\API\Auth\AuthLogoutController;
 use App\Http\Controllers\API\Auth\AuthUserPasswordController;
 use App\Http\Controllers\API\Auth\AuthUserProfileController;
 use App\Http\Controllers\API\Auth\AuthUserUsernameController;
-use App\Http\Controllers\API\AuthUserController;
-use App\Http\Controllers\API\SocialiteController;
+use App\Http\Controllers\API\Auth\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::class)->group(function () {
