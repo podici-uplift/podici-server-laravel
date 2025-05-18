@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
         Password::defaults(function () {
             $rule = Password::min(8);
 
-            return $this->app->environment(['prod', 'production'])
+            return $this->app->environment(['prod', 'production', 'testing'])
                 ? $rule->mixedCase()->numbers()->symbols()->uncompromised()
                 : $rule;
         });
