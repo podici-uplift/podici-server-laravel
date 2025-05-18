@@ -1,26 +1,27 @@
 <?php
 
+namespace Tests\Datasets;
+
 class UsernameUpdateDataSets
 {
-    const INVALID_USERNAMES = "username-update-invalid-usernames";
-    const VALID_USERNAMES = "username-update-valid-usernames";
+    static public function invalidUsernames()
+    {
+        return [
+            'i contain spaces',
+            'IHaveSpecialCharacters#',
+            '1startWithNumber',
+            'IAmWayTooLongLikeIShouldBeWayTooLongLikeWhoWouldEvenReadThis'
+        ];
+    }
+
+    static public function validUsernames()
+    {
+        return [
+            'YoungMayor',
+            'Young.Mayor',
+            'Young_Mayor',
+            'YoungMayor123',
+            'YoungMayor___'
+        ];
+    }
 }
-
-dataset(UsernameUpdateDataSets::INVALID_USERNAMES, function () {
-    return [
-        'i contain spaces',
-        'IHaveSpecialCharacters#',
-        '1startWithNumber',
-        'IAmWayTooLongLikeIShouldBeWayTooLongLikeWhoWouldEvenReadThis'
-    ];
-});
-
-dataset(UsernameUpdateDataSets::VALID_USERNAMES, function () {
-    return [
-        'YoungMayor',
-        'Young.Mayor',
-        'Young_Mayor',
-        'YoungMayor123',
-        'YoungMayor___'
-    ];
-});

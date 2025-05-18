@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Datasets;
+
 class PasswordUpdateDataSets
 {
     static public function invalidPasswords()

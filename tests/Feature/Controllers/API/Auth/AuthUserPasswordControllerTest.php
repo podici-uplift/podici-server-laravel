@@ -3,6 +3,7 @@
 use App\Events\PasswordUpdated;
 use App\Events\UserActivity;
 use App\Models\User;
+use Tests\Datasets\PasswordUpdateDataSets;
 
 describe("Update Password", function () {
     $baseTester = fn() => httpTester('POST', 'api.auth.user.password-update');

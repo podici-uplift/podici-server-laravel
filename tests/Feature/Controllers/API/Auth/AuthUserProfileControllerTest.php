@@ -3,6 +3,7 @@
 use App\Events\ProfileUpdated;
 use App\Events\UserActivity;
 use App\Models\User;
+use Tests\Datasets\ProfileUpdateDatasets;
 
 describe("Get Profile", function () {
     it("Requires authentication", function () {
@@ -41,7 +42,7 @@ describe("Update Profile", function () {
         $baseTester()->sendAs($user, [
             $field => $value
         ])->expectValidationError([$field]);
-    })->with(ProfileUpdateDatasets::FORM_ERRORS);
+    })->with(ProfileUpdateDatasets::formErrors());
 
     it("Validates payloads with damaged fields", function (string $field, string $value) use ($baseTester) {
         $user = User::factory()->create();
@@ -49,7 +50,7 @@ describe("Update Profile", function () {
         $payload = httpPayload()->profileUpdate()->mod($field, $value)->data();
 
         $baseTester()->sendAs($user, $payload)->expectValidationError([$field]);
-    })->with(ProfileUpdateDatasets::FORM_ERRORS);
+    })->with(ProfileUpdateDatasets::formErrors());
 
     it("Profile Can update", function () use ($baseTester) {
         Event::fake();
