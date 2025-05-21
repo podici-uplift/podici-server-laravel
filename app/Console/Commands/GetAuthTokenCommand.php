@@ -33,21 +33,29 @@ class GetAuthTokenCommand extends Command implements PromptsForMissingInput
      */
     public function handle()
     {
+        $env = app()->environment();
+
+        if ($env !== 'local') {
+            return error('This command can only be run in local environment');
+        }
+
         $email = text(
-            "User email:",
-            default: "youngmayor.dev@gmail.com",
+            'User email:',
+            default: 'youngmayor.dev@gmail.com',
             required: true
         );
 
-        $createIfMissing = confirm("Create user if missing");
+        $createIfMissing = confirm('Create user if missing');
 
         $user = $createIfMissing
             ? AuthActions::getOrCreateUserUsingEmail($email)
             : User::byIdentifier($email);
 
-        if (!$user) return error("User with email {$email} was not found");
+        if (! $user) {
+            return error("User with email {$email} was not found");
+        }
 
-        $token = $user->createToken("Token from CLI");
+        $token = $user->createToken('Token from CLI');
 
         info("Token generated successfully: {$token->plainTextToken}");
     }

@@ -1,6 +1,5 @@
 <?php
 
-use Pest\TestSuite;
 use Tests\Helpers\HttpPayload;
 use Tests\Helpers\HttpTester;
 use Tests\TestCase;
@@ -69,5 +68,5 @@ function httpTester(
 
 function httpPayload()
 {
-    return new HttpPayload();
+    return new HttpPayload;
 }

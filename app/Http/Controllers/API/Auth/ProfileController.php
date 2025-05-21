@@ -10,7 +10,7 @@ use App\Http\Resources\Auth\UserResource;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
-class AuthUserProfileController extends Controller
+class ProfileController extends Controller
 {
     public function index(Request $request)
     {

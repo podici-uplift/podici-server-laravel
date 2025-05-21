@@ -41,7 +41,7 @@ class SetupUsernameRequest extends FormRequest
                 'string',
                 'max:32',
                 Rule::unique('users', 'username'),
-                new Username
+                new Username,
             ],
         ];
     }

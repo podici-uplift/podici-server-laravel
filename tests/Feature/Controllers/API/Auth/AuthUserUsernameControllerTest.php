@@ -5,14 +5,14 @@ use App\Events\UsernameSetup;
 use App\Models\User;
 use Tests\Datasets\UsernameUpdateDataSets;
 
-describe("Update username", function () {
-    $baseTester = fn() => httpTester('POST', 'api.auth.user.username-update');
+describe('Update username', function () {
+    $baseTester = fn () => httpTester('POST', 'api.auth.user.username-update');
 
-    it("Requires auth", function () use ($baseTester) {
+    it('Requires auth', function () use ($baseTester) {
         $baseTester()->send()->expectAuthenticationError();
     });
 
-    it("Requires unique usernames", function () use ($baseTester) {
+    it('Requires unique usernames', function () use ($baseTester) {
         $userOne = User::factory()->create([
             'username_last_updated_at' => null,
         ]);
@@ -22,7 +22,7 @@ describe("Update username", function () {
         ]);
 
         $baseTester()->sendAs($userOne, [
-            'username' => $userTwo->username
+            'username' => $userTwo->username,
         ])->expectValidationError(['username']);
     });
 
@@ -30,11 +30,11 @@ describe("Update username", function () {
         Event::fake();
 
         $user = User::factory()->create([
-            'username_last_updated_at' => now()
+            'username_last_updated_at' => now(),
         ]);
 
         $baseTester()->sendAs($user, [
-            'username' => uniqid("user")
+            'username' => uniqid('user'),
         ])->expectUnauthorized();
 
         Event::assertNotDispatched(UsernameSetup::class);
@@ -45,11 +45,11 @@ describe("Update username", function () {
 
         $this->travel($cooldownDuration + 1)->days();
 
-        $newUsername = uniqid("user");
+        $newUsername = uniqid('user');
 
         $baseTester()->sendAs($user, [
-            'username' => $newUsername
-        ])->expectOk("response.action.success");
+            'username' => $newUsername,
+        ])->expectOk('response.action.success');
 
         Event::assertDispatched(UsernameSetup::class);
 
@@ -60,16 +60,16 @@ describe("Update username", function () {
         expect($user->username)->toBe($newUsername);
     });
 
-    it("Updates with cooldown", function ($validUsername) use ($baseTester) {
+    it('Updates with cooldown', function ($validUsername) use ($baseTester) {
         Event::fake();
 
         $user = User::factory()->create([
-            'username_last_updated_at' => null
+            'username_last_updated_at' => null,
         ]);
 
         $baseTester()->sendAs($user, [
-            'username' => $validUsername
-        ])->expectOk("response.action.success");
+            'username' => $validUsername,
+        ])->expectOk('response.action.success');
 
         Event::assertDispatched(UsernameSetup::class);
 
@@ -80,7 +80,7 @@ describe("Update username", function () {
         expect($user->username)->toBe($validUsername);
     })->with(UsernameUpdateDataSets::validUsernames());
 
-    it("Validates username", function ($invalidUsername) use ($baseTester) {
+    it('Validates username', function ($invalidUsername) use ($baseTester) {
         Event::fake();
 
         $user = User::factory()->create([
@@ -89,7 +89,7 @@ describe("Update username", function () {
         ]);
 
         $baseTester()->sendAs($user, [
-            'username' => $invalidUsername
+            'username' => $invalidUsername,
         ])->expectValidationError(['username']);
 
         Event::assertNotDispatched(UsernameSetup::class);

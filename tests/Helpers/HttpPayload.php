@@ -2,18 +2,13 @@
 
 namespace Tests\Helpers;
 
-use App\Enums\Country;
 use App\Enums\Gender;
-use App\Models\User;
-use Exception;
 
 class HttpPayload
 {
     protected array $payload = [];
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     protected function payload(callable $generator): self
     {
@@ -69,7 +64,7 @@ class HttpPayload
     public function profileUpdate(): self
     {
         return $this->payload(fn () => [
-            'phone' => fake()->numerify("23480########"),
+            'phone' => fake()->numerify('23480########'),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'other_names' => fake()->lastName(),

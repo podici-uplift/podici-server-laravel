@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Enums\UserAction;
-use App\Events\UsernameSetup;
+use App\Events\PasswordUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\SetupUsernameRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
-class AuthUserUsernameController extends Controller
+class UpdatePasswordController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(SetupUsernameRequest $request)
+    public function __invoke(UpdatePasswordRequest $request)
     {
         $user = $request->user();
 
         $user->recordAction(UserAction::PROFILE_UPDATE);
 
         $user->update([
-            'username' => $request->validated('username'),
-            'username_last_updated_at' => now(),
+            'password' => $request->validated('password'),
+            'password_last_updated_at' => now(),
         ]);
 
-        event(new UsernameSetup($user));
+        event(new PasswordUpdated($user));
 
         return AppResponse::ok(__('response.action.success'));
     }

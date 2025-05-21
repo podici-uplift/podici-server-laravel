@@ -4,24 +4,24 @@ namespace Tests\Datasets;
 
 class UsernameUpdateDataSets
 {
-    static public function invalidUsernames()
+    public static function invalidUsernames()
     {
         return [
             'i contain spaces',
             'IHaveSpecialCharacters#',
             '1startWithNumber',
-            'IAmWayTooLongLikeIShouldBeWayTooLongLikeWhoWouldEvenReadThis'
+            'IAmWayTooLongLikeIShouldBeWayTooLongLikeWhoWouldEvenReadThis',
         ];
     }
 
-    static public function validUsernames()
+    public static function validUsernames()
     {
         return [
             'YoungMayor',
             'Young.Mayor',
             'Young_Mayor',
             'YoungMayor123',
-            'YoungMayor___'
+            'YoungMayor___',
         ];
     }
 }

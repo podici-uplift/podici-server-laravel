@@ -54,7 +54,7 @@ class HttpTester
     public function dump(): self
     {
         return $this->handleResponse(
-            fn(TestResponse $response) => $response->dump()
+            fn (TestResponse $response) => $response->dump()
         );
     }
 
@@ -72,8 +72,8 @@ class HttpTester
     public function expect(string $key, mixed $value): self
     {
         return $this->handleResponse(
-            fn(TestResponse $response) => $response->assertJson(
-                fn(AssertableJson $json) => $json->where($key, $value)->etc()
+            fn (TestResponse $response) => $response->assertJson(
+                fn (AssertableJson $json) => $json->where($key, $value)->etc()
             )
         );
     }
@@ -81,8 +81,8 @@ class HttpTester
     public function expectAll(array $bindings): self
     {
         return $this->handleResponse(
-            fn(TestResponse $response) => $response->assertJson(
-                fn(AssertableJson $json) => $json->whereAll($bindings)->etc()
+            fn (TestResponse $response) => $response->assertJson(
+                fn (AssertableJson $json) => $json->whereAll($bindings)->etc()
             )
         );
     }
@@ -95,7 +95,7 @@ class HttpTester
     public function expectStatus(int $status): self
     {
         return $this->handleResponse(
-            fn(TestResponse $response) => $response->assertStatus($status)
+            fn (TestResponse $response) => $response->assertStatus($status)
         );
     }
 
@@ -107,8 +107,8 @@ class HttpTester
     public function expectAllType(array $bindings): self
     {
         return $this->handleResponse(
-            fn(TestResponse $response) => $response->assertJson(
-                fn(AssertableJson $json) => $json->whereAllType($bindings)
+            fn (TestResponse $response) => $response->assertJson(
+                fn (AssertableJson $json) => $json->whereAllType($bindings)
             )
         );
     }
@@ -119,7 +119,7 @@ class HttpTester
             'status' => 'string',
             'statusCode' => 'integer',
             'message' => 'string',
-            'resource' => 'array'
+            'resource' => 'array',
         ]);
     }
 

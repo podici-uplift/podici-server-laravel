@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\Auth\AuthLogoutController;
-use App\Http\Controllers\API\Auth\AuthUserPasswordController;
-use App\Http\Controllers\API\Auth\AuthUserProfileController;
-use App\Http\Controllers\API\Auth\AuthUserUsernameController;
+use App\Http\Controllers\API\Auth\LogoutController;
+use App\Http\Controllers\API\Auth\ProfileController;
 use App\Http\Controllers\API\Auth\SocialiteController;
+use App\Http\Controllers\API\Auth\UpdatePasswordController;
+use App\Http\Controllers\API\Auth\UpdateUsernameController;
+use App\Http\Controllers\API\CreateShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::class)->group(function () {
@@ -14,13 +15,17 @@ Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::
 });
 
 Route::prefix('user')->name('user.')->middleware(['auth:sanctum'])->group(function () {
-    Route::prefix('profile')->name('profile.')->controller(AuthUserProfileController::class)->group(function () {
+    Route::prefix('profile')->name('profile.')->controller(ProfileController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::put('/', 'update')->name('update');
     });
 
-    Route::post('password', AuthUserPasswordController::class)->name('password-update');
-    Route::post('username', AuthUserUsernameController::class)->name('username-update');
+    Route::post('password', UpdatePasswordController::class)->name('password-update');
+    Route::post('username', UpdateUsernameController::class)->name('username-update');
 
-    Route::post('logout', AuthLogoutController::class)->name('logout');
+    Route::post('logout', LogoutController::class)->name('logout');
+});
+
+Route::prefix('shop')->name('shop.')->middleware(['auth:sanctum'])->group(function () {
+    Route::post('create', CreateShopController::class)->name('create');
 });

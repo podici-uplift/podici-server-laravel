@@ -10,8 +10,7 @@ abstract class RegexRule implements ValidationRule
     public function __construct(
         protected readonly string $pattern,
         protected readonly string $failMessage,
-    ) {
-    }
+    ) {}
 
     /**
      * Run the validation rule.

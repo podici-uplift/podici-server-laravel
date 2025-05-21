@@ -2,6 +2,6 @@
 
 return [
     'action' => [
-        'success' => 'Action completed successfully'
-    ]
+        'success' => 'Action completed successfully',
+    ],
 ];

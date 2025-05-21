@@ -18,7 +18,7 @@ class AppResponse
             'status' => $statusText,
             'statusCode' => $statusCode,
             'message' => $message ?? $statusText,
-            'data' => $data
+            'data' => $data,
         ], $statusCode);
     }
 
@@ -36,7 +36,7 @@ class AppResponse
             'status' => data_get(Response::$statusTexts, $statusCode),
             'statusCode' => $statusCode,
             'message' => $messsage ?? data_get(Response::$statusTexts, $statusCode),
-            'resource' => $resource
+            'resource' => $resource,
         ], $statusCode);
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Enums;
 
-use App\Logic\KYCRules;
-
 enum Country: string
 {
     case NIGERIA = 'ng';
@@ -18,7 +16,7 @@ enum Country: string
     public function phoneNumberPattern(): string
     {
         return match ($this) {
-            self::NIGERIA => "/^(234)([7-9][0-1])([0-9]{8})$/"
+            self::NIGERIA => '/^(234)([7-9][0-1])([0-9]{8})$/'
         };
     }
 

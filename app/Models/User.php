@@ -62,14 +62,14 @@ class User extends Authenticatable
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->password),
+            get: fn () => ! is_null($this->password),
         );
     }
 
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->phone_verified_at),
+            get: fn () => ! is_null($this->phone_verified_at),
         );
     }
 

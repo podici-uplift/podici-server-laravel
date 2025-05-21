@@ -5,16 +5,16 @@ use App\Events\UserActivity;
 use App\Models\User;
 use Tests\Datasets\ProfileUpdateDatasets;
 
-describe("Get Profile", function () {
-    it("Requires authentication", function () {
-        httpTester("GET", "api.auth.user.profile.index")->send()
+describe('Get Profile', function () {
+    it('Requires authentication', function () {
+        httpTester('GET', 'api.auth.user.profile.index')->send()
             ->expectAuthenticationError();
     });
 
-    it("Gets correct profile", function () {
+    it('Gets correct profile', function () {
         $user = User::factory()->create();
 
-        httpTester("GET", "api.auth.user.profile.index")->sendAs($user)
+        httpTester('GET', 'api.auth.user.profile.index')->sendAs($user)
             ->expectResource()
             ->expectAll([
                 'resource.id' => $user->id,
@@ -23,28 +23,28 @@ describe("Get Profile", function () {
     });
 });
 
-describe("Update Profile", function () {
-    $baseTester = fn() => httpTester('PUT', 'api.auth.user.profile.update');
+describe('Update Profile', function () {
+    $baseTester = fn () => httpTester('PUT', 'api.auth.user.profile.update');
 
-    it("Requires auth", function () use ($baseTester) {
+    it('Requires auth', function () use ($baseTester) {
         $baseTester()->send()->expectAuthenticationError();
     });
 
-    it("Requires at least on field", function () use ($baseTester) {
+    it('Requires at least on field', function () use ($baseTester) {
         $user = User::factory()->create();
 
         $baseTester()->sendAs($user, [])->expectValidationError();
     });
 
-    it("Validates payloads individualy", function (string $field, string $value) use ($baseTester) {
+    it('Validates payloads individualy', function (string $field, string $value) use ($baseTester) {
         $user = User::factory()->create();
 
         $baseTester()->sendAs($user, [
-            $field => $value
+            $field => $value,
         ])->expectValidationError([$field]);
     })->with(ProfileUpdateDatasets::formErrors());
 
-    it("Validates payloads with damaged fields", function (string $field, string $value) use ($baseTester) {
+    it('Validates payloads with damaged fields', function (string $field, string $value) use ($baseTester) {
         $user = User::factory()->create();
 
         $payload = httpPayload()->profileUpdate()->mod($field, $value)->data();
@@ -52,7 +52,7 @@ describe("Update Profile", function () {
         $baseTester()->sendAs($user, $payload)->expectValidationError([$field]);
     })->with(ProfileUpdateDatasets::formErrors());
 
-    it("Profile Can update", function () use ($baseTester) {
+    it('Profile Can update', function () use ($baseTester) {
         Event::fake();
 
         $user = User::factory()->create();

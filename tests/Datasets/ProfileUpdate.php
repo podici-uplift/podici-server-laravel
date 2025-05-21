@@ -4,7 +4,7 @@ namespace Tests\Datasets;
 
 class ProfileUpdateDatasets
 {
-    static public function formErrors()
+    public static function formErrors()
     {
         return [
             'phone_incorrect' => ['phone', 'xxxyyy'],
