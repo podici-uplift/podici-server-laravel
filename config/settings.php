@@ -10,5 +10,5 @@ return [
 
     'shop' => [
         'name_length_limit' => 64,
-    ]
+    ],
 ];

@@ -35,7 +35,7 @@ class Shop extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => [
+            set: fn (string $value) => [
                 'name' => $value,
                 'slug' => ShopName::toSlug($value),
             ],

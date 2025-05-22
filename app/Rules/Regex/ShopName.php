@@ -10,7 +10,7 @@ class ShopName extends RegexRule
     public function __construct()
     {
         parent::__construct(
-            "/^[a-z].+$/i",
+            '/^[a-z].+$/i',
             'validation.shop_name_invalid'
         );
     }

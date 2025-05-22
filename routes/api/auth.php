@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\Auth\CreateShopController;
 use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\ProfileController;
 use App\Http\Controllers\API\Auth\SocialiteController;
 use App\Http\Controllers\API\Auth\UpdatePasswordController;
 use App\Http\Controllers\API\Auth\UpdateUsernameController;
-use App\Http\Controllers\API\Auth\CreateShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('socialite')->name('socialite.')->controller(SocialiteController::class)->group(function () {

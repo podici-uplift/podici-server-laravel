@@ -24,7 +24,7 @@ class CreateShopRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', new ShopNameRule],
-            'is_adult_shop' => ['boolean']
+            'is_adult_shop' => ['boolean'],
         ];
     }
 }
