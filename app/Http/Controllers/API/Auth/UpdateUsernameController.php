@@ -18,7 +18,7 @@ class UpdateUsernameController extends Controller
     {
         $user = $request->user();
 
-        $user->recordAction(UserAction::PROFILE_UPDATE);
+        $user->recordAction(UserAction::UPDATE_PROFILE);
 
         $user->update([
             'username' => $request->validated('username'),

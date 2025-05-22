@@ -25,7 +25,7 @@ class ProfileController extends Controller
 
         $user->update($request->validated());
 
-        $user->recordAction(UserAction::PROFILE_UPDATE);
+        $user->recordAction(UserAction::UPDATE_PROFILE);
 
         event(new ProfileUpdated($user));
 

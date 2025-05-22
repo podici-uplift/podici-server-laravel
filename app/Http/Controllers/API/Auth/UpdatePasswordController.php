@@ -18,7 +18,7 @@ class UpdatePasswordController extends Controller
     {
         $user = $request->user();
 
-        $user->recordAction(UserAction::PROFILE_UPDATE);
+        $user->recordAction(UserAction::UPDATE_PROFILE);
 
         $user->update([
             'password' => $request->validated('password'),

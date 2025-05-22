@@ -12,11 +12,7 @@ class CreateShopRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $userHasShop = $this->user()->shop()->exists();
-
-        if ($userHasShop) return false;
-
-        return true;
+        return ! $this->user()->shop()->exists();
     }
 
     /**
@@ -28,7 +24,7 @@ class CreateShopRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', new ShopNameRule],
-            'is_adult' => ['boolean']
+            'is_adult_shop' => ['boolean']
         ];
     }
 }

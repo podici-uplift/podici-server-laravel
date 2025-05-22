@@ -4,5 +4,6 @@ namespace App\Enums;
 
 enum UserAction: string
 {
-    case PROFILE_UPDATE = 'profile-update';
+    case UPDATE_PROFILE = 'profile-update';
+    case CREATE_SHOP = 'shop-create';
 }

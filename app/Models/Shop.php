@@ -18,9 +18,7 @@ class Shop extends Model
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasCategories, HasContacts, HasFactory, HasShortUlid, HasUlids;
 
-    protected $guarded = [
-        'slug',
-    ];
+    protected $guarded = [];
 
     protected function casts(): array
     {
