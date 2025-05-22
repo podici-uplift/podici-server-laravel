@@ -7,4 +7,8 @@ return [
          */
         'username_update_cooldown' => 183,
     ],
+
+    'shop' => [
+        'name_length_limit' => 12,
+    ]
 ];
