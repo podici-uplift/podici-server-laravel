@@ -170,6 +170,8 @@ return [
     'username_invalid' => 'The provided :attribute is not a valid username',
     'shop_name_invalid' => 'The provided :attribute is not a valid shop name',
     'shop_name_too_long' => 'The provided :attribute is too long',
+    'shop_name_in_use' => 'The provided :attribute is already in use',
+    'shop_name_prohibited' => 'The provided :attribute is not allowed',
 
     /*
     |--------------------------------------------------------------------------

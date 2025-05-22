@@ -5,7 +5,7 @@ namespace App\Rules\Regex;
 use App\Logics\ShopName as ShopNameLogic;
 use Closure;
 
-class ShopName extends RegexRule
+class ShopNameRegexRule extends RegexRule
 {
     public function __construct()
     {

@@ -2,7 +2,7 @@
 
 namespace App\Rules\Regex;
 
-class Username extends RegexRule
+class UsernameRegexRule extends RegexRule
 {
     public function __construct()
     {

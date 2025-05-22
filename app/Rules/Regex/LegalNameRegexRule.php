@@ -2,7 +2,7 @@
 
 namespace App\Rules\Regex;
 
-class LegalName extends RegexRule
+class LegalNameRegexRule extends RegexRule
 {
     public function __construct(
         bool $allowSpace = false

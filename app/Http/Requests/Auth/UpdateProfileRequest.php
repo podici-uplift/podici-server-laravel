@@ -4,8 +4,8 @@ namespace App\Http\Requests\Auth;
 
 use App\Enums\Country;
 use App\Enums\Gender;
-use App\Rules\Regex\LegalName;
-use App\Rules\Regex\PhoneNumber;
+use App\Rules\Regex\LegalNameRegexRule;
+use App\Rules\Regex\PhoneNumberRegexRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,22 +29,22 @@ class UpdateProfileRequest extends FormRequest
         return [
             'phone' => [
                 'string',
-                new PhoneNumber(Country::NIGERIA),
+                new PhoneNumberRegexRule(Country::NIGERIA),
                 'required_without_all:phone,first_name,last_name,other_names,gender,bio',
             ],
             'first_name' => [
                 'string',
-                new LegalName,
+                new LegalNameRegexRule,
                 'required_without_all:phone,last_name,other_names,gender,bio',
             ],
             'last_name' => [
                 'string',
-                new LegalName,
+                new LegalNameRegexRule,
                 'required_without_all:phone,first_name,other_names,gender,bio',
             ],
             'other_names' => [
                 'string',
-                new LegalName(true),
+                new LegalNameRegexRule(true),
                 'required_without_all:phone,first_name,last_name,gender,bio',
             ],
             'gender' => [

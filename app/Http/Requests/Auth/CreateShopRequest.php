@@ -2,8 +2,13 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Rules\Regex\ShopName as ShopNameRule;
+use App\Logics\ShopName;
+use App\Rules\BlacklistedShopNameRule;
+use App\Rules\Regex\ShopNameRegexRule;
+use App\Rules\UniqueShopNameRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class CreateShopRequest extends FormRequest
 {
@@ -23,8 +28,23 @@ class CreateShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', new ShopNameRule],
+            'name' => [
+                'required',
+                'string',
+                new ShopNameRegexRule,
+                new BlacklistedShopNameRule,
+                new UniqueShopNameRule,
+            ],
             'is_adult_shop' => ['boolean'],
+        ];
+    }
+    /**
+     * Get the "after" validation callables for the request.
+     */
+    public function after(): array
+    {
+        return [
+            //
         ];
     }
 }

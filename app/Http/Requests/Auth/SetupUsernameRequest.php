@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Rules\Regex\Username;
+use App\Rules\Regex\UsernameRegexRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -41,7 +41,7 @@ class SetupUsernameRequest extends FormRequest
                 'string',
                 'max:32',
                 Rule::unique('users', 'username'),
-                new Username,
+                new UsernameRegexRule,
             ],
         ];
     }

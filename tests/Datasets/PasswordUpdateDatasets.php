@@ -2,7 +2,7 @@
 
 namespace Tests\Datasets;
 
-class PasswordUpdateDataSets
+class PasswordUpdateDatasets
 {
     public static function invalidPasswords()
     {

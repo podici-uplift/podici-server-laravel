@@ -2,7 +2,7 @@
 
 namespace Tests\Datasets;
 
-class UsernameUpdateDataSets
+class UsernameUpdateDatasets
 {
     public static function invalidUsernames()
     {

@@ -4,7 +4,7 @@ namespace App\Rules\Regex;
 
 use App\Enums\Country;
 
-class PhoneNumber extends RegexRule
+class PhoneNumberRegexRule extends RegexRule
 {
     public function __construct(Country $country)
     {

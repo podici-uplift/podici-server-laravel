@@ -3,7 +3,7 @@
 use App\Events\PasswordUpdated;
 use App\Events\UserActivity;
 use App\Models\User;
-use Tests\Datasets\PasswordUpdateDataSets;
+use Tests\Datasets\PasswordUpdateDatasets;
 
 describe('Update Password', function () {
     $baseTester = fn () => httpTester('POST', 'api.auth.user.password-update');
@@ -40,7 +40,7 @@ describe('Update Password', function () {
         Event::assertNotDispatched(PasswordUpdated::class);
 
         Event::assertNotDispatched(UserActivity::class);
-    })->with(PasswordUpdateDataSets::invalidPasswords());
+    })->with(PasswordUpdateDatasets::invalidPasswords());
 
     it('Updates correctly', function ($validPassword) use ($baseTester) {
         Event::fake();
@@ -55,5 +55,5 @@ describe('Update Password', function () {
         Event::assertDispatched(PasswordUpdated::class);
 
         Event::assertDispatched(UserActivity::class);
-    })->with(PasswordUpdateDataSets::validPasswords());
+    })->with(PasswordUpdateDatasets::validPasswords());
 });

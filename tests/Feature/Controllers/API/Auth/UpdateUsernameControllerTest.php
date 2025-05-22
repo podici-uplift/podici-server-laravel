@@ -3,7 +3,7 @@
 use App\Events\UserActivity;
 use App\Events\UsernameSetup;
 use App\Models\User;
-use Tests\Datasets\UsernameUpdateDataSets;
+use Tests\Datasets\UsernameUpdateDatasets;
 
 describe('Update username', function () {
     $baseTester = fn () => httpTester('POST', 'api.auth.user.username-update');
@@ -78,7 +78,7 @@ describe('Update username', function () {
         $user->refresh();
 
         expect($user->username)->toBe($validUsername);
-    })->with(UsernameUpdateDataSets::validUsernames());
+    })->with(UsernameUpdateDatasets::validUsernames());
 
     it('Validates username', function ($invalidUsername) use ($baseTester) {
         Event::fake();
@@ -100,5 +100,5 @@ describe('Update username', function () {
 
         expect($user->username)->toBe(null);
         expect($user->username_last_updated_at)->toBe(null);
-    })->with(UsernameUpdateDataSets::invalidUsernames());
+    })->with(UsernameUpdateDatasets::invalidUsernames());
 });
