@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\Shop;
 
 use App\Enums\ShopStatus;
 use App\Enums\UserAction;
 use App\Events\ShopCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\CreateShopRequest;
+use App\Http\Requests\Shop\CreateShopRequest;
 use App\Http\Resources\ShopResource;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 /**
  * Create Shop Controller
  *
- * @tags Auth
+ * @tags Shop
  */
 class CreateShopController extends Controller
 {

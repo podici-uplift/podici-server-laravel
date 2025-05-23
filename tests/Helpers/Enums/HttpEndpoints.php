@@ -2,24 +2,35 @@
 
 namespace Tests\Helpers\Enums;
 
+use Illuminate\Support\Collection;
 use Tests\Helpers\HttpTester;
 
 enum HttpEndpoints: string
 {
-    case AUTH_CREATE_SHOP = "api.auth.shop.create";
+    case SELF_PROFILE = 'GET:api.user.profile.index';
+    case SELF_PROFILE_UPDATE = 'PUT:api.user.profile.update';
+    case SELF_PASSWORD_UPDATE = 'POST:api.user.password-update';
+    case SELF_USERNAME_UPDATE = 'POST:api.user.username-update';
 
-    public function tester(string $method = "GET"): HttpTester
+    case SHOP_CREATE = "POST:api.shop.create";
+
+    public function tester(): HttpTester
     {
-        return httpTester($method, $this->value);
+        return httpTester($this->method(), $this->route());
     }
 
-    public function post(): HttpTester
+    private function parameters(): Collection
     {
-        return $this->tester("POST");
+        return str($this->value)->split("/[:]+/");
     }
 
-    public function get(): HttpTester
+    private function method()
     {
-        return $this->tester("GET");
+        return $this->parameters()->first();
+    }
+
+    private function route()
+    {
+        return $this->parameters()->last();
     }
 }

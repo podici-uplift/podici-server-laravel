@@ -4,15 +4,15 @@ use App\Events\UserActivity;
 use App\Events\UsernameSetup;
 use App\Models\User;
 use Tests\Datasets\UsernameUpdateDatasets;
+use Tests\Helpers\Enums\HttpEndpoints;
 
 describe('Update username', function () {
-    $baseTester = fn () => httpTester('POST', 'api.auth.user.username-update');
 
-    it('Requires auth', function () use ($baseTester) {
-        $baseTester()->send()->expectAuthenticationError();
+    it('Requires auth', function ()  {
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->send()->expectAuthenticationError();
     });
 
-    it('Requires unique usernames', function () use ($baseTester) {
+    it('Requires unique usernames', function ()  {
         $userOne = User::factory()->create([
             'username_last_updated_at' => null,
         ]);
@@ -21,19 +21,19 @@ describe('Update username', function () {
             'username_last_updated_at' => null,
         ]);
 
-        $baseTester()->sendAs($userOne, [
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($userOne, [
             'username' => $userTwo->username,
         ])->expectValidationError(['username']);
     });
 
-    it("Doesn't update when recently updated", function () use ($baseTester) {
+    it("Doesn't update when recently updated", function ()  {
         Event::fake();
 
         $user = User::factory()->create([
             'username_last_updated_at' => now(),
         ]);
 
-        $baseTester()->sendAs($user, [
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => uniqid('user'),
         ])->expectUnauthorized();
 
@@ -47,7 +47,7 @@ describe('Update username', function () {
 
         $newUsername = uniqid('user');
 
-        $baseTester()->sendAs($user, [
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => $newUsername,
         ])->expectOk('response.action.success');
 
@@ -60,14 +60,14 @@ describe('Update username', function () {
         expect($user->username)->toBe($newUsername);
     });
 
-    it('Updates with cooldown', function ($validUsername) use ($baseTester) {
+    it('Updates with cooldown', function ($validUsername)  {
         Event::fake();
 
         $user = User::factory()->create([
             'username_last_updated_at' => null,
         ]);
 
-        $baseTester()->sendAs($user, [
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => $validUsername,
         ])->expectOk('response.action.success');
 
@@ -80,7 +80,7 @@ describe('Update username', function () {
         expect($user->username)->toBe($validUsername);
     })->with(UsernameUpdateDatasets::validUsernames());
 
-    it('Validates username', function ($invalidUsername) use ($baseTester) {
+    it('Validates username', function ($invalidUsername)  {
         Event::fake();
 
         $user = User::factory()->create([
@@ -88,7 +88,7 @@ describe('Update username', function () {
             'username' => null,
         ]);
 
-        $baseTester()->sendAs($user, [
+        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => $invalidUsername,
         ])->expectValidationError(['username']);
 

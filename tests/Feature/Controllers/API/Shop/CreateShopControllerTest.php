@@ -9,7 +9,7 @@ use Tests\Datasets\ShopNameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
 it("requires auth to create shop", function () {
-    HttpEndpoints::AUTH_CREATE_SHOP->post()->send([
+    HttpEndpoints::SHOP_CREATE->tester()->send([
         "name" => fake()->company(),
         "is_adult_shop" => fake()->boolean(),
     ])->expectAuthenticationError();
@@ -24,7 +24,7 @@ it("can create a shop", function () {
 
     $isAdultShop = fake()->boolean();
 
-    HttpEndpoints::AUTH_CREATE_SHOP->post()->sendAs($user, [
+    HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
         "name" => $name,
         "is_adult_shop" => $isAdultShop,
     ])->expectResource()->expectAll([
@@ -50,7 +50,7 @@ it("prevents shop name duplication", function () {
 
     $existingShop = Shop::factory()->create();
 
-    HttpEndpoints::AUTH_CREATE_SHOP->post()->sendAs($user, [
+    HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
         "name" => $existingShop->name,
         "is_adult_shop" => fake()->boolean(),
     ])->expectValidationError(["name"]);
@@ -69,7 +69,7 @@ it("prevents blacklisted shop names", function (string $blacklistedName) {
 
     $user = User::factory()->create();
 
-    HttpEndpoints::AUTH_CREATE_SHOP->post()->sendAs($user, [
+    HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
         "name" => str($blacklistedName)->title(),
         "is_adult_shop" => fake()->boolean(),
     ])->expectValidationError(["name"]);

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\User;
 
 use App\Enums\UserAction;
 use App\Events\ProfileUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\UpdateProfileRequest;
+use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Resources\Auth\UserResource;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 /**
  * Profile Controller
  *
- * @tags Auth
+ * @tags User
  */
 class ProfileController extends Controller
 {

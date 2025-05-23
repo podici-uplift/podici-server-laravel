@@ -6,8 +6,16 @@ use App\Actions\AuthActions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * Local Auth Controller
+ *
+ * @tags Local
+ */
 class LocalAuthController extends Controller
 {
+    /**
+     * Local auth from email
+     */
     public function authFromEmail(Request $request)
     {
         $request->validate([

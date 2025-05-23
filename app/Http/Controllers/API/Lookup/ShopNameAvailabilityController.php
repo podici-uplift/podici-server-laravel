@@ -5,18 +5,23 @@ namespace App\Http\Controllers\API\Lookup;
 use App\Http\Controllers\Controller;
 use App\Logics\AppResponse;
 use App\Logics\ShopName;
-use App\Rules\Regex\ShopName as ShopNameRule;
+use App\Rules\Regex\ShopNameRegexRule;
 use Illuminate\Http\Request;
 
+/**
+ * Shop Name Availability Controller
+ *
+ * @tags Lookup
+ */
 class ShopNameAvailabilityController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Shop name availability lookup
      */
     public function __invoke(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', new ShopNameRule],
+            'name' => ['required', 'string', new ShopNameRegexRule],
         ]);
 
         return AppResponse::ok(__('response.action.success'), [

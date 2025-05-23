@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\User;
 
 use App\Enums\UserAction;
 use App\Events\UsernameSetup;
@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 /**
  * Update username controller
  *
- * @tags Auth
+ * @tags User
  */
 class UpdateUsernameController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Update username
      */
     public function __invoke(SetupUsernameRequest $request)
     {

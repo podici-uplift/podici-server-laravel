@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\User;
 
 use App\Enums\UserAction;
 use App\Events\PasswordUpdated;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 /**
  * Update Password Controller
  *
- * @tags Auth
+ * @tags User
  */
 class UpdatePasswordController extends Controller
 {

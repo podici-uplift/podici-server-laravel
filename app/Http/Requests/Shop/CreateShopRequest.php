@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Shop;
 
-use App\Logics\ShopName;
 use App\Rules\BlacklistedShopNameRule;
 use App\Rules\Regex\ShopNameRegexRule;
 use App\Rules\UniqueShopNameRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 class CreateShopRequest extends FormRequest
 {
