@@ -9,6 +9,11 @@ use App\Http\Requests\Auth\SetupUsernameRequest;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Update username controller
+ *
+ * @tags Auth
+ */
 class UpdateUsernameController extends Controller
 {
     /**

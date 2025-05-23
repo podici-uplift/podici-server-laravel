@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 
+/**
+ * Socialite Controller
+ *
+ * @tags Socialite
+ */
 class SocialiteController extends Controller
 {
     /**

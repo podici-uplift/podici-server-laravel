@@ -36,7 +36,7 @@ class HttpPayload
         return data_get($this->payload, $key);
     }
 
-    public function data(): array // @todo: Change to data
+    public function data(): array
     {
         return $this->payload;
     }

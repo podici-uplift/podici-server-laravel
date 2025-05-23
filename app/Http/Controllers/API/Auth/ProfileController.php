@@ -10,8 +10,16 @@ use App\Http\Resources\Auth\UserResource;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Profile Controller
+ *
+ * @tags Auth
+ */
 class ProfileController extends Controller
 {
+    /**
+     * Get Profile
+     */
     public function index(Request $request)
     {
         return AppResponse::resource(
@@ -19,6 +27,9 @@ class ProfileController extends Controller
         );
     }
 
+    /**
+     * Update Profile
+     */
     public function update(UpdateProfileRequest $request)
     {
         $user = $request->user();

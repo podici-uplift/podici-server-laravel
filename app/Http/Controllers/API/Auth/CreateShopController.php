@@ -11,10 +11,15 @@ use App\Http\Resources\ShopResource;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Create Shop Controller
+ *
+ * @tags Auth
+ */
 class CreateShopController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Create shop
      */
     public function __invoke(CreateShopRequest $request)
     {

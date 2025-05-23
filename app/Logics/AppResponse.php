@@ -2,6 +2,7 @@
 
 namespace App\Logics;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
@@ -11,7 +12,7 @@ class AppResponse
         int $statusCode,
         ?string $message = null,
         ?array $data = []
-    ) {
+    ): JsonResponse {
         $statusText = data_get(Response::$statusTexts, $statusCode);
 
         return response()->json([
@@ -31,7 +32,7 @@ class AppResponse
         JsonResource $resource,
         ?string $messsage = null,
         int $statusCode = Response::HTTP_OK
-    ) {
+    ): JsonResponse {
         return response()->json([
             'status' => data_get(Response::$statusTexts, $statusCode),
             'statusCode' => $statusCode,

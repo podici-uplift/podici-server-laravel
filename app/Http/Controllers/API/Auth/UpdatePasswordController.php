@@ -9,10 +9,15 @@ use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Logics\AppResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Update Password Controller
+ *
+ * @tags Auth
+ */
 class UpdatePasswordController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Update password
      */
     public function __invoke(UpdatePasswordRequest $request)
     {
