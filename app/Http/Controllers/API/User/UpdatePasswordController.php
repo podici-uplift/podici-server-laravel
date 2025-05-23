@@ -7,7 +7,6 @@ use App\Events\PasswordUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Logics\AppResponse;
-use Illuminate\Http\Request;
 
 /**
  * Update Password Controller

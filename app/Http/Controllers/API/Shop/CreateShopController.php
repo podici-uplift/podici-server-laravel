@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\CreateShopRequest;
 use App\Http\Resources\ShopResource;
 use App\Logics\AppResponse;
-use Illuminate\Http\Request;
 
 /**
  * Create Shop Controller

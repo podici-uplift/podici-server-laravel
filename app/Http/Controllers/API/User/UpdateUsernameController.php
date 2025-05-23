@@ -7,7 +7,6 @@ use App\Events\UsernameSetup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SetupUsernameRequest;
 use App\Logics\AppResponse;
-use Illuminate\Http\Request;
 
 /**
  * Update username controller

@@ -12,7 +12,7 @@ enum HttpEndpoints: string
     case SELF_PASSWORD_UPDATE = 'POST:api.user.password-update';
     case SELF_USERNAME_UPDATE = 'POST:api.user.username-update';
 
-    case SHOP_CREATE = "POST:api.shop.create";
+    case SHOP_CREATE = 'POST:api.shop.create';
 
     public function tester(): HttpTester
     {
@@ -21,7 +21,7 @@ enum HttpEndpoints: string
 
     private function parameters(): Collection
     {
-        return str($this->value)->split("/[:]+/");
+        return str($this->value)->split('/[:]+/');
     }
 
     private function method()

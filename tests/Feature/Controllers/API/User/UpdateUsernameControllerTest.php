@@ -8,11 +8,11 @@ use Tests\Helpers\Enums\HttpEndpoints;
 
 describe('Update username', function () {
 
-    it('Requires auth', function ()  {
+    it('Requires auth', function () {
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->send()->expectAuthenticationError();
     });
 
-    it('Requires unique usernames', function ()  {
+    it('Requires unique usernames', function () {
         $userOne = User::factory()->create([
             'username_last_updated_at' => null,
         ]);
@@ -26,7 +26,7 @@ describe('Update username', function () {
         ])->expectValidationError(['username']);
     });
 
-    it("Doesn't update when recently updated", function ()  {
+    it("Doesn't update when recently updated", function () {
         Event::fake();
 
         $user = User::factory()->create([
@@ -60,7 +60,7 @@ describe('Update username', function () {
         expect($user->username)->toBe($newUsername);
     });
 
-    it('Updates with cooldown', function ($validUsername)  {
+    it('Updates with cooldown', function ($validUsername) {
         Event::fake();
 
         $user = User::factory()->create([
@@ -80,7 +80,7 @@ describe('Update username', function () {
         expect($user->username)->toBe($validUsername);
     })->with(UsernameUpdateDatasets::validUsernames());
 
-    it('Validates username', function ($invalidUsername)  {
+    it('Validates username', function ($invalidUsername) {
         Event::fake();
 
         $user = User::factory()->create([

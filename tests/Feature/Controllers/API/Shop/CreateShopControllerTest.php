@@ -8,14 +8,14 @@ use App\Models\User;
 use Tests\Datasets\ShopNameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
-it("requires auth to create shop", function () {
+it('requires auth to create shop', function () {
     HttpEndpoints::SHOP_CREATE->tester()->send([
-        "name" => fake()->company(),
-        "is_adult_shop" => fake()->boolean(),
+        'name' => fake()->company(),
+        'is_adult_shop' => fake()->boolean(),
     ])->expectAuthenticationError();
 });
 
-it("can create a shop", function () {
+it('can create a shop', function () {
     Event::fake();
 
     $user = User::factory()->create();
@@ -25,12 +25,12 @@ it("can create a shop", function () {
     $isAdultShop = fake()->boolean();
 
     HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
-        "name" => $name,
-        "is_adult_shop" => $isAdultShop,
+        'name' => $name,
+        'is_adult_shop' => $isAdultShop,
     ])->expectResource()->expectAll([
-        "resource.name" => $name,
+        'resource.name' => $name,
         'resource.slug' => ShopName::toSlug($name),
-        'resource.is_adult_shop' => $isAdultShop
+        'resource.is_adult_shop' => $isAdultShop,
     ]);
 
     Event::assertDispatched(ShopCreated::class);
@@ -39,11 +39,11 @@ it("can create a shop", function () {
     $this->assertDatabaseCount('shops', 1);
     $this->assertDatabaseHas('shops', [
         'user_id' => $user->id,
-        'name' => $name
+        'name' => $name,
     ]);
 });
 
-it("prevents shop name duplication", function () {
+it('prevents shop name duplication', function () {
     Event::fake();
 
     $user = User::factory()->create();
@@ -51,9 +51,9 @@ it("prevents shop name duplication", function () {
     $existingShop = Shop::factory()->create();
 
     HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
-        "name" => $existingShop->name,
-        "is_adult_shop" => fake()->boolean(),
-    ])->expectValidationError(["name"]);
+        'name' => $existingShop->name,
+        'is_adult_shop' => fake()->boolean(),
+    ])->expectValidationError(['name']);
 
     Event::assertNotDispatched(ShopCreated::class);
     Event::assertNotDispatched(UserActivity::class);
@@ -64,15 +64,15 @@ it("prevents shop name duplication", function () {
     ]);
 });
 
-it("prevents blacklisted shop names", function (string $blacklistedName) {
+it('prevents blacklisted shop names', function (string $blacklistedName) {
     Event::fake();
 
     $user = User::factory()->create();
 
     HttpEndpoints::SHOP_CREATE->tester()->sendAs($user, [
-        "name" => str($blacklistedName)->title(),
-        "is_adult_shop" => fake()->boolean(),
-    ])->expectValidationError(["name"]);
+        'name' => str($blacklistedName)->title(),
+        'is_adult_shop' => fake()->boolean(),
+    ])->expectValidationError(['name']);
 
     Event::assertNotDispatched(ShopCreated::class);
     Event::assertNotDispatched(UserActivity::class);

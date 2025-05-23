@@ -35,6 +35,7 @@ class CreateShopRequest extends FormRequest
             'is_adult_shop' => ['boolean'],
         ];
     }
+
     /**
      * Get the "after" validation callables for the request.
      */
