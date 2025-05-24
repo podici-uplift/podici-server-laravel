@@ -89,4 +89,18 @@ class UserFactory extends Factory
     {
         return $this->state(fn(array $attributes) => ['password' => null]);
     }
+
+    /**
+     * Username
+     */
+
+    public function username(string $username): static
+    {
+        return $this->state(fn(array $attributes) => ['username' => $username,]);
+    }
+
+    public function noUsername()
+    {
+        return $this->state(fn(array $attributes) => ['username' => null]);
+    }
 }

@@ -3,94 +3,81 @@
 use App\Events\UserActivity;
 use App\Events\UsernameSetup;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 use Tests\Datasets\UsernameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
-describe('Update username', function () {
+describe("UPDATE USERNAME SUCCESS CASES ✅", function () {
+    it("Doesn't update when recently updated", function () {
+        $cooldown = fake()->numberBetween(1, 100);
+        Config::set('settings.user.username_update_cooldown', $cooldown);
 
+        $user = createUser();
+
+        $newUsername = uniqid('user');
+
+        $user->recordFieldUpdate('username');
+
+        updateUsernameAs($user, $newUsername)->expectUnauthorized();
+
+        assertUsernameNotUpdated();
+
+        $this->travel($cooldown)->days();
+
+        updateUsernameAs($user, $newUsername)->expectOk('response.action.success');
+
+        assertUsernameUpdated($user, $newUsername);
+    });
+
+    it('Updates', function ($validUsername) {
+        $user = createUser();
+
+        updateUsernameAs($user, $validUsername)->expectOk('response.action.success');
+
+        assertUsernameUpdated($user, $validUsername);
+    })->with(UsernameUpdateDatasets::validUsernames());
+});
+
+describe('UPDATE USERNAME FAIL CASES ❌', function () {
     it('Requires auth', function () {
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->send()->expectAuthenticationError();
     });
 
     it('Requires unique usernames', function () {
-        $userOne = User::factory()->create();
+        $userOne = createUser();
+        $userTwo = createUser();
 
-        $userTwo = User::factory()->create();
+        updateUsernameAs($userOne, $userTwo->username)
+            ->expectValidationError(['username']);
 
-        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($userOne, [
-            'username' => $userTwo->username,
-        ])->expectValidationError(['username']);
+        assertUsernameNotUpdated();
     });
-
-    it("Doesn't update when recently updated", function () {
-        Event::fake();
-
-        $user = User::factory()->create();
-
-        $user->recordFieldUpdate('username');
-
-        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
-            'username' => uniqid('user'),
-        ])->expectUnauthorized();
-
-        Event::assertNotDispatched(UsernameSetup::class);
-
-        Event::assertNotDispatched(UserActivity::class);
-
-        $cooldownDuration = (int) config('settings.user.username_update_cooldown', 0);
-
-        $this->travel($cooldownDuration + 1)->days();
-
-        $newUsername = uniqid('user');
-
-        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
-            'username' => $newUsername,
-        ])->expectOk('response.action.success');
-
-        Event::assertDispatched(UsernameSetup::class);
-
-        Event::assertDispatched(UserActivity::class);
-
-        $user->refresh();
-
-        expect($user->username)->toBe($newUsername);
-    });
-
-    it('Updates with cooldown', function ($validUsername) {
-        Event::fake();
-
-        $user = User::factory()->create();
-
-        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
-            'username' => $validUsername,
-        ])->expectOk('response.action.success');
-
-        Event::assertDispatched(UsernameSetup::class);
-
-        Event::assertDispatched(UserActivity::class);
-
-        $user->refresh();
-
-        expect($user->username)->toBe($validUsername);
-    })->with(UsernameUpdateDatasets::validUsernames());
 
     it('Validates username', function ($invalidUsername) {
-        Event::fake();
+        $user = userFactory()->noUsername()->create();
 
-        $user = User::factory()->create([
-            'username' => null,
-        ]);
+        updateUsernameAs($user, $invalidUsername)->expectValidationError(['username']);
 
-        HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
-            'username' => $invalidUsername,
-        ])->expectValidationError(['username']);
-
-        Event::assertNotDispatched(UsernameSetup::class);
-
-        Event::assertNotDispatched(UserActivity::class);
-
-        $user->refresh();
-
-        expect($user->username)->toBe(null);
+        assertUsernameNotUpdated();
     })->with(UsernameUpdateDatasets::invalidUsernames());
 });
+
+function updateUsernameAs(User $user, string $username)
+{
+    return HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, ['username' => $username]);
+}
+
+function assertUsernameNotUpdated()
+{
+    Event::assertNotDispatched(UsernameSetup::class);
+    Event::assertNotDispatched(UserActivity::class);
+}
+
+function assertUsernameUpdated(User $user, string $newUsername)
+{
+    Event::assertDispatched(UsernameSetup::class);
+    Event::assertDispatched(UserActivity::class);
+
+    $user->refresh();
+    expect($user->username)->toBe($newUsername);
+}
