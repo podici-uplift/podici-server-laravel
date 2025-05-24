@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Database\Factories\UserFactory;
 use Tests\Helpers\HttpPayload;
 use Tests\Helpers\HttpTester;
 use Tests\TestCase;
@@ -18,6 +20,10 @@ use Tests\TestCase;
 pest()->extend(TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
+
+pest()->beforeEach(function () {
+    Event::fake();
+})->in('Feature/Controllers');
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +75,14 @@ function httpTester(
 function httpPayload()
 {
     return new HttpPayload;
+}
+
+function userFactory(): UserFactory
+{
+    return User::factory();
+}
+
+function createUser(array $payload = []): User
+{
+    return userFactory()->create($payload);
 }

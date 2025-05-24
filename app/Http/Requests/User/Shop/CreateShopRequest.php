@@ -49,7 +49,7 @@ class CreateShopRequest extends FormRequest
 
     private function ensureUserIsOldEnoughToCreateAdultShops(Validator $validator)
     {
-        if (! $this->user()->is_adult) {
+        if ($this->safe()->boolean('is_adult_shop') && ! $this->user()->is_adult) {
             $validator->errors()->add('is_adult_shop', __('validation.user_too_young', [
                 'adultAge' => config('settings.adult_age'),
                 'action' => 'create adult shops'

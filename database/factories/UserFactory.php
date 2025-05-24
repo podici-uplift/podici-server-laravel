@@ -47,9 +47,28 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
             'phone_verified_at' => null,
+        ]);
+    }
+
+    public function agedBetween(string $startDate, string $endDate): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'dob' => fake()->dateTimeBetween($startDate, $endDate)
+        ]);
+    }
+
+    public function noDob()
+    {
+        return $this->state(fn(array $attributes) => ['dob' => null]);
+    }
+
+    public function youngerThan(int $years)
+    {
+        return $this->state(fn(array $attributes) => [
+            'dob' => fake()->dateTimeBetween("-{$years} years")
         ]);
     }
 }
