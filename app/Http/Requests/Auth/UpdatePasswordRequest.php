@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordRequest extends FormRequest
@@ -23,14 +24,18 @@ class UpdatePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => [
-                'required',
-                'confirmed',
-                Password::defaults(),
+            'old_password' => [
+                Rule::requiredIf($this->oldPasswordIsRequired()),
+                'string',
             ],
-            'invalidate_logins' => [
-                'boolean'
-            ]
+            'password' => ['required', 'confirmed', Password::defaults()],
+            'invalidate_logins' => ['boolean']
         ];
+    }
+
+    private function oldPasswordIsRequired(): bool
+    {
+        return config('settings.password_update_requires_old_password')
+            && $this->user()->password != null;
     }
 }

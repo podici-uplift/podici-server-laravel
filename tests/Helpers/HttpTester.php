@@ -178,6 +178,11 @@ class HttpTester
         return $this->expectStatusAndMessage(403, $messageKey ?? 'This action is unauthorized.', $messageReplace);
     }
 
+    public function expectForbidden(?string $messageKey = null, array $messageReplace = []): self
+    {
+        return $this->expectStatusAndMessage(403, $messageKey ?? 'Forbidden', $messageReplace);
+    }
+
     public function expectNotFound(?string $messageKey = null, array $messageReplace = []): self
     {
         return $this->expectStatus(404);

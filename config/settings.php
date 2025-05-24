@@ -27,5 +27,13 @@ return [
      */
     'adult_age' => 18,
 
+    /**
+     * If to verify the old password when updating a password
+     */
+    'password_update_requires_old_password' => true,
+
+    /**
+     * If to enable the tracking of updates to selected models
+     */
     'tracking_model_updates' => true,
 ];

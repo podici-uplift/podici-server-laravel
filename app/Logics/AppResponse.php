@@ -35,6 +35,13 @@ class AppResponse
         return self::ok(__('response.action.success'), $data);
     }
 
+    public static function forbidden(
+        ?string $message = null,
+        ?array $data = []
+    ): JsonResponse {
+        return (new self)(Response::HTTP_FORBIDDEN, $message, $data);
+    }
+
     public static function resource(
         JsonResource $resource,
         ?string $messsage = null,
