@@ -18,7 +18,7 @@ class PasswordUpdated
     public function __construct(
         public User $user,
     ) {
-        //
+        // Create modelupdate with no values
     }
 
     /**

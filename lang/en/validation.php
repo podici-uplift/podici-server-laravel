@@ -164,14 +164,19 @@ return [
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
 
-    // Custom Rules
+    /// Custom Rules
     'phone_invalid' => 'The :attribute is not a valid phone number',
     'legal_name_invalid' => 'The provided :attribute is not a valid legal name',
     'username_invalid' => 'The provided :attribute is not a valid username',
+    'user_too_young' => 'You need to be at least :adultAge to :action.',
+
+    // Shop Name
     'shop_name_invalid' => 'The provided :attribute is not a valid shop name',
     'shop_name_too_long' => 'The provided :attribute is too long',
     'shop_name_in_use' => 'The provided :attribute is already in use',
     'shop_name_prohibited' => 'The provided :attribute is not allowed',
+    'shop_name_update_hot' => 'Shop name cannot be updated until :nextUpdateDateTime.',
+    // 'shop_has_adult_products' => 'You cannot change',
 
     /*
     |--------------------------------------------------------------------------

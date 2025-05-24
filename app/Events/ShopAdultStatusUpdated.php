@@ -2,14 +2,17 @@
 
 namespace App\Events;
 
-use App\Enums\UserAction;
+use App\Models\Shop;
 use App\Models\User;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserActivity
+class ShopAdultStatusUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -18,11 +21,10 @@ class UserActivity
      */
     public function __construct(
         public User $user,
-        public UserAction $action
+        public Shop $shop,
     ) {
-        // DB notify user
-        // Update last activity DONE
-        // Maybe create user activity table
+        // Create modelupdate
+        // if shop was updated to non adult, then mark existing adult products as inactive
     }
 
     /**

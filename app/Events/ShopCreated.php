@@ -20,7 +20,7 @@ class ShopCreated
         public User $user,
         public Shop $shop,
     ) {
-        //
+        // Notify user
     }
 
     /**

@@ -82,3 +82,7 @@ it('prevents blacklisted shop names', function (string $blacklistedName) {
         'user_id' => $user->id,
     ]);
 })->with(ShopNameUpdateDatasets::blacklistedShopnames());
+
+it("Prevents underaged users from creating adult shop", function () {})->todo();
+
+it("Prevents users with no age from creating adult shop", function () {})->todo();

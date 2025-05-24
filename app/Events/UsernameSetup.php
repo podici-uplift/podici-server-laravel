@@ -18,7 +18,7 @@ class UsernameSetup
     public function __construct(
         public User $user
     ) {
-        //
+        // Notify user
     }
 
     /**

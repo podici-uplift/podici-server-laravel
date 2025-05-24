@@ -6,6 +6,7 @@ use App\Rules\BlacklistedShopNameRule;
 use App\Rules\Regex\ShopNameRegexRule;
 use App\Rules\UniqueShopNameRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class CreateShopRequest extends FormRequest
 {
@@ -42,7 +43,17 @@ class CreateShopRequest extends FormRequest
     public function after(): array
     {
         return [
-            //
+            fn (Validator $validator) => $this->ensureUserIsOldEnoughToCreateAdultShops($validator),
         ];
+    }
+
+    private function ensureUserIsOldEnoughToCreateAdultShops(Validator $validator)
+    {
+        if (! $this->user()->is_adult) {
+            $validator->errors()->add('is_adult_shop', __('validation.user_too_young', [
+                'adultAge' => config('settings.adult_age'),
+                'action' => 'create adult shops'
+            ]));
+        }
     }
 }

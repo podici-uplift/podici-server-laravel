@@ -75,6 +75,26 @@ class User extends Authenticatable implements RecordsUpdate
         );
     }
 
+    protected function age(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->dob ? $this->dob->diffInYears(now()) : null,
+        );
+    }
+
+    protected function isAdult(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $adultAge = config('settings.adult_age', 18);
+
+                if ($adultAge <= 0) return true;
+
+                return $this->age >= $adultAge;
+            }
+        );
+    }
+
     /**
      * Scopes
      */
