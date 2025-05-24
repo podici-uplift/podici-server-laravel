@@ -168,7 +168,7 @@ return [
     'phone_invalid' => 'The :attribute is not a valid phone number',
     'legal_name_invalid' => 'The provided :attribute is not a valid legal name',
     'username_invalid' => 'The provided :attribute is not a valid username',
-    'user_too_young' => 'You need to be at least :adultAge to :action.',
+    'user_too_young' => 'You need to be at least :adultAge years old to :action.',
 
     // Shop Name
     'shop_name_invalid' => 'The provided :attribute is not a valid shop name',
