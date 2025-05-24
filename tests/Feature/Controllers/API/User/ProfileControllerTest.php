@@ -13,7 +13,7 @@ describe('Get Profile', function () {
     });
 
     it('Gets correct profile', function () {
-        $user = User::factory()->create();
+        $user = createUser();
 
         HttpEndpoints::SELF_PROFILE->tester()->sendAs($user)
             ->expectResource()
@@ -30,7 +30,7 @@ describe('Update Profile', function () {
     });
 
     it('Requires at least on field', function () {
-        $user = User::factory()->create();
+        $user = createUser();
 
         HttpEndpoints::SELF_PROFILE_UPDATE->tester()->sendAs($user, [])->expectValidationError();
     });
@@ -52,8 +52,6 @@ describe('Update Profile', function () {
     })->with(ProfileUpdateDatasets::formErrors());
 
     it('Profile Can update', function () {
-        Event::fake();
-
         $user = User::factory()->create();
 
         $payload = httpPayload()->profileUpdate()->data();
@@ -66,7 +64,7 @@ describe('Update Profile', function () {
 
         $user->refresh();
 
-        testCase($this)->assertSame($payload, [
+        $this->assertSame($payload, [
             'phone' => $user->phone,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,

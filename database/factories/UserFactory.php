@@ -53,6 +53,10 @@ class UserFactory extends Factory
         ]);
     }
 
+    /**
+     * DOB
+     */
+
     public function agedBetween(string $startDate, string $endDate): static
     {
         return $this->state(fn(array $attributes) => [
@@ -70,5 +74,19 @@ class UserFactory extends Factory
         return $this->state(fn(array $attributes) => [
             'dob' => fake()->dateTimeBetween("-{$years} years")
         ]);
+    }
+
+    /**
+     * Password
+     */
+
+    public function password(string $password): static
+    {
+        return $this->state(fn(array $attributes) => ['password' => $password,]);
+    }
+
+    public function noPassword()
+    {
+        return $this->state(fn(array $attributes) => ['password' => null]);
     }
 }

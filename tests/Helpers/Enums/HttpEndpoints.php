@@ -13,6 +13,8 @@ enum HttpEndpoints: string
     case SELF_SHOP_CREATE = 'POST:api.user.shop.create';
     case SELF_USERNAME_UPDATE = 'POST:api.user.username-update';
 
+    case LOOKUP_SHOP_NAME_AVAILABILITY = 'POST:api.lookup.availability.shop-name';
+
     public function tester(): HttpTester
     {
         return httpTester($this->method(), $this->route());

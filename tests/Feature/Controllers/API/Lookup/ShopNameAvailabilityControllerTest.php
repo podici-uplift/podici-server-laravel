@@ -2,13 +2,12 @@
 
 use App\Logics\ShopName;
 use App\Models\Shop;
+use Tests\Helpers\Enums\HttpEndpoints;
 
-$baseTester = fn () => httpTester('POST', 'api.lookup.availability.shop-name');
-
-it('can check shop name availability', function () use ($baseTester) {
+it('can check shop name availability', function () {
     $shop = Shop::factory()->create();
 
-    $baseTester()->send(['name' => $shop->name])
+    HttpEndpoints::LOOKUP_SHOP_NAME_AVAILABILITY->tester()->send(['name' => $shop->name])
         ->expectOk('response.action.success')
         ->expectAll([
             'data.is_available' => false,
@@ -17,7 +16,7 @@ it('can check shop name availability', function () use ($baseTester) {
 
     $otherName = str(fake()->company())->limit(ShopName::nameLengthLimit(), end: '');
 
-    $baseTester()->send(['name' => $otherName])
+    HttpEndpoints::LOOKUP_SHOP_NAME_AVAILABILITY->tester()->send(['name' => $otherName])
         ->expectOk('response.action.success')
         ->expectAll([
             'data.is_available' => true,
