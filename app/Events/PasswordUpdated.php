@@ -17,8 +17,10 @@ class PasswordUpdated
      */
     public function __construct(
         public User $user,
+        public bool $invalidateLogins
     ) {
         // Create modelupdate with no values
+        // if invalidateLogins then delete existing sanctum tokens
     }
 
     /**

@@ -19,6 +19,7 @@ class UsernameSetup
         public User $user
     ) {
         // Notify user
+        // Create model update
     }
 
     /**

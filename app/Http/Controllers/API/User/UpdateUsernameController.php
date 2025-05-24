@@ -26,7 +26,6 @@ class UpdateUsernameController extends Controller
 
         $user->update([
             'username' => $request->validated('username'),
-            'username_last_updated_at' => now(),
         ]);
 
         event(new UsernameSetup($user));

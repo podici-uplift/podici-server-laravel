@@ -13,13 +13,9 @@ describe('Update username', function () {
     });
 
     it('Requires unique usernames', function () {
-        $userOne = User::factory()->create([
-            'username_last_updated_at' => null,
-        ]);
+        $userOne = User::factory()->create();
 
-        $userTwo = User::factory()->create([
-            'username_last_updated_at' => null,
-        ]);
+        $userTwo = User::factory()->create();
 
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($userOne, [
             'username' => $userTwo->username,
@@ -29,9 +25,9 @@ describe('Update username', function () {
     it("Doesn't update when recently updated", function () {
         Event::fake();
 
-        $user = User::factory()->create([
-            'username_last_updated_at' => now(),
-        ]);
+        $user = User::factory()->create();
+
+        $user->recordFieldUpdate('username');
 
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => uniqid('user'),
@@ -63,9 +59,7 @@ describe('Update username', function () {
     it('Updates with cooldown', function ($validUsername) {
         Event::fake();
 
-        $user = User::factory()->create([
-            'username_last_updated_at' => null,
-        ]);
+        $user = User::factory()->create();
 
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->sendAs($user, [
             'username' => $validUsername,
@@ -84,7 +78,6 @@ describe('Update username', function () {
         Event::fake();
 
         $user = User::factory()->create([
-            'username_last_updated_at' => null,
             'username' => null,
         ]);
 
@@ -99,6 +92,5 @@ describe('Update username', function () {
         $user->refresh();
 
         expect($user->username)->toBe(null);
-        expect($user->username_last_updated_at)->toBe(null);
     })->with(UsernameUpdateDatasets::invalidUsernames());
 });

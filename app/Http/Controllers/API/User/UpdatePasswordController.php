@@ -26,10 +26,9 @@ class UpdatePasswordController extends Controller
 
         $user->update([
             'password' => $request->validated('password'),
-            'password_last_updated_at' => now(),
         ]);
 
-        event(new PasswordUpdated($user));
+        event(new PasswordUpdated($user, $request->safe()->boolean('invalidate_logins')));
 
         return AppResponse::actionSuccess();
     }

@@ -28,6 +28,9 @@ class UpdatePasswordRequest extends FormRequest
                 'confirmed',
                 Password::defaults(),
             ],
+            'invalidate_logins' => [
+                'boolean'
+            ]
         ];
     }
 }

@@ -52,8 +52,6 @@ class User extends Authenticatable implements RecordsUpdate
             'email_verified_at' => 'datetime',
             'phone_verified_at' => 'datetime',
             'last_activity_at' => 'datetime',
-            'username_last_updated_at' => 'datetime',
-            'password_last_updated_at' => 'datetime',
             'dob' => 'datetime',
             'gender' => Gender::class,
             'last_activity' => UserAction::class,
