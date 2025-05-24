@@ -24,6 +24,7 @@ arch()->preset()->php();
 arch()->preset()->laravel()
     ->ignoring("App\Http\Controllers\API\Local")
     ->ignoring("App\Http\Controllers\API\Auth\SocialiteController")
+    ->ignoring('App\Listeners\CheckHealth')
     ->ignoring("App\Providers\AppServiceProvider");
 
 arch()->preset()->security();

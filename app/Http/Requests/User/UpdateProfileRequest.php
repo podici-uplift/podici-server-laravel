@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Enums\Country;
 use App\Enums\Gender;
+use App\Logics\RequirementBuilder;
 use App\Rules\Regex\LegalNameRegexRule;
 use App\Rules\Regex\PhoneNumberRegexRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -26,35 +27,44 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules(): array
     {
+        $requirementBuilder = new RequirementBuilder([
+            'phone',
+            'first_name',
+            'last_name',
+            'other_names',
+            'gender',
+            'bio'
+        ]);
+
         return [
             'phone' => [
                 'string',
                 new PhoneNumberRegexRule(Country::NIGERIA),
-                'required_without_all:phone,first_name,last_name,other_names,gender,bio',
+                $requirementBuilder->requiredWithoutAll('phone'),
             ],
             'first_name' => [
                 'string',
                 new LegalNameRegexRule,
-                'required_without_all:phone,last_name,other_names,gender,bio',
+                $requirementBuilder->requiredWithoutAll('first_name'),
             ],
             'last_name' => [
                 'string',
                 new LegalNameRegexRule,
-                'required_without_all:phone,first_name,other_names,gender,bio',
+                $requirementBuilder->requiredWithoutAll('last_name'),
             ],
             'other_names' => [
                 'string',
                 new LegalNameRegexRule(true),
-                'required_without_all:phone,first_name,last_name,gender,bio',
+                $requirementBuilder->requiredWithoutAll('other_names'),
             ],
             'gender' => [
                 Rule::enum(Gender::class),
-                'required_without_all:phone,first_name,last_name,other_names,bio',
+                $requirementBuilder->requiredWithoutAll('gender'),
             ],
             'bio' => [
                 'string',
                 'max:248',
-                'required_without_all:phone,first_name,last_name,other_names,gender',
+                $requirementBuilder->requiredWithoutAll('bio'),
             ],
         ];
     }

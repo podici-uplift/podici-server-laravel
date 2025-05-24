@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
+use App\Models\Interfaces\RecordsUpdate;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasShortUlid;
+use App\Models\Traits\HasUpdates;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,10 +19,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements RecordsUpdate
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasContacts, HasFactory, HasShortUlid, HasUlids, Notifiable;
+    use HasApiTokens, HasContacts, HasFactory, HasShortUlid, HasUlids, Notifiable, HasUpdates;
 
     /**
      * The attributes that are mass assignable.

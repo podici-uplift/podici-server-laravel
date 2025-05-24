@@ -31,6 +31,6 @@ class UpdateUsernameController extends Controller
 
         event(new UsernameSetup($user));
 
-        return AppResponse::ok(__('response.action.success'));
+        return AppResponse::actionSuccess();
     }
 }

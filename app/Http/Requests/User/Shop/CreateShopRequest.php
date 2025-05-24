@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Shop;
+namespace App\Http\Requests\User\Shop;
 
 use App\Rules\BlacklistedShopNameRule;
 use App\Rules\Regex\ShopNameRegexRule;

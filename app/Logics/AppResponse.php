@@ -23,9 +23,16 @@ class AppResponse
         ], $statusCode);
     }
 
-    public static function ok(?string $message = null, ?array $data = [])
-    {
+    public static function ok(
+        ?string $message = null,
+        ?array $data = []
+    ): JsonResponse {
         return (new self)(Response::HTTP_OK, $message, $data);
+    }
+
+    public static function actionSuccess(?array $data = []): JsonResponse
+    {
+        return self::ok(__('response.action.success'), $data);
     }
 
     public static function resource(

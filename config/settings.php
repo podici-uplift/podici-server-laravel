@@ -11,4 +11,6 @@ return [
     'shop' => [
         'name_length_limit' => 64,
     ],
+
+    'tracking_model_updates' => true,
 ];

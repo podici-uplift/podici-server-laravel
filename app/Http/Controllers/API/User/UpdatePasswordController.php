@@ -31,6 +31,6 @@ class UpdatePasswordController extends Controller
 
         event(new PasswordUpdated($user));
 
-        return AppResponse::ok(__('response.action.success'));
+        return AppResponse::actionSuccess();
     }
 }

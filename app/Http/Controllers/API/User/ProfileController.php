@@ -40,6 +40,6 @@ class ProfileController extends Controller
 
         event(new ProfileUpdated($user));
 
-        return AppResponse::ok(__('response.action.success'));
+        return AppResponse::actionSuccess();
     }
 }

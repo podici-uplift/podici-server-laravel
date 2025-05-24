@@ -13,17 +13,14 @@ class SetupUsernameRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // @TODO: Move to using ModelUpdate
         $lastUpdatedAt = $this->user()->username_last_updated_at;
 
-        if (is_null($lastUpdatedAt)) {
-            return true;
-        }
+        if (is_null($lastUpdatedAt)) return true;
 
         $cooldownDuration = (int) config('settings.user.username_update_cooldown', 0);
 
-        if ($cooldownDuration <= 0) {
-            return true;
-        }
+        if ($cooldownDuration <= 0) return true;
 
         return $lastUpdatedAt->lt(now()->subDays($cooldownDuration));
     }
