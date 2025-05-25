@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('daily_views', function (Blueprint $table) {
             $table->ulidMorphs('viewable');
-            $table->foreignUlid('user_id');
-            $table->date('viewed_at');
+            $table->date('date');
+            $table->unsignedInteger('views')->default(1);
 
-            $table->unique(['viewable_type', 'viewable_id', 'user_id', 'viewed_at'], 'unique_daily_view');
+            $table->unique(['viewable_type', 'viewable_id', 'date'], 'daily_views_unique');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('daily_views');
     }
 };
