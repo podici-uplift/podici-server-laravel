@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -12,6 +14,8 @@ class View extends Model
     /** @use HasFactory<\Database\Factories\ViewFactory> */
     use HasFactory;
 
+    use MassPrunable;
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -20,6 +24,14 @@ class View extends Model
     public $timestamps = false;
 
     protected $guarded = [];
+
+    /**
+     * Get the prunable model query.
+     */
+    public function prunable(): Builder
+    {
+        return static::where('viewed_at', '<=', now()->subWeek());
+    }
 
     protected function casts()
     {
