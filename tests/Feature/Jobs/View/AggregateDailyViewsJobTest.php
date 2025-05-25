@@ -4,9 +4,7 @@ use App\Jobs\Views\AggregateDailyViewsJob;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
-use App\Models\View;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Queue;
+use App\Models\View\View;
 
 it("can aggregate daily views for :dataset", function ($modelGenerator) {
     $date = fake()->date();

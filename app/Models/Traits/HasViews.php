@@ -2,9 +2,9 @@
 
 namespace App\Models\Traits;
 
-use App\Models\DailyView;
+use App\Models\View\DailyView;
 use App\Models\User;
-use App\Models\View;
+use App\Models\View\View;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasViews

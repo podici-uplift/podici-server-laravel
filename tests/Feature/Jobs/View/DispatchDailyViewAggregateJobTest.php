@@ -5,10 +5,9 @@ use App\Jobs\Views\DispatchDailyViewAggregatesJob;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
-use App\Models\View;
+use App\Models\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Queue;
 
 test("It correctly dispatches the job", function () {
     Bus::fake();

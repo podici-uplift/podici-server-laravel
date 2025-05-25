@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\View;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\MassPrunable;

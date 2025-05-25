@@ -2,8 +2,8 @@
 
 namespace App\Jobs\Views;
 
-use App\Models\DailyView;
-use App\Models\View;
+use App\Models\View\DailyView;
+use App\Models\View\View;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 

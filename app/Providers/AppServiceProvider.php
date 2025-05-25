@@ -55,13 +55,17 @@ class AppServiceProvider extends ServiceProvider
             // 'moonshine_user' => \MoonShine\Laravel\Models\MoonshineUser::class,
             // 'moonshine_user_role' => \MoonShine\Laravel\Models\MoonshineUserRole::class,
 
+            // Views
+            'daily_view' => \App\Models\View\DailyView::class,
+            'monthly_view' => \App\Models\View\MonthlyView::class,
+            'view' => \App\Models\View\View::class,
+
             'category' => \App\Models\Category::class,
             'contact' => \App\Models\Contact::class,
             'model_update' => \App\Models\ModelUpdate::class,
             'product' => \App\Models\Product::class,
             'shop' => \App\Models\Shop::class,
             'user' => \App\Models\User::class,
-            'view' => \App\Models\View::class,
         ]);
     }
 
