@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Enums\Currency;
 use App\Enums\FlagStatus;
 use App\Enums\ProductStatus;
+use App\Models\Interfaces\RecordsView;
 use App\Models\Traits\HasShortUlid;
+use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -14,10 +16,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Product extends Model implements RecordsView
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
-    use HasFactory, HasUlids, HasShortUlid, SoftDeletes;
+    use HasFactory;
+
+    use HasUlids,
+        HasShortUlid,
+        SoftDeletes,
+        HasViews;
 
     protected $guarded = [];
 

@@ -36,4 +36,9 @@ return [
      * If to enable the tracking of updates to selected models
      */
     'tracking_model_updates' => true,
+
+    /**
+     * If to enable the tracking of views
+     */
+    'tracking_views' => true,
 ];

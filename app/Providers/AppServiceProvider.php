@@ -58,8 +58,10 @@ class AppServiceProvider extends ServiceProvider
             'category' => \App\Models\Category::class,
             'contact' => \App\Models\Contact::class,
             'model_update' => \App\Models\ModelUpdate::class,
+            'product' => \App\Models\Product::class,
             'shop' => \App\Models\Shop::class,
             'user' => \App\Models\User::class,
+            'view' => \App\Models\View::class,
         ]);
     }
 

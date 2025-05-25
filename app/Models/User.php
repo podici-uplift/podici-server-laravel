@@ -6,9 +6,11 @@ use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
 use App\Models\Interfaces\RecordsUpdate;
+use App\Models\Interfaces\RecordsView;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasUpdates;
+use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -19,10 +21,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements RecordsUpdate
+class User extends Authenticatable implements RecordsUpdate, RecordsView
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasContacts, HasFactory, HasShortUlid, HasUlids, Notifiable, HasUpdates;
+    use HasFactory;
+
+    use HasApiTokens,
+        HasContacts,
+        HasViews,
+        HasShortUlid,
+        HasUlids,
+        Notifiable,
+        HasUpdates;
 
     /**
      * The attributes that are mass assignable.
@@ -62,14 +72,14 @@ class User extends Authenticatable implements RecordsUpdate
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->password),
+            get: fn() => ! is_null($this->password),
         );
     }
 
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->phone_verified_at),
+            get: fn() => ! is_null($this->phone_verified_at),
         );
     }
 
