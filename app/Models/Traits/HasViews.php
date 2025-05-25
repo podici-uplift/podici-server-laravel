@@ -19,7 +19,7 @@ trait HasViews
         return $this->morphMany(DailyView::class, 'viewable');
     }
 
-    public function viewCount(): int
+    public function dailyViewCount(): int
     {
         return $this->dailyViews()->sum('views');
     }

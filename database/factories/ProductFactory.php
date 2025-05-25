@@ -31,7 +31,7 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 0, 100),
             'sale_price' => fake()->randomFloat(2, 0, 100),
             'currency' => fake()->randomElement(Currency::cases()),
-            'quantity' => fake()->randomNumber(),
+            'quantity_left' => fake()->randomNumber(),
             'is_adult' => fake()->boolean(),
         ];
     }

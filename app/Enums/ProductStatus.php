@@ -20,7 +20,7 @@ enum ProductStatus: string
      * Product is active
      * `published_at != null
      *  && published_at < now()
-     *  && quantity > 0 || quantity == null
+     *  && quantity_left > 0 || quantity_left == null
      *  && flag is null`
      */
     case ACTIVE = 'active';
@@ -38,8 +38,8 @@ enum ProductStatus: string
     case UNLISTED = 'unlisted';
 
     /**
-     * Product has quantity == 0
-     * `published_at < now() && quantity == 0`
+     * Product has quantity_left == 0
+     * `published_at < now() && quantity_left == 0`
      */
     case OUT_OF_STOCK = 'out_of_stock';
 

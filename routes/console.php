@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\Views\DispatchDailyViewAggregatesJob;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -10,3 +11,7 @@ Artisan::command('inspire', function () {
 Schedule::command('model:prune')->daily();
 
 Schedule::command('sanctum:prune-expired --hours=24')->daily();
+
+Schedule::job(
+    new DispatchDailyViewAggregatesJob(now()->subDay()->toDateString())
+)->dailyAt('00:05');
