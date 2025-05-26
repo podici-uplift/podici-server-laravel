@@ -79,9 +79,9 @@ trait HasViews
         ?string $date = null,
         bool $aggregatedOnly = false
     ): int {
-        $aggregatedCount = $this->monthlyViews()->forMonth($date)->first();
+        $aggregatedRecord = $this->monthlyViews()->forMonth($date)->first();
 
-        if ($aggregatedCount || $aggregatedOnly) return (int) optional($aggregatedCount)->views;
+        if ($aggregatedRecord || $aggregatedOnly) return (int) optional($aggregatedRecord)->views;
 
         return $this->dailyViews()->forMonth($date)->sum('views');
     }
