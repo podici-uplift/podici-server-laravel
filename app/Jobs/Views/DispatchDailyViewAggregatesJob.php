@@ -15,6 +15,7 @@ class DispatchDailyViewAggregatesJob implements ShouldQueue
      */
     public function __construct(
         protected string $date,
+        protected $shouldDelete = false
     ) {
         //
     }
@@ -37,7 +38,8 @@ class DispatchDailyViewAggregatesJob implements ShouldQueue
         AggregateDailyViewsJob::dispatch(
             $viewable->viewable_type,
             $viewable->viewable_id,
-            $this->date
+            $this->date,
+            $this->shouldDelete
         );
     }
 }

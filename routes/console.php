@@ -13,5 +13,8 @@ Schedule::command('model:prune')->daily();
 Schedule::command('sanctum:prune-expired --hours=24')->daily();
 
 Schedule::job(
-    new DispatchDailyViewAggregatesJob(now()->subDay()->toDateString())
+    new DispatchDailyViewAggregatesJob(
+        date: now()->subDay()->toDateString(),
+        shouldDelete: true
+    )
 )->dailyAt('00:05');

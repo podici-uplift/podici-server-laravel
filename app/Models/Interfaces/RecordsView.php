@@ -11,7 +11,7 @@ interface RecordsView
 
     public function dailyViews(): MorphMany;
 
-    public function dailyViewCount(): int;
+    public function monthlyViews(): MorphMany;
 
     public function recordView(User $user): void;
 }

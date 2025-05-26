@@ -23,8 +23,15 @@ it("can aggregate daily views for :dataset", function ($modelGenerator) {
     (new AggregateDailyViewsJob($model->getMorphClass(), $model->getKey(), $date))->handle();
     (new AggregateDailyViewsJob($otherModel->getMorphClass(), $otherModel->getKey(), $date))->handle();
 
-    $this->assertEquals($modelViewCount, $model->dailyViewCount());
-    $this->assertEquals($otherModelViewCount, $otherModel->dailyViewCount());
+    $this->assertEquals(
+        $modelViewCount,
+        $model->dailyViews()->sum('views')
+    );
+
+    $this->assertEquals(
+        $otherModelViewCount,
+        $otherModel->dailyViews()->sum('views')
+    );
 
     $this->assertDatabaseHas('daily_views', [
         'viewable_id' => $model->getKey(),

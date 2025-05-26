@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\View\DailyView;
 use App\Models\User;
+use App\Models\View\MonthlyView;
 use App\Models\View\View;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -19,9 +20,9 @@ trait HasViews
         return $this->morphMany(DailyView::class, 'viewable');
     }
 
-    public function dailyViewCount(): int
+    public function monthlyViews(): MorphMany
     {
-        return $this->dailyViews()->sum('views');
+        return $this->morphMany(MonthlyView::class, 'viewable');
     }
 
     public function recordView(User $user): void
