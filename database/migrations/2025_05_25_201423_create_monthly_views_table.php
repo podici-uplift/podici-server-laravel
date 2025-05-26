@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('monthly_views', function (Blueprint $table) {
+            $table->ulid('id')->primary();
             $table->ulidMorphs('viewable');
-            $table->date('date');
+            $table->unsignedSmallInteger('year');
+            $table->unsignedTinyInteger('month');
             $table->unsignedInteger('views')->default(1);
 
-            $table->unique(['viewable_type', 'viewable_id', 'date'], 'monthly_views_unique');
+            $table->unique(['viewable_type', 'viewable_id', 'year', 'month'], 'monthly_views_unique');
         });
     }
 

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('daily_views', function (Blueprint $table) {
+            $table->ulid('id')->primary();
             $table->ulidMorphs('viewable');
             $table->date('date');
             $table->unsignedInteger('views')->default(1);

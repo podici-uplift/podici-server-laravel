@@ -2,9 +2,12 @@
 
 namespace App\Models\View;
 
+use App\Models\Traits\HasShortUlid;
 use Carbon\Carbon;
+use Carbon\Month;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -13,6 +16,8 @@ class MonthlyView extends Model
 {
     /** @use HasFactory<\Database\Factories\MonthlyViewFactory> */
     use HasFactory;
+
+    use HasUlids, HasShortUlid;
 
     /**
      * Indicates if the model should be timestamped.
@@ -26,7 +31,8 @@ class MonthlyView extends Model
     protected function casts()
     {
         return [
-            'date' => 'datetime:Y-m',
+            'year' => 'integer',
+            'month' => Month::class,
         ];
     }
 
@@ -62,9 +68,12 @@ class MonthlyView extends Model
         Builder $query,
         string|Carbon|null $date = null
     ): void {
-        $date = Carbon::parse($date ?? now())->format('Y-m');
+        $date = Carbon::parse($date ?? now());
 
-        $query->where('date', $date);
+        $query->where(function ($query) use ($date) {
+            $query->where('year', $date->year)
+                ->where('month', $date->month);
+        });
     }
 
     /**
@@ -80,9 +89,12 @@ class MonthlyView extends Model
         Builder $query,
         string|Carbon|null $date = null
     ): void {
-        $date = Carbon::parse($date ?? now())->format('Y-m');
+        $date = Carbon::parse($date ?? now());
 
-        $query->whereNot('date', $date);
+        $query->whereNot(function ($query) use ($date) {
+            $query->where('year', $date->year)
+                ->where('month', $date->month);
+        });
     }
 
     /**
