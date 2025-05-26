@@ -3,6 +3,8 @@
 namespace App\Models\View;
 
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\MassPrunable;
@@ -31,15 +33,22 @@ class View extends Model
      */
     public function prunable(): Builder
     {
-        return static::where('viewed_at', '<=', now()->subWeek());
+        return static::where('date', '<=', now()->subWeek());
     }
 
     protected function casts()
     {
         return [
-            'viewed_at' => 'datetime:Y-m-d',
+            'date' => 'datetime:Y-m-d',
         ];
     }
+
+
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
 
     public function viewable(): MorphTo
     {
@@ -49,5 +58,30 @@ class View extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    /**
+     * ? ***********************************************************************
+     * ? Scopes
+     * ? ***********************************************************************
+     */
+
+    /**
+     * Scope a query to only include views for a specific date.
+     *
+     * @param Builder $query
+     * @param string|Carbon $date
+     *
+     * @return void
+     */
+    #[Scope]
+    protected function forDate(
+        Builder $query,
+        string|Carbon|null $date = null
+    ): void {
+        $date = Carbon::parse($date ?? now())->format('Y-m-d');
+
+        $query->where('date', $date);
     }
 }

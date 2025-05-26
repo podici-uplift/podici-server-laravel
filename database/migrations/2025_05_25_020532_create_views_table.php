@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->ulidMorphs('viewable');
             $table->foreignUlid('user_id');
-            $table->date('viewed_at');
+            $table->date('date');
 
-            $table->unique(['viewable_type', 'viewable_id', 'user_id', 'viewed_at'], 'unique_daily_view');
+            $table->unique(['viewable_type', 'viewable_id', 'user_id', 'date'], 'views_unique');
         });
     }
 

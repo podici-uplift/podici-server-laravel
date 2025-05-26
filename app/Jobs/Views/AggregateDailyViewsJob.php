@@ -18,8 +18,7 @@ class AggregateDailyViewsJob implements ShouldQueue
     public function __construct(
         public string $viewableType,
         public string $viewableId,
-        public string $date,
-        public bool $shouldDelete = false
+        public string $date
     ) {
         //
     }
@@ -29,22 +28,19 @@ class AggregateDailyViewsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        DB::transaction(function () {
-            $viewQuery = View::where('viewable_type', $this->viewableType)
-                ->where('viewable_id', $this->viewableId)
-                ->whereDate('viewed_at', $this->date);
+        $viewsCount = View::where('viewable_type', $this->viewableType)
+            ->where('viewable_id', $this->viewableId)
+            ->whereDate('date', $this->date)
+            ->count();
 
-            $viewsCount = $viewQuery->count();
+        if ($viewsCount === 0) return;
 
-            DailyView::updateOrCreate([
-                'viewable_type' => $this->viewableType,
-                'viewable_id' => $this->viewableId,
-                'date' => $this->date,
-            ], [
-                'views' => $viewsCount
-            ]);
-
-            if ($this->shouldDelete) $viewQuery->delete();
-        });
+        DailyView::updateOrCreate([
+            'viewable_type' => $this->viewableType,
+            'viewable_id' => $this->viewableId,
+            'date' => $this->date,
+        ], [
+            'views' => $viewsCount
+        ]);
     }
 }

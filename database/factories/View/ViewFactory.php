@@ -22,13 +22,13 @@ class ViewFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'viewed_at' => now(),
+            'date' => now(),
         ];
     }
 
     public function viewDate(string $date): Factory
     {
-        return $this->state(fn(array $attributes) => ['viewed_at' => $date,]);
+        return $this->state(fn(array $attributes) => ['date' => $date,]);
     }
 
     public function forModel(Model $model): static
