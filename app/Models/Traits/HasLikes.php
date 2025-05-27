@@ -13,6 +13,12 @@ trait HasLikes
      * ? Relationships
      * ? ***********************************************************************
      */
+
+    /**
+     * Returns a collection of {@see Like}s that belong to this model.
+     *
+     * @return MorphMany<Like>
+     */
     public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
@@ -22,6 +28,12 @@ trait HasLikes
      * ? ***********************************************************************
      * ? Counts
      * ? ***********************************************************************
+     */
+
+    /**
+     * Returns the count of likes that belong to this model.
+     *
+     * @return int
      */
     public function likesCount(): int
     {
@@ -33,6 +45,14 @@ trait HasLikes
      * ? Methods
      * ? ***********************************************************************
      */
+
+    /**
+     * Creates a new {@see Like} belonging to this model.
+     *
+     * @param User $liker The user who is performing the like.
+     *
+     * @return void
+     */
     public function recordLike(User $liker): void
     {
         $this->likes()->firstOrCreate([
@@ -40,6 +60,13 @@ trait HasLikes
         ]);
     }
 
+    /**
+     * Determines if the model is liked by the specified user.
+     *
+     * @param User $user The user to check for a like.
+     *
+     * @return bool True if the model is liked by the user, false otherwise.
+     */
     public function isLikedBy(User $user): bool
     {
         return $this->likes()->where('user_id', $user->id)->exists();
