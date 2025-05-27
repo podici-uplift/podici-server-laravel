@@ -7,9 +7,9 @@ use App\Logics\ShopName;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasModelUpdates;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
-use App\Models\Traits\HasModelUpdates;
 use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model
 {
-    use HasCategories, HasContacts, HasLikes, HasReviews, HasModelUpdates, HasViews;
+    use HasCategories, HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews;
 
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
