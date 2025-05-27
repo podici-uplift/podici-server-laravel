@@ -9,7 +9,7 @@ use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
-use App\Models\Traits\HasUpdates;
+use App\Models\Traits\HasModelUpdates;
 use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,7 +24,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasShortUlid, HasUlids, Notifiable;
-    use HasContacts, HasLikes, HasReviews, HasUpdates, HasViews;
+    use HasContacts, HasLikes, HasReviews, HasModelUpdates, HasViews;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;

@@ -6,7 +6,7 @@ use App\Models\ModelUpdate;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-trait HasUpdates
+trait HasModelUpdates
 {
     public function updates(): MorphMany
     {
