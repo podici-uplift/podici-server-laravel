@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasCategories, HasReviews, HasViews, HasLikes;
+    use HasCategories, HasLikes, HasReviews, HasViews;
 
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;

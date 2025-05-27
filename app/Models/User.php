@@ -24,7 +24,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasShortUlid, HasUlids, Notifiable;
-    use HasContacts, HasReviews, HasUpdates, HasViews, HasLikes;
+    use HasContacts, HasLikes, HasReviews, HasUpdates, HasViews;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;

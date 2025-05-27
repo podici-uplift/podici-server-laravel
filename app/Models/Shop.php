@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model
 {
-    use HasCategories, HasContacts, HasReviews, HasUpdates, HasViews, HasLikes;
+    use HasCategories, HasContacts, HasLikes, HasReviews, HasUpdates, HasViews;
 
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;

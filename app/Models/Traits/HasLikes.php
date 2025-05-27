@@ -13,7 +13,6 @@ trait HasLikes
      * ? Relationships
      * ? ***********************************************************************
      */
-
     public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
@@ -24,7 +23,6 @@ trait HasLikes
      * ? Counts
      * ? ***********************************************************************
      */
-
     public function likesCount(): int
     {
         return $this->likes()->count();
@@ -35,7 +33,6 @@ trait HasLikes
      * ? Methods
      * ? ***********************************************************************
      */
-
     public function recordLike(User $liker): void
     {
         $this->likes()->firstOrCreate([

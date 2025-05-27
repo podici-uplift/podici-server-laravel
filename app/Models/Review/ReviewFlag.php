@@ -15,7 +15,6 @@ class ReviewFlag extends Model
     use HasFactory;
 
     use HasShortUlid, HasUlids, SoftDeletes;
-
     use SoftDeletes;
 
     protected $guarded = [];
