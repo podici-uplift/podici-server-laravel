@@ -132,6 +132,53 @@ test("View count for month", function () {
     )->toBe(0);
 });
 
+test("View count for year", function () {
+    $user = createUser();
+    $year = 2024;
+
+    $monthsIntoTheYear = fake()->numberBetween(3, 11);
+
+    $startOfYear = Carbon::create($year, 1, 1);
+    $previousYear = $startOfYear->clone()->subYear();
+    $nextYear = $startOfYear->clone()->addYear();
+
+    $expectedAggViews = 0;
+
+    // Add previous year's record to ensure that only current year is counted
+    recordMonthlyAggregatedView(
+        $user,
+        $previousYear->year,
+        $previousYear->endOfYear()->month,
+        fake()->randomNumber()
+    );
+
+    // Add next year's record to ensure that only current year is counted
+    recordMonthlyAggregatedView(
+        $user,
+        $nextYear->year,
+        $nextYear->startOfYear()->month,
+        fake()->randomNumber()
+    );
+
+    expect(
+        $user->viewCountForYear($year)
+    )->toBe($expectedAggViews);
+
+    for ($i = 0; $i < $monthsIntoTheYear; $i++) {
+        $month = $startOfYear->addMonth()->month;
+
+        $views = fake()->numberBetween(1, 1000);
+
+        $expectedAggViews += $views;
+
+        recordMonthlyAggregatedView($user, $year, $month, $views);
+    }
+
+    expect(
+        $user->viewCountForYear($year)
+    )->toBe($expectedAggViews);
+});
+
 /**
  * ? ***********************************************************************
  * ? Helpers

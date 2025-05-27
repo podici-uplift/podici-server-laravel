@@ -112,6 +112,6 @@ class MonthlyView extends Model
     ): void {
         $year ??= now()->format('Y');
 
-        $query->whereYear('date', $year);
+        $query->where('year', $year);
     }
 }
