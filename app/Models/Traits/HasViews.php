@@ -56,7 +56,6 @@ trait HasViews
      * Get the real-time count of views for the given date or the current date if none is provided.
      *
      * @param  string|null  $date  The date for which to count views in 'Y-m-d' format. Defaults to the current date.
-     *
      * @return int The count of views for the specified date.
      */
     public function realTimeCount(?string $date = null): int
@@ -73,7 +72,6 @@ trait HasViews
      *
      * @param  string|null  $date  The date for which to count views in 'Y-m-d' format. Defaults to the current date.
      * @param  bool  $aggregatedOnly  Whether to only return the aggregated count, or to fall back to the real-time count if none exists.
-     *
      * @return int The count of views for the specified date.
      */
     public function viewCountForDay(
@@ -98,7 +96,6 @@ trait HasViews
      *
      * @param  string|null  $date  The month for which to count views in 'Y-m' format. Defaults to the current month.
      * @param  bool  $aggregatedOnly  Whether to only return the aggregated count, or to fall back to the sum of the daily counts if none exists.
-     *
      * @return int The count of views for the specified month.
      */
     public function viewCountForMonth(
@@ -120,7 +117,6 @@ trait HasViews
      * Aggregates the views from the monthly records and returns the total count.
      *
      * @param  int  $year  The year for which to count views.
-     *
      * @return int The count of views for the specified year.
      */
     public function viewCountForYear(int $year): int
@@ -138,7 +134,6 @@ trait HasViews
      * If `$includeRealTime` is `false` (default), the method will only return the sum of the aggregated views.
      *
      * @param  bool  $includeRealTime  Whether to include the real-time count of views or not.
-     *
      * @return int The total count of views.
      */
     public function totalViewCount(bool $includeRealTime = false): int
@@ -176,9 +171,7 @@ trait HasViews
      *
      * If `tracking_views` is set to false in the settings, this method will return null.
      *
-     * @param User $viewer The user who is performing the view.
-     *
-     * @return void
+     * @param  User  $viewer  The user who is performing the view.
      */
     public function recordView(User $viewer): void
     {

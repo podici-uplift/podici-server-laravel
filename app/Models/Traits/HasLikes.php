@@ -32,8 +32,6 @@ trait HasLikes
 
     /**
      * Returns the count of likes that belong to this model.
-     *
-     * @return int
      */
     public function likesCount(): int
     {
@@ -49,9 +47,7 @@ trait HasLikes
     /**
      * Creates a new {@see Like} belonging to this model.
      *
-     * @param User $liker The user who is performing the like.
-     *
-     * @return void
+     * @param  User  $liker  The user who is performing the like.
      */
     public function recordLike(User $liker): void
     {
@@ -63,8 +59,7 @@ trait HasLikes
     /**
      * Determines if the model is liked by the specified user.
      *
-     * @param User $user The user to check for a like.
-     *
+     * @param  User  $user  The user to check for a like.
      * @return bool True if the model is liked by the user, false otherwise.
      */
     public function isLikedBy(User $user): bool

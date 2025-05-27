@@ -12,7 +12,6 @@ use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,7 +24,7 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-    use HasShortUlid, HasUlids, SoftDeletes;
+    use HasShortUlid, SoftDeletes;
 
     protected $guarded = [];
 

@@ -33,8 +33,7 @@ trait HasModelUpdates
     /**
      * Retrieves the latest {@see ModelUpdate} for the specified field.
      *
-     * @param string $field The field to retrieve the latest update for.
-     *
+     * @param  string  $field  The field to retrieve the latest update for.
      * @return ModelUpdate|null The latest update for the specified field, or null if there are no updates.
      */
     public function getFieldLatestUpdate(string $field): ?ModelUpdate
@@ -47,11 +46,10 @@ trait HasModelUpdates
      *
      * This method will return null if `tracking_model_updates` is set to false in the settings.
      *
-     * @param string $field The field to record an update for.
-     * @param string|null $oldValue The old value of the field before the update.
-     * @param string|null $newValue The new value of the field after the update.
-     * @param User|null $updatedBy The user who performed the update.
-     *
+     * @param  string  $field  The field to record an update for.
+     * @param  string|null  $oldValue  The old value of the field before the update.
+     * @param  string|null  $newValue  The new value of the field after the update.
+     * @param  User|null  $updatedBy  The user who performed the update.
      * @return ModelUpdate|null The newly created update, or null if tracking is disabled.
      */
     public function recordFieldUpdate(

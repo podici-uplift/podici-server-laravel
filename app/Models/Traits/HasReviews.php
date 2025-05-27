@@ -33,8 +33,6 @@ trait HasReviews
 
     /**
      * Returns the count of reviews that belong to this model.
-     *
-     * @return int
      */
     public function reviewsCount(): int
     {
@@ -50,13 +48,12 @@ trait HasReviews
     /**
      * Creates a new {@see Review} belonging to this model.
      *
-     * @param User $reviewer The user who is writing the review.
-     * @param string $review The actual text of the review.
-     * @param ReviewRating $rating The numeric rating given in the review.
-     * @param ReviewStatus $status The current status of the review.
-     * @param string|null $title The title of the review. Optional.
-     * @param Review|null $parent The parent review, if this is a reply. Optional.
-     *
+     * @param  User  $reviewer  The user who is writing the review.
+     * @param  string  $review  The actual text of the review.
+     * @param  ReviewRating  $rating  The numeric rating given in the review.
+     * @param  ReviewStatus  $status  The current status of the review.
+     * @param  string|null  $title  The title of the review. Optional.
+     * @param  Review|null  $parent  The parent review, if this is a reply. Optional.
      * @return Review The newly created review.
      */
     public function recordReview(

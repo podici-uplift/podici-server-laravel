@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Carbon\Month;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -17,7 +16,7 @@ class MonthlyView extends Model
     /** @use HasFactory<\Database\Factories\MonthlyViewFactory> */
     use HasFactory;
 
-    use HasShortUlid, HasUlids;
+    use HasShortUlid;
 
     /**
      * Indicates if the model should be timestamped.

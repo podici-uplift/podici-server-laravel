@@ -31,8 +31,6 @@ trait HasCategories
 
     /**
      * Returns the count of {@see Category}s that are associated with this model.
-     *
-     * @return int
      */
     public function categoriesCount(): int
     {
@@ -48,7 +46,7 @@ trait HasCategories
     /**
      * Adds a {@see Category} to this model.
      *
-     * @param Category $category The category to add.
+     * @param  Category  $category  The category to add.
      */
     public function addCategory(Category $category): void
     {
@@ -58,7 +56,7 @@ trait HasCategories
     /**
      * Removes a {@see Category} from this model.
      *
-     * @param Category $category The category to remove.
+     * @param  Category  $category  The category to remove.
      */
     public function removeCategory(Category $category): void
     {

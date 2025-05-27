@@ -12,7 +12,6 @@ use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,7 +24,7 @@ class Shop extends Model
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
 
-    use HasShortUlid, HasUlids;
+    use HasShortUlid;
 
     protected $guarded = [];
 
