@@ -87,7 +87,8 @@ class DailyView extends Model
         $date = Carbon::parse($date ?? now());
 
         $query->whereBetween('date', [
-            $date->clone()->startOfMonth(),
+            // Last day of the previous month is used, cause whereBetween is not inclusive
+            $date->clone()->subMonth()->endOfMonth(),
             $date->clone()->endOfMonth()
         ]);
     }

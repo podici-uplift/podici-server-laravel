@@ -64,6 +64,74 @@ test("View count for day", function () {
     )->toBe(0);
 });
 
+test("View count for month", function () {
+    $user = createUser();
+
+    $currentMonth = Carbon::parse('2024-02-1');
+    $previousMonth = $currentMonth->clone()->subMonth();
+
+    $aggPrevMonthViews = fake()->numberBetween(1000, 100000);
+
+    recordMonthlyAggregatedView(
+        $user,
+        $previousMonth->year,
+        $previousMonth->month,
+        $aggPrevMonthViews
+    );
+
+    expect(
+        $user->viewCountForMonth($previousMonth->toDateString(), aggregatedOnly: true)
+    )->toBe($aggPrevMonthViews);
+
+    expect(
+        $user->viewCountForMonth($previousMonth->toDateString(), aggregatedOnly: false)
+    )->toBe($aggPrevMonthViews);
+
+    expect(
+        $user->viewCountForMonth($currentMonth->toDateString(), aggregatedOnly: false)
+    )->toBe(0);
+
+    expect(
+        $user->viewCountForMonth($currentMonth->toDateString(), aggregatedOnly: true)
+    )->toBe(0);
+
+    $noOfDays = fake()->numberBetween(7, 28);
+
+    $unaggCurrentMonthViews = 0;
+
+    // Add previous month's record to ensure that only current month is counted
+    recordDailyAggregatedView(
+        $user,
+        $previousMonth->clone()->endOfMonth()->toDateString(),
+        fake()->randomNumber()
+    );
+
+    // Add next month's record to ensure that only current month is counted
+    recordDailyAggregatedView(
+        $user,
+        $currentMonth->clone()->addMonth()->startOfMonth()->toDateString(),
+        fake()->randomNumber()
+    );
+
+    for ($i = 0; $i < $noOfDays; $i++) {
+        $date = $currentMonth->clone()->addDays($i)->toDateString();
+
+        $views = fake()->numberBetween(1, 1000);
+
+        $unaggCurrentMonthViews += $views;
+
+        recordDailyAggregatedView($user, $date, $views);
+    }
+
+    expect(
+        $user->viewCountForMonth($currentMonth->toDateString(), aggregatedOnly: false)
+    )->toBe($unaggCurrentMonthViews);
+
+    expect(
+        $user->viewCountForMonth($currentMonth->toDateString(), aggregatedOnly: true)
+    )->toBe(0);
+});
+
 /**
  * ? ***********************************************************************
  * ? Helpers
@@ -81,16 +149,20 @@ function recordView(User $user, string $date): void
 
 function recordDailyAggregatedView(User $user, string $date, int $views): void
 {
-    $user->dailyViews()->firstOrCreate([
-        'date' => $date,
-        'views' => $views
-    ]);
+    $user->dailyViews()->updateOrCreate(
+        ['date' => $date],
+        ['views' => $views]
+    );
 }
 
-function recordMonthlyAggregatedView(User $user, string $date, int $views): void
-{
+function recordMonthlyAggregatedView(
+    User $user,
+    int $year,
+    int $month,
+    int $views
+): void {
     $user->monthlyViews()->updateOrCreate(
-        ['date' => $date],
+        ['year' => $year, 'month' => $month],
         ['views' => $views]
     );
 }
