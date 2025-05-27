@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'reviews' => [
+        'max_no_of_pins' => 3,
+    ],
+
     'user' => [
         /**
          * The cooldown period for updating username (in days)

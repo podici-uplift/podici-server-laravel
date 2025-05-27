@@ -121,14 +121,14 @@ trait HasViews
     /**
      * Record a view for this model by the given user.
      */
-    public function recordView(User $user): void
+    public function recordView(User $viewer): void
     {
         if (! config('settings.tracking_views')) {
             return;
         }
 
         $this->views()->firstOrCreate([
-            'user_id' => $user->id,
+            'user_id' => $viewer->id,
             'date' => now()->format('Y-m-d'),
         ]);
     }

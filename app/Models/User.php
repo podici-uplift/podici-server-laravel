@@ -5,9 +5,8 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
-use App\Models\Interfaces\RecordsUpdate;
-use App\Models\Interfaces\RecordsView;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasUpdates;
 use App\Models\Traits\HasViews;
@@ -21,15 +20,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements RecordsUpdate, RecordsView
+class User extends Authenticatable
 {
-    use HasApiTokens,
-        HasContacts,
-        HasShortUlid,
-        HasUlids,
-        HasUpdates,
-        HasViews,
-        Notifiable;
+    use HasApiTokens, HasShortUlid, HasUlids, Notifiable;
+    use HasContacts, HasReviews, HasUpdates, HasViews;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;

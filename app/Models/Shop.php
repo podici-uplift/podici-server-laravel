@@ -4,10 +4,9 @@ namespace App\Models;
 
 use App\Enums\ShopStatus;
 use App\Logics\ShopName;
-use App\Models\Interfaces\RecordsUpdate;
-use App\Models\Interfaces\RecordsView;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasUpdates;
 use App\Models\Traits\HasViews;
@@ -18,17 +17,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Shop extends Model implements RecordsUpdate, RecordsView
+class Shop extends Model
 {
-    use HasCategories,
-        HasContacts,
-        HasShortUlid,
-        HasUlids,
-        HasUpdates,
-        HasViews;
+    use HasCategories, HasContacts, HasReviews, HasUpdates, HasViews;
 
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
+
+    use HasShortUlid, HasUlids;
 
     protected $guarded = [];
 
