@@ -179,6 +179,53 @@ test("View count for year", function () {
     )->toBe($expectedAggViews);
 });
 
+
+test("Total view count", function () {
+    $user = createUser();
+
+    $baseDate = now()->endOfMonth();
+
+    $this->travelTo($baseDate);
+
+    $aggViews = 0;
+
+    expect($user->totalViewCount())->toBe($aggViews);
+
+    $monthsBack = fake()->numberBetween(3, 24);
+
+    for ($i = 1; $i < $monthsBack; $i++) {
+        $pastDate = $baseDate->clone()->subMonthsNoOverflow($i);
+
+        $views = fake()->numberBetween(1, 1000);
+
+        $aggViews += $views;
+
+        recordMonthlyAggregatedView($user, $pastDate->year, $pastDate->month, $views);
+    }
+
+    expect($user->totalViewCount())->toBe($aggViews);
+
+    $daysBack = fake()->numberBetween(3, 24);
+
+    for ($i = 1; $i < $daysBack; $i++) {
+        $pastDate = $baseDate->clone()->subDays($i);
+
+        $views = fake()->numberBetween(1, 1000);
+
+        $aggViews += $views;
+
+        recordDailyAggregatedView($user, $pastDate->toDateString(), $views);
+    }
+
+    expect($user->totalViewCount())->toBe($aggViews);
+
+    $realTimeViews = fake()->numberBetween(1, 100);
+
+    for ($i = 0; $i < $realTimeViews; $i++) recordView($user, $baseDate->toDateString());
+
+    expect($user->totalViewCount(includeRealTime: false))->toBe($aggViews);
+    expect($user->totalViewCount(includeRealTime: true))->toBe($aggViews + $realTimeViews);
+});
 /**
  * ? ***********************************************************************
  * ? Helpers
