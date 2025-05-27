@@ -164,7 +164,8 @@ return [
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
 
-    /// Custom Rules
+    // ? Custom Rules
+
     'phone_invalid' => 'The :attribute is not a valid phone number',
     'legal_name_invalid' => 'The provided :attribute is not a valid legal name',
     'username_invalid' => 'The provided :attribute is not a valid username',
