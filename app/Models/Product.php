@@ -21,10 +21,10 @@ class Product extends Model implements RecordsView
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-    use HasUlids,
-        HasShortUlid,
-        SoftDeletes,
-        HasViews;
+    use HasShortUlid,
+        HasUlids,
+        HasViews,
+        SoftDeletes;
 
     protected $guarded = [];
 
@@ -38,7 +38,7 @@ class Product extends Model implements RecordsView
             'is_adult' => 'boolean',
             'is_listed' => 'boolean',
             'published_at' => 'datetime',
-            'flag' => FlagStatus::class
+            'flag' => FlagStatus::class,
         ];
     }
 
@@ -49,19 +49,33 @@ class Product extends Model implements RecordsView
 
     public function status(): ProductStatus
     {
-        if ($this->deleted_at != null) return ProductStatus::DELETED;
+        if ($this->deleted_at != null) {
+            return ProductStatus::DELETED;
+        }
 
-        if ($this->flag != null && $this->flag != FlagStatus::RESOLVED) return ProductStatus::FLAGGED;
+        if ($this->flag != null && $this->flag != FlagStatus::RESOLVED) {
+            return ProductStatus::FLAGGED;
+        }
 
-        if ($this->published_at == null) return ProductStatus::DRAFT;
+        if ($this->published_at == null) {
+            return ProductStatus::DRAFT;
+        }
 
-        if ($this->published_at > now()) return ProductStatus::COMING_SOON;
+        if ($this->published_at > now()) {
+            return ProductStatus::COMING_SOON;
+        }
 
-        if ($this->is_listed == false) return ProductStatus::UNLISTED;
+        if ($this->is_listed == false) {
+            return ProductStatus::UNLISTED;
+        }
 
-        if ($this->quantity_left === 0) return ProductStatus::OUT_OF_STOCK;
+        if ($this->quantity_left === 0) {
+            return ProductStatus::OUT_OF_STOCK;
+        }
 
-        if ($this->sale_price != null) return ProductStatus::ON_SALE;
+        if ($this->sale_price != null) {
+            return ProductStatus::ON_SALE;
+        }
 
         return ProductStatus::ACTIVE;
     }

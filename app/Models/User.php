@@ -23,16 +23,16 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements RecordsUpdate, RecordsView
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory;
-
     use HasApiTokens,
         HasContacts,
-        HasViews,
         HasShortUlid,
         HasUlids,
-        Notifiable,
-        HasUpdates;
+        HasUpdates,
+        HasViews,
+        Notifiable;
+
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -72,21 +72,21 @@ class User extends Authenticatable implements RecordsUpdate, RecordsView
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->password),
+            get: fn () => ! is_null($this->password),
         );
     }
 
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->phone_verified_at),
+            get: fn () => ! is_null($this->phone_verified_at),
         );
     }
 
     protected function age(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->dob ? $this->dob->diffInYears(now()) : null,
+            get: fn () => $this->dob ? $this->dob->diffInYears(now()) : null,
         );
     }
 
@@ -96,7 +96,9 @@ class User extends Authenticatable implements RecordsUpdate, RecordsView
             get: function () {
                 $adultAge = config('settings.adult_age', 18);
 
-                if ($adultAge <= 0) return true;
+                if ($adultAge <= 0) {
+                    return true;
+                }
 
                 return $this->age >= $adultAge;
             }

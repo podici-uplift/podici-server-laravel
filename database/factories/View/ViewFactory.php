@@ -28,12 +28,12 @@ class ViewFactory extends Factory
 
     public function viewDate(string $date): Factory
     {
-        return $this->state(fn(array $attributes) => ['date' => $date,]);
+        return $this->state(fn (array $attributes) => ['date' => $date]);
     }
 
     public function forModel(Model $model): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'viewable_type' => $model->getMorphClass(),
             'viewable_id' => $model->getKey(),
         ]);

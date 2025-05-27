@@ -23,7 +23,7 @@ describe('SUCCESS CASES ✅', function () {
         assertShopCreated($user, $name);
     });
 
-    it("Allows underaged users to create adult shops when feature is disabled", function () {
+    it('Allows underaged users to create adult shops when feature is disabled', function () {
         Config::set('settings.adult_age', 0);
 
         $user = userFactory()->youngerThan(17)->create();
@@ -39,7 +39,7 @@ describe('SUCCESS CASES ✅', function () {
     });
 });
 
-describe("ERROR CASES 🔴", function () {
+describe('ERROR CASES 🔴', function () {
     it('requires auth to create shop', function () {
         HttpEndpoints::SELF_SHOP_CREATE->tester()->send([
             'name' => fake()->company(),
@@ -71,7 +71,7 @@ describe("ERROR CASES 🔴", function () {
         assertShopNotCreated($user);
     })->with(ShopNameUpdateDatasets::blacklistedShopnames());
 
-    it("Prevents underaged users from creating adult shop", function () {
+    it('Prevents underaged users from creating adult shop', function () {
         Config::set('settings.adult_age', 18);
 
         $user = userFactory()->youngerThan(17)->create();
@@ -84,7 +84,7 @@ describe("ERROR CASES 🔴", function () {
         assertShopNotCreated($user);
     });
 
-    it("Prevents users with no age from creating adult shop", function () {
+    it('Prevents users with no age from creating adult shop', function () {
         Config::set('settings.adult_age', 18);
 
         $user = userFactory()->noDob()->create();
@@ -109,7 +109,7 @@ function assertShopNotCreated(User $user, int $expectedCount = 0)
     Event::assertNotDispatched(UserActivity::class);
 
     test()->assertDatabaseCount('shops', $expectedCount);
-    test()->assertDatabaseMissing('shops', ['user_id' => $user->id,]);
+    test()->assertDatabaseMissing('shops', ['user_id' => $user->id]);
 }
 
 function assertShopCreated(User $user, string $name, int $expectedCount = 1)
@@ -118,7 +118,7 @@ function assertShopCreated(User $user, string $name, int $expectedCount = 1)
     Event::assertDispatched(UserActivity::class);
 
     test()->assertDatabaseCount('shops', $expectedCount);
-    test()->assertDatabaseHas('shops', ['user_id' => $user->id, 'name' => $name,]);
+    test()->assertDatabaseHas('shops', ['user_id' => $user->id, 'name' => $name]);
 }
 
 function resourceExpectation(string $name, bool $isAdult)

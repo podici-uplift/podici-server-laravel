@@ -6,7 +6,6 @@ use App\Models\View\DailyView;
 use App\Models\View\View;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\DB;
 
 class AggregateDailyViewsJob implements ShouldQueue
 {
@@ -33,14 +32,16 @@ class AggregateDailyViewsJob implements ShouldQueue
             ->whereDate('date', $this->date)
             ->count();
 
-        if ($viewsCount === 0) return;
+        if ($viewsCount === 0) {
+            return;
+        }
 
         DailyView::updateOrCreate([
             'viewable_type' => $this->viewableType,
             'viewable_id' => $this->viewableId,
             'date' => $this->date,
         ], [
-            'views' => $viewsCount
+            'views' => $viewsCount,
         ]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Interfaces\RecordsUpdate;
 use App\Models\Traits\HasShortUlid;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class ModelUpdate extends Model
 {
     /** @use HasFactory<\Database\Factories\ModelUpdateFactory> */
-    use HasFactory, HasUlids, HasShortUlid;
+    use HasFactory, HasShortUlid, HasUlids;
 
     protected $guarded = [];
 
@@ -29,9 +28,13 @@ class ModelUpdate extends Model
 
     public function hasCooldown(int $duration, string $unit = 'days')
     {
-        if ($duration <= 0) return true;
+        if ($duration <= 0) {
+            return true;
+        }
 
-        if (! config('settings.tracking_model_updates')) return true;
+        if (! config('settings.tracking_model_updates')) {
+            return true;
+        }
 
         return $this->created_at->lt(now()->sub($unit, $duration));
     }

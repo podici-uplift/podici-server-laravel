@@ -9,7 +9,7 @@ use App\Models\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Bus;
 
-test("It correctly dispatches the job", function () {
+test('It correctly dispatches the job', function () {
     Bus::fake();
 
     $date = fake()->date();

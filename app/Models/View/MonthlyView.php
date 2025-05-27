@@ -17,7 +17,7 @@ class MonthlyView extends Model
     /** @use HasFactory<\Database\Factories\MonthlyViewFactory> */
     use HasFactory;
 
-    use HasUlids, HasShortUlid;
+    use HasShortUlid, HasUlids;
 
     /**
      * Indicates if the model should be timestamped.
@@ -36,18 +36,15 @@ class MonthlyView extends Model
         ];
     }
 
-
     /**
      * ? ***********************************************************************
      * ? Relationships
      * ? ***********************************************************************
      */
-
     public function viewable(): MorphTo
     {
         return $this->morphTo();
     }
-
 
     /**
      * ? ***********************************************************************
@@ -58,10 +55,7 @@ class MonthlyView extends Model
     /**
      * Scope a query to only include views for a specific date.
      *
-     * @param Builder $query
-     * @param string|Carbon $date
-     *
-     * @return void
+     * @param  string|Carbon  $date
      */
     #[Scope]
     protected function forMonth(
@@ -78,11 +72,6 @@ class MonthlyView extends Model
 
     /**
      * Scope a query to exclude views for a specific month.
-     *
-     * @param Builder $query
-     * @param string|Carbon|null $date
-     *
-     * @return void
      */
     #[Scope]
     protected function notMonth(
@@ -100,10 +89,7 @@ class MonthlyView extends Model
     /**
      * Scope a query to only include views for a specific year.
      *
-     * @param Builder $query
-     * @param string|Carbon $date
-     *
-     * @return void
+     * @param  string|Carbon  $date
      */
     #[Scope]
     protected function forYear(

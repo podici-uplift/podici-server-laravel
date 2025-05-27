@@ -6,7 +6,7 @@ use App\Models\Shop;
 use App\Models\User;
 use App\Models\View\View;
 
-it("can aggregate daily views for :dataset", function ($modelGenerator) {
+it('can aggregate daily views for :dataset', function ($modelGenerator) {
     $date = fake()->date();
 
     $model = $modelGenerator->create();

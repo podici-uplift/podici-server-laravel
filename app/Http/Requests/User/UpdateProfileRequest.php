@@ -33,7 +33,7 @@ class UpdateProfileRequest extends FormRequest
             'last_name',
             'other_names',
             'gender',
-            'bio'
+            'bio',
         ]);
 
         return [

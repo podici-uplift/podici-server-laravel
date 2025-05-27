@@ -26,7 +26,9 @@ class ValidateShopUpdate
     {
         $lastNameUpdate = $this->shop->getFieldLatestUpdate('name');
 
-        if (! $lastNameUpdate) return;
+        if (! $lastNameUpdate) {
+            return;
+        }
 
         $cooldownDuration = config('settings.shop.name_update_cooldown');
 
@@ -41,13 +43,17 @@ class ValidateShopUpdate
     {
         $updateToAdultShop = $validator->safe()->boolean('is_adult_shop');
 
-        if (! $updateToAdultShop) return;
+        if (! $updateToAdultShop) {
+            return;
+        }
 
-        if (request()->user()->is_adult) return;
+        if (request()->user()->is_adult) {
+            return;
+        }
 
         $validator->errors()->add('is_adult_shop', __('validation.user_too_young', [
             'adultAge' => config('settings.adult_age'),
-            'action' => 'set your shop as an adult shop'
+            'action' => 'set your shop as an adult shop',
         ]));
     }
 }

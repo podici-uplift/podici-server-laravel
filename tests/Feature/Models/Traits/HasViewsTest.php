@@ -3,7 +3,7 @@
 use App\Models\User;
 use Carbon\Carbon;
 
-test("Real time count", function () {
+test('Real time count', function () {
     $user = createUser();
 
     $count = fake()->numberBetween(1, 100);
@@ -12,13 +12,15 @@ test("Real time count", function () {
     for ($i = 0; $i < $count; $i++) {
         recordView($user, $date);
 
-        if ($i % 2 === 0) recordView($user, fake()->date(max: 'last week'));
+        if ($i % 2 === 0) {
+            recordView($user, fake()->date(max: 'last week'));
+        }
     }
 
     expect($user->realTimeCount($date))->toBe($count);
 });
 
-test("View count for day", function () {
+test('View count for day', function () {
     $user = createUser();
 
     $yesterday = now()->subDay()->toDateString();
@@ -53,7 +55,6 @@ test("View count for day", function () {
     /**
      * ! For Today
      */
-
     expect(
         $user->viewCountForDay($now, aggregatedOnly: false)
     )->toBe($realTimeViewCount);
@@ -64,7 +65,7 @@ test("View count for day", function () {
     )->toBe(0);
 });
 
-test("View count for month", function () {
+test('View count for month', function () {
     $user = createUser();
 
     $currentMonth = Carbon::parse('2024-02-1');
@@ -132,7 +133,7 @@ test("View count for month", function () {
     )->toBe(0);
 });
 
-test("View count for year", function () {
+test('View count for year', function () {
     $user = createUser();
     $year = 2024;
 
@@ -179,8 +180,7 @@ test("View count for year", function () {
     )->toBe($expectedAggViews);
 });
 
-
-test("Total view count", function () {
+test('Total view count', function () {
     $user = createUser();
 
     $baseDate = now()->endOfMonth();
@@ -221,7 +221,9 @@ test("Total view count", function () {
 
     $realTimeViews = fake()->numberBetween(1, 100);
 
-    for ($i = 0; $i < $realTimeViews; $i++) recordView($user, $baseDate->toDateString());
+    for ($i = 0; $i < $realTimeViews; $i++) {
+        recordView($user, $baseDate->toDateString());
+    }
 
     expect($user->totalViewCount(includeRealTime: false))->toBe($aggViews);
     expect($user->totalViewCount(includeRealTime: true))->toBe($aggViews + $realTimeViews);
@@ -230,14 +232,12 @@ test("Total view count", function () {
  * ? ***********************************************************************
  * ? Helpers
  * ? ***********************************************************************
- *
  */
-
 function recordView(User $user, string $date): void
 {
     $user->views()->firstOrCreate([
         'user_id' => createUser()->id,
-        'date' => $date
+        'date' => $date,
     ]);
 }
 

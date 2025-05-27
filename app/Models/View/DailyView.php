@@ -17,7 +17,7 @@ class DailyView extends Model
     /** @use HasFactory<\Database\Factories\DailyViewFactory> */
     use HasFactory;
 
-    use HasUlids, HasShortUlid;
+    use HasShortUlid, HasUlids;
     use HasShortUlid, HasUlids;
     use MassPrunable;
 
@@ -45,18 +45,15 @@ class DailyView extends Model
         ];
     }
 
-
     /**
      * ? ***********************************************************************
      * ? Relationships
      * ? ***********************************************************************
      */
-
     public function viewable(): MorphTo
     {
         return $this->morphTo();
     }
-
 
     /**
      * ? ***********************************************************************
@@ -67,10 +64,7 @@ class DailyView extends Model
     /**
      * Scope a query to only include views for a specific date.
      *
-     * @param Builder $query
-     * @param string|Carbon $date
-     *
-     * @return void
+     * @param  string|Carbon  $date
      */
     #[Scope]
     protected function forDate(
@@ -85,10 +79,7 @@ class DailyView extends Model
     /**
      * Scope a query to only include views for a specific month.
      *
-     * @param Builder $query
-     * @param string|Carbon $date
-     *
-     * @return void
+     * @param  string|Carbon  $date
      */
     #[Scope]
     protected function forMonth(
@@ -100,7 +91,7 @@ class DailyView extends Model
         $query->whereBetween('date', [
             // Last day of the previous month is used, cause whereBetween is not inclusive
             $date->clone()->subMonth()->endOfMonth(),
-            $date->clone()->endOfMonth()
+            $date->clone()->endOfMonth(),
         ]);
     }
 }

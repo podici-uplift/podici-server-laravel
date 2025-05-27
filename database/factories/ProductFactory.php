@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\Currency;
-use App\Enums\ProductStatus;
 use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

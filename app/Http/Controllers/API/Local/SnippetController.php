@@ -29,7 +29,7 @@ class SnippetController extends Controller
             'viewable_id' => $viewable->getKey(),
             'date' => now()->format('Y-m-d'),
         ], [
-            'views' => 0
+            'views' => 0,
         ])->increment('views', 12);
     }
 

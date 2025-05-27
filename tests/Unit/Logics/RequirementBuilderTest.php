@@ -2,32 +2,32 @@
 
 use App\Logics\RequirementBuilder;
 
-test("It builds requirement correctly", function () {
+test('It builds requirement correctly', function () {
     $fields = ['name', 'age', 'gender'];
 
     $requirementBuilder = new RequirementBuilder($fields);
 
     expect($requirementBuilder->requiredWithoutAll('name'))->toBe(
-        "required_without_all:age,gender"
+        'required_without_all:age,gender'
     );
 
     expect($requirementBuilder->requiredWithoutAll('age'))->toBe(
-        "required_without_all:name,gender"
+        'required_without_all:name,gender'
     );
 
     expect($requirementBuilder->requiredWithoutAll('gender'))->toBe(
-        "required_without_all:name,age"
+        'required_without_all:name,age'
     );
 
     expect($requirementBuilder->requiredWithout('name'))->toBe(
-        "required_without:age,gender"
+        'required_without:age,gender'
     );
 
     expect($requirementBuilder->requiredWithout('age'))->toBe(
-        "required_without:name,gender"
+        'required_without:name,gender'
     );
 
     expect($requirementBuilder->requiredWithout('gender'))->toBe(
-        "required_without:name,age"
+        'required_without:name,age'
     );
 });

@@ -20,15 +20,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model implements RecordsUpdate, RecordsView
 {
-    /** @use HasFactory<\Database\Factories\ShopFactory> */
-    use HasFactory;
-
     use HasCategories,
         HasContacts,
         HasShortUlid,
         HasUlids,
         HasUpdates,
         HasViews;
+
+    /** @use HasFactory<\Database\Factories\ShopFactory> */
+    use HasFactory;
 
     protected $guarded = [];
 
@@ -47,7 +47,7 @@ class Shop extends Model implements RecordsUpdate, RecordsView
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => [
+            set: fn (string $value) => [
                 'name' => $value,
                 'slug' => ShopName::toSlug($value),
             ],

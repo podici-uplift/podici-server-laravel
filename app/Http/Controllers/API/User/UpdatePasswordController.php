@@ -23,7 +23,9 @@ class UpdatePasswordController extends Controller
     {
         $user = $request->user();
 
-        if (! $this->oldPasswordIsValid($request)) return AppResponse::forbidden();
+        if (! $this->oldPasswordIsValid($request)) {
+            return AppResponse::forbidden();
+        }
 
         $user->recordAction(UserAction::UPDATE_PROFILE);
 
@@ -42,11 +44,15 @@ class UpdatePasswordController extends Controller
 
     private function oldPasswordIsValid(UpdatePasswordRequest $request): bool
     {
-        if (! $request->user()->has_setup_password) return true;
+        if (! $request->user()->has_setup_password) {
+            return true;
+        }
 
         $verifyOldPassword = config('settings.password_update_requires_old_password');
 
-        if (! $verifyOldPassword) return true;
+        if (! $verifyOldPassword) {
+            return true;
+        }
 
         $providedOldPassword = $request->safe()->string('old_password');
         $storedHashedPassword = $request->user()->password;
@@ -56,7 +62,9 @@ class UpdatePasswordController extends Controller
 
     private function invalidateOldLogins(UpdatePasswordRequest $request)
     {
-        if (! $request->safe()->boolean('invalidate_logins')) return;
+        if (! $request->safe()->boolean('invalidate_logins')) {
+            return;
+        }
 
         $request->user()->tokens()->where(
             'id',

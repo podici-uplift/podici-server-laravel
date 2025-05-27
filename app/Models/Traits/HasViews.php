@@ -2,8 +2,8 @@
 
 namespace App\Models\Traits;
 
-use App\Models\View\DailyView;
 use App\Models\User;
+use App\Models\View\DailyView;
 use App\Models\View\MonthlyView;
 use App\Models\View\View;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -18,8 +18,6 @@ trait HasViews
 
     /**
      * The views that belong to the Model
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function views(): MorphMany
     {
@@ -28,8 +26,6 @@ trait HasViews
 
     /**
      * The daily views that belong to the Model
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function dailyViews(): MorphMany
     {
@@ -38,14 +34,11 @@ trait HasViews
 
     /**
      * The monthly views that belong to the Model
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function monthlyViews(): MorphMany
     {
         return $this->morphMany(MonthlyView::class, 'viewable');
     }
-
 
     /**
      * ? ***********************************************************************
@@ -56,7 +49,7 @@ trait HasViews
     /**
      * Get the real-time count of views for the given date or the current date if none is provided.
      *
-     * @param string|null $date The date for which to count views in 'Y-m-d' format. Defaults to the current date.
+     * @param  string|null  $date  The date for which to count views in 'Y-m-d' format. Defaults to the current date.
      * @return int The count of views for the specified date.
      */
     public function realTimeCount(?string $date = null): int
@@ -70,7 +63,9 @@ trait HasViews
     ): int {
         $aggregatedCount = $this->dailyViews()->forDate($date)->first();
 
-        if ($aggregatedCount || $aggregatedOnly) return (int) optional($aggregatedCount)->views;
+        if ($aggregatedCount || $aggregatedOnly) {
+            return (int) optional($aggregatedCount)->views;
+        }
 
         return $this->realTimeCount($date);
     }
@@ -81,7 +76,9 @@ trait HasViews
     ): int {
         $aggregatedRecord = $this->monthlyViews()->forMonth($date)->first();
 
-        if ($aggregatedRecord || $aggregatedOnly) return (int) optional($aggregatedRecord)->views;
+        if ($aggregatedRecord || $aggregatedOnly) {
+            return (int) optional($aggregatedRecord)->views;
+        }
 
         return $this->dailyViews()->forMonth($date)->sum('views');
     }
@@ -123,13 +120,12 @@ trait HasViews
 
     /**
      * Record a view for this model by the given user.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
      */
     public function recordView(User $user): void
     {
-        if (! config('settings.tracking_views')) return;
+        if (! config('settings.tracking_views')) {
+            return;
+        }
 
         $this->views()->firstOrCreate([
             'user_id' => $user->id,

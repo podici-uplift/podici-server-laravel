@@ -12,12 +12,12 @@ class RequirementBuilder
 
     public function requiredWithout(string $exception): string
     {
-        return $this->generateStatement($exception, "required_without");
+        return $this->generateStatement($exception, 'required_without');
     }
 
     public function requiredWithoutAll(string $exception): string
     {
-        return $this->generateStatement($exception, "required_without_all");
+        return $this->generateStatement($exception, 'required_without_all');
     }
 
     private function generateStatement(string $exception, string $rule): string

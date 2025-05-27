@@ -43,13 +43,11 @@ class View extends Model
         ];
     }
 
-
     /**
      * ? ***********************************************************************
      * ? Relationships
      * ? ***********************************************************************
      */
-
     public function viewable(): MorphTo
     {
         return $this->morphTo();
@@ -60,7 +58,6 @@ class View extends Model
         return $this->belongsTo(User::class);
     }
 
-
     /**
      * ? ***********************************************************************
      * ? Scopes
@@ -70,10 +67,7 @@ class View extends Model
     /**
      * Scope a query to only include views for a specific date.
      *
-     * @param Builder $query
-     * @param string|Carbon $date
-     *
-     * @return void
+     * @param  string|Carbon  $date
      */
     #[Scope]
     protected function forDate(

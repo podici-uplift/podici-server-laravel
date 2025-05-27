@@ -38,7 +38,9 @@ class SetupUsernameRequest extends FormRequest
     {
         $usernameLatestUpdate = $this->user()->getFieldLatestUpdate('username');
 
-        if (! $usernameLatestUpdate) return true;
+        if (! $usernameLatestUpdate) {
+            return true;
+        }
 
         return $usernameLatestUpdate->hasCooldown(
             config('settings.user.username_update_cooldown', 0)

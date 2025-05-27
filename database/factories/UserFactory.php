@@ -47,7 +47,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
             'phone_verified_at' => null,
         ]);
@@ -56,51 +56,48 @@ class UserFactory extends Factory
     /**
      * DOB
      */
-
     public function agedBetween(string $startDate, string $endDate): static
     {
-        return $this->state(fn(array $attributes) => [
-            'dob' => fake()->dateTimeBetween($startDate, $endDate)
+        return $this->state(fn (array $attributes) => [
+            'dob' => fake()->dateTimeBetween($startDate, $endDate),
         ]);
     }
 
     public function noDob()
     {
-        return $this->state(fn(array $attributes) => ['dob' => null]);
+        return $this->state(fn (array $attributes) => ['dob' => null]);
     }
 
     public function youngerThan(int $years)
     {
-        return $this->state(fn(array $attributes) => [
-            'dob' => fake()->dateTimeBetween("-{$years} years")
+        return $this->state(fn (array $attributes) => [
+            'dob' => fake()->dateTimeBetween("-{$years} years"),
         ]);
     }
 
     /**
      * Password
      */
-
     public function password(string $password): static
     {
-        return $this->state(fn(array $attributes) => ['password' => $password,]);
+        return $this->state(fn (array $attributes) => ['password' => $password]);
     }
 
     public function noPassword()
     {
-        return $this->state(fn(array $attributes) => ['password' => null]);
+        return $this->state(fn (array $attributes) => ['password' => null]);
     }
 
     /**
      * Username
      */
-
     public function username(string $username): static
     {
-        return $this->state(fn(array $attributes) => ['username' => $username,]);
+        return $this->state(fn (array $attributes) => ['username' => $username]);
     }
 
     public function noUsername()
     {
-        return $this->state(fn(array $attributes) => ['username' => null]);
+        return $this->state(fn (array $attributes) => ['username' => null]);
     }
 }

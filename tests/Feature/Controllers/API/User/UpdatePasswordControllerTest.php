@@ -8,7 +8,7 @@ use Tests\Datasets\PasswordUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 use Tests\Helpers\HttpTester;
 
-describe("UPDATE PASSWORD SUCCESS CASES ✅", function () {
+describe('UPDATE PASSWORD SUCCESS CASES ✅', function () {
     it('Sets up new password correctly', function ($validPassword) {
         $user = userFactory()->noPassword()->create();
 
@@ -20,9 +20,9 @@ describe("UPDATE PASSWORD SUCCESS CASES ✅", function () {
         assertPasswordUpdated($user, $validPassword);
     })->with(PasswordUpdateDatasets::validPasswords());
 
-    it("Updates password without old password when configuration does not require it", function () {
-        $oldPassword = "Old P@ssw0rd!#321";
-        $newPassword = "NEW Old P@ssw0rd!#321 LOL";
+    it('Updates password without old password when configuration does not require it', function () {
+        $oldPassword = 'Old P@ssw0rd!#321';
+        $newPassword = 'NEW Old P@ssw0rd!#321 LOL';
 
         Config::set('settings.password_update_requires_old_password', false);
 
@@ -36,9 +36,9 @@ describe("UPDATE PASSWORD SUCCESS CASES ✅", function () {
         assertPasswordUpdated($user, $newPassword);
     });
 
-    it("Updates password with old password when configuration requires it", function () {
-        $oldPassword = "Old P@ssw0rd!#321";
-        $newPassword = "NEW Old P@ssw0rd!#321 LOL";
+    it('Updates password with old password when configuration requires it', function () {
+        $oldPassword = 'Old P@ssw0rd!#321';
+        $newPassword = 'NEW Old P@ssw0rd!#321 LOL';
 
         Config::set('settings.password_update_requires_old_password', true);
 
@@ -47,7 +47,7 @@ describe("UPDATE PASSWORD SUCCESS CASES ✅", function () {
         updatePasswordAs($user, [
             'password' => $newPassword,
             'password_confirmation' => $newPassword,
-            'old_password' => $oldPassword
+            'old_password' => $oldPassword,
         ])->expectOk('response.action.success');
 
         assertPasswordUpdated($user, $newPassword);
@@ -81,9 +81,9 @@ describe('UPDATE PASSWORD ERROR CASES 🔴', function () {
         assertPasswordNotUpdated();
     })->with(PasswordUpdateDatasets::invalidPasswords());
 
-    it("Requires old password when configuration requires it", function () {
-        $oldPassword = "Old P@ssw0rd!#321";
-        $newPassword = "NEW Old P@ssw0rd!#321 LOL";
+    it('Requires old password when configuration requires it', function () {
+        $oldPassword = 'Old P@ssw0rd!#321';
+        $newPassword = 'NEW Old P@ssw0rd!#321 LOL';
 
         Config::set('settings.password_update_requires_old_password', true);
 
@@ -97,9 +97,9 @@ describe('UPDATE PASSWORD ERROR CASES 🔴', function () {
         assertPasswordNotUpdated();
     });
 
-    it("Validates old password", function () {
-        $oldPassword = "Old P@ssw0rd!#321";
-        $newPassword = "NEW Old P@ssw0rd!#321 LOL";
+    it('Validates old password', function () {
+        $oldPassword = 'Old P@ssw0rd!#321';
+        $newPassword = 'NEW Old P@ssw0rd!#321 LOL';
 
         Config::set('settings.password_update_requires_old_password', true);
 
@@ -108,7 +108,7 @@ describe('UPDATE PASSWORD ERROR CASES 🔴', function () {
         updatePasswordAs($user, [
             'password' => $newPassword,
             'password_confirmation' => $newPassword,
-            'old_password' => "An incorrect password"
+            'old_password' => 'An incorrect password',
         ])->expectForbidden();
 
         assertPasswordNotUpdated();

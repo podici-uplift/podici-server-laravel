@@ -24,7 +24,9 @@ trait HasUpdates
         ?string $newValue = null,
         ?User $updatedBy = null,
     ): ?ModelUpdate {
-        if (! config('settings.tracking_model_updates')) return null;
+        if (! config('settings.tracking_model_updates')) {
+            return null;
+        }
 
         return $this->updates()->create([
             'updated_by' => optional($updatedBy)->id,

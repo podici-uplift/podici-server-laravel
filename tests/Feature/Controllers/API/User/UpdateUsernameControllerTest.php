@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Tests\Datasets\UsernameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
-describe("UPDATE USERNAME SUCCESS CASES ✅", function () {
+describe('UPDATE USERNAME SUCCESS CASES ✅', function () {
     it("Doesn't update when recently updated", function () {
         $cooldown = fake()->numberBetween(1, 100);
         Config::set('settings.user.username_update_cooldown', $cooldown);

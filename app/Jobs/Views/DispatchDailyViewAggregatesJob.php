@@ -29,7 +29,7 @@ class DispatchDailyViewAggregatesJob implements ShouldQueue
             ->whereDate('date', $this->date)
             ->distinct()
             ->cursor()
-            ->each(fn($viewable) => $this->dispatchAggregateJob($viewable));
+            ->each(fn ($viewable) => $this->dispatchAggregateJob($viewable));
     }
 
     private function dispatchAggregateJob(object $viewable)

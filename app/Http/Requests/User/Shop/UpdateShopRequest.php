@@ -11,7 +11,6 @@ use App\Validation\User\Shop\ValidateShopUpdate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Concerns\InteractsWithInput;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 class UpdateShopRequest extends FormRequest
 {
@@ -37,7 +36,7 @@ class UpdateShopRequest extends FormRequest
             'description',
             'tags',
             'is_adult_shop',
-            'status'
+            'status',
         ]);
 
         return [
@@ -53,16 +52,16 @@ class UpdateShopRequest extends FormRequest
                 'nullable',
                 'string',
                 'min:1',
-                'max:255'
+                'max:255',
             ],
             'is_adult_shop' => [
                 $requirementBuilder->requiredWithoutAll('is_adult_shop'),
-                'boolean'
+                'boolean',
             ],
             'status' => [
                 $requirementBuilder->requiredWithoutAll('status'),
                 Rule::enum(ShopStatus::class),
-            ]
+            ],
         ];
     }
 

@@ -27,7 +27,7 @@ class UpdateShopController extends Controller
             'name',
             'description',
             'is_adult_shop',
-            'status'
+            'status',
         ]));
 
         if ($request->safe()->filled('name')) {
