@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Review;
 
 use App\Enums\Review\ReviewFlagType;
 use App\Models\Review\Review;
