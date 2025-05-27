@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -17,6 +18,8 @@ class DailyView extends Model
     use HasFactory;
 
     use HasUlids, HasShortUlid;
+    use HasShortUlid, HasUlids;
+    use MassPrunable;
 
     /**
      * Indicates if the model should be timestamped.
@@ -26,6 +29,14 @@ class DailyView extends Model
     public $timestamps = false;
 
     protected $guarded = [];
+
+    /**
+     * Get the prunable model query.
+     */
+    public function prunable(): Builder
+    {
+        return static::where('date', '<=', now()->subWeek());
+    }
 
     protected function casts()
     {
