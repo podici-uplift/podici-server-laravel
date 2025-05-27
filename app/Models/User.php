@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasUpdates;
@@ -23,7 +24,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasShortUlid, HasUlids, Notifiable;
-    use HasContacts, HasReviews, HasUpdates, HasViews;
+    use HasContacts, HasReviews, HasUpdates, HasViews, HasLikes;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;

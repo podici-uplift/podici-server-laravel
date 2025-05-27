@@ -6,6 +6,7 @@ use App\Enums\ShopStatus;
 use App\Logics\ShopName;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasUpdates;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model
 {
-    use HasCategories, HasContacts, HasReviews, HasUpdates, HasViews;
+    use HasCategories, HasContacts, HasReviews, HasUpdates, HasViews, HasLikes;
 
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;

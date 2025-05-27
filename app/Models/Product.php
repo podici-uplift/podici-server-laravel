@@ -6,6 +6,7 @@ use App\Enums\Currency;
 use App\Enums\FlagStatus;
 use App\Enums\ProductStatus;
 use App\Models\Traits\HasCategories;
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasCategories, HasReviews, HasViews;
+    use HasCategories, HasReviews, HasViews, HasLikes;
 
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;

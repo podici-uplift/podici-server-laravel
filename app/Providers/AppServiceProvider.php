@@ -55,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
             // 'moonshine_user' => \MoonShine\Laravel\Models\MoonshineUser::class,
             // 'moonshine_user_role' => \MoonShine\Laravel\Models\MoonshineUserRole::class,
 
+            // Reviews
+            'review' => \App\Models\Review\Review::class,
+
             // Views
             'daily_view' => \App\Models\View\DailyView::class,
             'monthly_view' => \App\Models\View\MonthlyView::class,
@@ -62,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
 
             'category' => \App\Models\Category::class,
             'contact' => \App\Models\Contact::class,
+            'like' => \App\Models\Like::class,
             'model_update' => \App\Models\ModelUpdate::class,
             'product' => \App\Models\Product::class,
             'shop' => \App\Models\Shop::class,
