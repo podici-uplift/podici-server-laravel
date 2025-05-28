@@ -6,7 +6,6 @@ use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -30,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->setupModels();
-        $this->setupMorphMap();
         $this->setupTelescope();
         $this->setupPassword();
         $this->setupScramble();
@@ -47,30 +45,6 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(! $this->app->environment(['prod', 'production']));
 
         Model::preventSilentlyDiscardingAttributes($this->app->environment('local'));
-    }
-
-    private function setupMorphMap()
-    {
-        Relation::enforceMorphMap([
-            // 'moonshine_user' => \MoonShine\Laravel\Models\MoonshineUser::class,
-            // 'moonshine_user_role' => \MoonShine\Laravel\Models\MoonshineUserRole::class,
-
-            // Reviews
-            'review' => \App\Models\Review\Review::class,
-
-            // Views
-            'daily_view' => \App\Models\View\DailyView::class,
-            'monthly_view' => \App\Models\View\MonthlyView::class,
-            'view' => \App\Models\View\View::class,
-
-            'category' => \App\Models\Category::class,
-            'contact' => \App\Models\Contact::class,
-            'like' => \App\Models\Like::class,
-            'model_update' => \App\Models\ModelUpdate::class,
-            'product' => \App\Models\Product::class,
-            'shop' => \App\Models\Shop::class,
-            'user' => \App\Models\User::class,
-        ]);
     }
 
     private function setupTelescope()
