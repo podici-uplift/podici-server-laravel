@@ -2,8 +2,9 @@
 
 namespace App\Models\Review;
 
+use App\Enums\Review\ReviewDisputeStatus;
 use App\Enums\Review\ReviewRating;
-use App\Enums\Review\ReviewStatus;
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasShortUlid;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -21,13 +22,17 @@ class Review extends Model
 
     use HasShortUlid;
 
+    use HasLikes;
+
     protected $guarded = [];
 
     protected function casts()
     {
         return [
             'rating' => ReviewRating::class,
-            'status' => ReviewStatus::class,
+            'dispute_status' => ReviewDisputeStatus::class,
+            'disputed_at' => 'datetime',
+            'dispute_resolved_at' => 'datetime',
         ];
     }
 
@@ -41,22 +46,14 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Review::class);
-    }
-
     public function flags(): HasMany
     {
         return $this->hasMany(ReviewFlag::class);
     }
 
-    /**
-     * Scope a query to only include reviews with a specific status.
-     */
     #[Scope]
-    protected function forStatus(Builder $query, ReviewStatus $status): void
+    public function isVisibleToPublic(Builder $query): void
     {
-        $query->where('status', $status);
+        $query->whereNot('dispute_status', ReviewDisputeStatus::TAKEN_DOWN);
     }
 }

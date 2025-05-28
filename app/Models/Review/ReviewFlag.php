@@ -3,6 +3,7 @@
 namespace App\Models\Review;
 
 use App\Enums\Review\ReviewFlagType;
+use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasShortUlid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,8 +14,11 @@ class ReviewFlag extends Model
     /** @use HasFactory<\Database\Factories\ReviewFlagFactory> */
     use HasFactory;
 
-    use HasShortUlid, SoftDeletes;
+    use HasShortUlid;
+
     use SoftDeletes;
+
+    use HasLikes;
 
     protected $guarded = [];
 

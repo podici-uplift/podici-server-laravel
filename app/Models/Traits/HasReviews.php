@@ -3,7 +3,6 @@
 namespace App\Models\Traits;
 
 use App\Enums\Review\ReviewRating;
-use App\Enums\Review\ReviewStatus;
 use App\Models\Review\Review;
 use App\Models\User;
 
@@ -33,10 +32,25 @@ trait HasReviews
 
     /**
      * Returns the count of reviews that belong to this model.
+     *
+     * @param  bool  $publicOnly  Whether to count only public reviews.
+     *
+     * @return int
      */
-    public function reviewsCount(): int
+    public function reviewsCount(bool $publicOnly = true): int
     {
-        return $this->reviews()->count();
+        return $this->reviews()->when(
+            $publicOnly,
+            fn($query) => $query->isVisibleToPublic()
+        )->count();
+    }
+
+    /**
+     * Returns the average rating of all reviews that belong to this model.
+     */
+    public function averageRating(): float
+    {
+        return $this->reviews()->isVisibleToPublic()->average('rating');
     }
 
     /**
@@ -51,26 +65,21 @@ trait HasReviews
      * @param  User  $reviewer  The user who is writing the review.
      * @param  string  $review  The actual text of the review.
      * @param  ReviewRating  $rating  The numeric rating given in the review.
-     * @param  ReviewStatus  $status  The current status of the review.
      * @param  string|null  $title  The title of the review. Optional.
-     * @param  Review|null  $parent  The parent review, if this is a reply. Optional.
+     *
      * @return Review The newly created review.
      */
     public function recordReview(
         User $reviewer,
         string $review,
         ReviewRating $rating,
-        ReviewStatus $status,
         ?string $title = null,
-        ?Review $parent = null,
     ) {
         return $this->reviews()->create([
             'user_id' => $reviewer->id,
-            'parent_id' => optional($parent)->id,
             'title' => $title,
             'review' => $review,
             'rating' => $rating,
-            'status' => $status,
         ]);
     }
 }
