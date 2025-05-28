@@ -7,6 +7,7 @@ use App\Logics\ShopName;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasMedia;
 use App\Models\Traits\HasModelUpdates;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model
 {
-    use HasCategories, HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews;
+    use HasCategories, HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews, HasMedia;
 
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
@@ -36,6 +37,11 @@ class Shop extends Model
             'status' => ShopStatus::class,
         ];
     }
+    /**
+     * ? ***********************************************************************
+     * ? Attribute
+     * ? ***********************************************************************
+     */
 
     /**
      * Interact with the user's first name.
@@ -43,18 +49,34 @@ class Shop extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => [
+            set: fn(string $value) => [
                 'name' => $value,
                 'slug' => ShopName::toSlug($value),
             ],
         );
     }
 
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
+
+    /**
+     * Get the user that owns the Shop
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get all of the products for the Shop
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Product>
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

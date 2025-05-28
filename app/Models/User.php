@@ -7,6 +7,7 @@ use App\Enums\UserAction;
 use App\Events\UserActivity;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasMedia;
 use App\Models\Traits\HasModelUpdates;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,7 +25,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasShortUlid, Notifiable;
-    use HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews;
+    use HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews, HasMedia;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -62,45 +64,86 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * ? ***********************************************************************
+     * ? Attributes
+     * ? ***********************************************************************
+     */
 
+    /**
+     * Determines if the user has already set up their password.
+     *
+     * @return bool
+     */
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->password),
+            get: fn() => ! is_null($this->password),
         );
     }
 
+
+    /**
+     * Determine if the user has verified their phone number.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn () => ! is_null($this->phone_verified_at),
+            get: fn() => ! is_null($this->phone_verified_at),
         );
     }
 
+    /**
+     * Get the user's age.
+     *
+     * The age is calculated in years relative to the current date and time.
+     *
+     * @return int|null The age if the user has a date of birth, otherwise null.
+     */
     protected function age(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->dob ? $this->dob->diffInYears(now()) : null,
+            get: fn() => $this->dob ? $this->dob->diffInYears(now()) : null,
         );
     }
 
+    /**
+     * Determine if the user is an adult.
+     *
+     * The age is calculated relative to the current date and time. If the age is
+     * greater than or equal to the configured adult age, the user is considered
+     * an adult.
+     *
+     * If the configured adult age is less than or equal to 0, the user is always
+     * considered an adult.
+     *
+     * @return bool
+     */
     protected function isAdult(): Attribute
     {
         return Attribute::make(
             get: function () {
                 $adultAge = config('settings.adult_age', 18);
 
-                if ($adultAge <= 0) {
-                    return true;
-                }
-
-                return $this->age >= $adultAge;
+                return $adultAge <= 0 ? true : $this->age >= $adultAge;
             }
         );
     }
+    /**
+     * ? ***********************************************************************
+     * ? Scopes
+     * ? ***********************************************************************
+     */
 
     /**
-     * Scopes
+     * Scope a query to only include users with a matching email, username, or id.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $identifier
+     *
+     * @return void
      */
     #[Scope]
     protected function byIdentifier(Builder $query, string $identifier): void
@@ -111,9 +154,26 @@ class User extends Authenticatable
                 ->orWhere('id', $identifier);
         });
     }
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
 
     /**
-     * Relationships
+     * Get the media uploaded by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Media>
+     */
+    public function uploadedMedias(): HasMany
+    {
+        return $this->hasMany(Media::class, 'user_id');
+    }
+
+    /**
+     * The shop associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Shop>
      */
     public function shop(): HasOne
     {
@@ -121,7 +181,16 @@ class User extends Authenticatable
     }
 
     /**
-     * Methods
+     * ? ***********************************************************************
+     * ? Methods
+     * ? ***********************************************************************
+     */
+
+    /**
+     * Records the given user action and dispatches a {@see \App\Events\UserActivity} event.
+     *
+     * @param  \App\Enums\UserAction  $action
+     * @return void
      */
     public function recordAction(UserAction $action)
     {

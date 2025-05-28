@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Like;
+use App\Models\Media;
 use App\Models\ModelUpdate;
 use App\Models\Product;
 use App\Models\Review\Review;
@@ -53,6 +54,7 @@ class RelationshipServiceProvider extends ServiceProvider
             'category' => Category::class,
             'contact' => Contact::class,
             'like' => Like::class,
+            'media' => Media::class,
             'model_update' => ModelUpdate::class,
             'product' => Product::class,
             'shop' => Shop::class,
