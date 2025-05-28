@@ -14,11 +14,9 @@ class ReviewFlag extends Model
     /** @use HasFactory<\Database\Factories\ReviewFlagFactory> */
     use HasFactory;
 
-    use HasShortUlid;
-
-    use SoftDeletes;
-
     use HasLikes;
+    use HasShortUlid;
+    use SoftDeletes;
 
     protected $guarded = [];
 

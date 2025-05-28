@@ -24,11 +24,19 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasShortUlid, Notifiable;
-    use HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews, HasMedia;
+    use HasApiTokens;
+    use HasContacts;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
+    use HasLikes;
+    use HasMedia;
+    use HasModelUpdates;
+    use HasReviews;
+    use HasShortUlid;
+    use HasViews;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -78,20 +86,17 @@ class User extends Authenticatable
     protected function hasSetupPassword(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->password),
+            get: fn () => ! is_null($this->password),
         );
     }
 
-
     /**
      * Determine if the user has verified their phone number.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function hasVerifiedPhone(): Attribute
     {
         return Attribute::make(
-            get: fn() => ! is_null($this->phone_verified_at),
+            get: fn () => ! is_null($this->phone_verified_at),
         );
     }
 
@@ -105,7 +110,7 @@ class User extends Authenticatable
     protected function age(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->dob ? $this->dob->diffInYears(now()) : null,
+            get: fn () => $this->dob ? $this->dob->diffInYears(now()) : null,
         );
     }
 
@@ -139,11 +144,6 @@ class User extends Authenticatable
 
     /**
      * Scope a query to only include users with a matching email, username, or id.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $identifier
-     *
-     * @return void
      */
     #[Scope]
     protected function byIdentifier(Builder $query, string $identifier): void
@@ -189,7 +189,6 @@ class User extends Authenticatable
     /**
      * Records the given user action and dispatches a {@see \App\Events\UserActivity} event.
      *
-     * @param  \App\Enums\UserAction  $action
      * @return void
      */
     public function recordAction(UserAction $action)

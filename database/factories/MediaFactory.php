@@ -26,7 +26,7 @@ class MediaFactory extends Factory
             'mime_type' => 'image/jpeg',
             'size' => fake()->randomNumber(4),
             'status' => fake()->randomElement(MediaStatus::cases()),
-            'purpose' => fake()->realText()
+            'purpose' => fake()->realText(),
         ];
     }
 }

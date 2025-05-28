@@ -20,9 +20,8 @@ class Review extends Model
     /** @use HasFactory<\Database\Factories\ReviewFactory> */
     use HasFactory;
 
-    use HasShortUlid;
-
     use HasLikes;
+    use HasShortUlid;
 
     protected $guarded = [];
 

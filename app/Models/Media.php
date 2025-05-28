@@ -15,9 +15,8 @@ class Media extends Model
     /** @use HasFactory<\Database\Factories\MediaFactory> */
     use HasFactory;
 
-    use HasShortUlid;
-
     use HasLikes;
+    use HasShortUlid;
 
     protected $guarded = [];
 

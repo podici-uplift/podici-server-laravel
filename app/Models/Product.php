@@ -21,12 +21,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasCategories, HasLikes, HasReviews, HasViews, HasMedia;
-
+    use HasCategories;
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+    use HasLikes;
+    use HasMedia;
+    use HasReviews;
 
     use HasShortUlid, SoftDeletes;
+
+    use HasViews;
 
     protected $guarded = [];
 
@@ -55,13 +59,11 @@ class Product extends Model
      *
      * Determines the current status of the product based on various attributes,
      * such as deletion, flags, publication date, listing status, quantity, and sale price.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function status(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => $this->getStatus($attributes),
+            get: fn (mixed $value, array $attributes) => $this->getStatus($attributes),
         );
     }
 
@@ -73,8 +75,6 @@ class Product extends Model
 
     /**
      * The shop that owns the Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function shop(): BelongsTo
     {
@@ -91,8 +91,6 @@ class Product extends Model
      * such as deletion, flags, publication date, listing status, quantity, and sale price.
      *
      * @param  array  $attributes  The attributes of the product.
-     *
-     * @return \App\Enums\ProductStatus
      */
     private function getStatus(array $attributes): ProductStatus
     {

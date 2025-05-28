@@ -34,14 +34,12 @@ trait HasReviews
      * Returns the count of reviews that belong to this model.
      *
      * @param  bool  $publicOnly  Whether to count only public reviews.
-     *
-     * @return int
      */
     public function reviewsCount(bool $publicOnly = true): int
     {
         return $this->reviews()->when(
             $publicOnly,
-            fn($query) => $query->isVisibleToPublic()
+            fn ($query) => $query->isVisibleToPublic()
         )->count();
     }
 
@@ -66,7 +64,6 @@ trait HasReviews
      * @param  string  $review  The actual text of the review.
      * @param  ReviewRating  $rating  The numeric rating given in the review.
      * @param  string|null  $title  The title of the review. Optional.
-     *
      * @return Review The newly created review.
      */
     public function recordReview(

@@ -20,12 +20,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shop extends Model
 {
-    use HasCategories, HasContacts, HasLikes, HasModelUpdates, HasReviews, HasViews, HasMedia;
-
+    use HasCategories;
+    use HasContacts;
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
+    use HasLikes;
+    use HasMedia;
+    use HasModelUpdates;
+    use HasReviews;
 
     use HasShortUlid;
+
+    use HasViews;
 
     protected $guarded = [];
 
@@ -49,7 +55,7 @@ class Shop extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => [
+            set: fn (string $value) => [
                 'name' => $value,
                 'slug' => ShopName::toSlug($value),
             ],
@@ -64,8 +70,6 @@ class Shop extends Model
 
     /**
      * Get the user that owns the Shop
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {

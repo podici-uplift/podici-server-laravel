@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class ModelUpdate extends Model
 {
     /** @use HasFactory<\Database\Factories\ModelUpdateFactory> */
-    use HasFactory, HasShortUlid;
+    use HasFactory;
+
+    use HasShortUlid;
 
     protected $guarded = [];
 

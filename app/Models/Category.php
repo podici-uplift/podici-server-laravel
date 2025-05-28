@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
-    use HasFactory, HasShortUlid;
+    use HasFactory;
+
+    use HasShortUlid;
 
     protected $guarded = [];
 

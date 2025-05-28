@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Contact extends Model
 {
     /** @use HasFactory<\Database\Factories\ContactFactory> */
-    use HasFactory, HasShortUlid;
+    use HasFactory;
+
+    use HasShortUlid;
 
     protected $guarded = [];
 
