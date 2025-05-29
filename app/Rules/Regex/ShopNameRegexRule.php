@@ -2,7 +2,7 @@
 
 namespace App\Rules\Regex;
 
-use App\Logics\ShopName as ShopNameLogic;
+use App\Models\Shop;
 use Closure;
 
 class ShopNameRegexRule extends RegexRule
@@ -19,7 +19,7 @@ class ShopNameRegexRule extends RegexRule
     {
         parent::validate($attribute, $value, $fail);
 
-        if (strlen($value) > ShopNameLogic::nameLengthLimit()) {
+        if (strlen($value) > Shop::nameLengthLimit()) {
             $fail('validation.shop_name_too_long')->translate();
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Logics\ShopName;
+use App\Models\Shop;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -15,7 +15,7 @@ class UniqueShopNameRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (ShopName::isInUse($value)) {
+        if (Shop::nameUsed($value)) {
             $fail('validation.shop_name_in_use')->translate();
         }
     }

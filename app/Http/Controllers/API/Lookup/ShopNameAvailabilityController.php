@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Lookup;
 
 use App\Http\Controllers\Controller;
-use App\Logics\ShopName;
+use App\Models\Shop;
 use App\Support\AppResponse;
 use App\Rules\Regex\ShopNameRegexRule;
 use Illuminate\Http\Request;
@@ -25,8 +25,8 @@ class ShopNameAvailabilityController extends Controller
         ]);
 
         return AppResponse::ok(__('response.action.success'), [
-            'is_available' => ShopName::isAvailable($request->name),
-            'slug' => ShopName::toSlug($request->name),
+            'is_available' => Shop::nameUsed($request->name),
+            'slug' => Shop::sluggifyName($request->name),
         ]);
     }
 }

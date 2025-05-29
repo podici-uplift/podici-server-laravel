@@ -2,7 +2,6 @@
 
 use App\Events\ShopCreated;
 use App\Events\UserActivity;
-use App\Logics\ShopName;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
@@ -125,7 +124,7 @@ function resourceExpectation(string $name, bool $isAdult)
 {
     return [
         'resource.name' => $name,
-        'resource.slug' => ShopName::toSlug($name),
+        'resource.slug' => Shop::sluggifyName($name),
         'resource.is_adult_shop' => $isAdult,
     ];
 }

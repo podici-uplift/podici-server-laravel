@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\ShopStatus;
-use App\Logics\ShopName;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
@@ -55,9 +54,9 @@ class Shop extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => [
+            set: fn(string $value) => [
                 'name' => $value,
-                'slug' => ShopName::toSlug($value),
+                'slug' => self::sluggifyName($value),
             ],
         );
     }
@@ -84,5 +83,30 @@ class Shop extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * ? ***********************************************************************
+     * ? Methods
+     * ? ***********************************************************************
+     */
+
+    public static function nameLengthLimit(): int
+    {
+        return config('settings.shop.name_length_limit');
+    }
+
+    public static function sluggifyName(string $name): string
+    {
+        $limit = self::nameLengthLimit();
+
+        return str($name)->limit($limit, end: '')->slug();
+    }
+
+    public static function nameUsed(string $name): bool
+    {
+        $slug = self::sluggifyName($name);
+
+        return Shop::where('slug', $slug)->exists();
     }
 }

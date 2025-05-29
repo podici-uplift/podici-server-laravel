@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ShopStatus;
-use App\Logics\ShopName;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +21,10 @@ class ShopFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => str(fake()->company())->limit(ShopName::nameLengthLimit(), end: ''),
+            'name' => str(fake()->company())->limit(
+                Shop::nameLengthLimit(),
+                end: ''
+            ),
             'description' => fake()->realText(),
             'is_adult_shop' => fake()->boolean(),
             'status' => fake()->randomElement(ShopStatus::cases()),

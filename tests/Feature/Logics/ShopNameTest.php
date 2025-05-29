@@ -1,14 +1,13 @@
 <?php
 
-use App\Logics\ShopName;
 use App\Models\Shop;
 
 it('Correctly gets name length limit', function () {
-    expect(ShopName::nameLengthLimit())->toBe(config('settings.shop.name_length_limit'));
+    expect(Shop::nameLengthLimit())->toBe(config('settings.shop.name_length_limit'));
 });
 
 it('Converts to slug correctly', function ($name, $expected) {
-    expect(ShopName::toSlug($name))->toBe($expected);
+    expect(Shop::sluggifyName($name))->toBe($expected);
 })->with([
     ['name' => 'Test Shop', 'expected' => 'test-shop'],
     ['name' => 'Test Shop 2', 'expected' => 'test-shop-2'],
@@ -22,9 +21,6 @@ it('Converts to slug correctly', function ($name, $expected) {
 it('Checks availability correctly', function () {
     $shop = Shop::factory()->create();
 
-    expect(ShopName::isAvailable('Test Shop'))->toBeTrue();
-    expect(ShopName::isAvailable($shop->name))->toBeFalse();
-
-    expect(ShopName::isInUse('Test Shop'))->toBeFalse();
-    expect(ShopName::isInUse($shop->name))->toBeTrue();
+    expect(Shop::nameUsed('Test Shop'))->toBeFalse();
+    expect(Shop::nameUsed($shop->name))->toBeTrue();
 })->repeat(10);

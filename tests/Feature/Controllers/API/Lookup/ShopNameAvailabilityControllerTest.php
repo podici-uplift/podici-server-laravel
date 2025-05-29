@@ -1,6 +1,5 @@
 <?php
 
-use App\Logics\ShopName;
 use App\Models\Shop;
 use Tests\Helpers\Enums\HttpEndpoints;
 
@@ -14,12 +13,12 @@ it('can check shop name availability', function () {
             'data.slug' => $shop->slug,
         ]);
 
-    $otherName = str(fake()->company())->limit(ShopName::nameLengthLimit(), end: '');
+    $otherName = str(fake()->company())->limit(Shop::nameLengthLimit(), end: '');
 
     HttpEndpoints::LOOKUP_SHOP_NAME_AVAILABILITY->tester()->send(['name' => $otherName])
         ->expectOk('response.action.success')
         ->expectAll([
             'data.is_available' => true,
-            'data.slug' => ShopName::toSlug($otherName),
+            'data.slug' => Shop::sluggifyName($otherName),
         ]);
 });
