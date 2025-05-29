@@ -7,7 +7,7 @@ use App\Events\ShopAdultStatusUpdated;
 use App\Events\ShopNameUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Shop\UpdateShopRequest;
-use App\Logics\AppResponse;
+use App\Support\AppResponse;
 
 /**
  * Update Shop Controller

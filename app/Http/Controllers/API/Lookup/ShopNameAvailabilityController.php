@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\Lookup;
 
 use App\Http\Controllers\Controller;
-use App\Logics\AppResponse;
 use App\Logics\ShopName;
+use App\Support\AppResponse;
 use App\Rules\Regex\ShopNameRegexRule;
 use Illuminate\Http\Request;
 

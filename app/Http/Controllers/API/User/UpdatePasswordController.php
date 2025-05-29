@@ -6,7 +6,7 @@ use App\Enums\UserAction;
 use App\Events\PasswordUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
-use App\Logics\AppResponse;
+use App\Support\AppResponse;
 use Illuminate\Support\Facades\Hash;
 
 /**

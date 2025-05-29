@@ -1,6 +1,6 @@
 <?php
 
-use App\Logics\RequirementBuilder;
+use App\Support\RequirementBuilder;
 
 test('It builds requirement correctly', function () {
     $fields = ['name', 'age', 'gender'];

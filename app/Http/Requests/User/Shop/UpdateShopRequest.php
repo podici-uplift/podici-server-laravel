@@ -3,10 +3,10 @@
 namespace App\Http\Requests\User\Shop;
 
 use App\Enums\ShopStatus;
-use App\Logics\RequirementBuilder;
 use App\Rules\BlacklistedShopNameRule;
 use App\Rules\Regex\ShopNameRegexRule;
 use App\Rules\UniqueShopNameRule;
+use App\Support\RequirementBuilder;
 use App\Validation\User\Shop\ValidateShopUpdate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Concerns\InteractsWithInput;

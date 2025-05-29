@@ -7,7 +7,7 @@ use App\Events\ProfileUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Resources\Auth\UserResource;
-use App\Logics\AppResponse;
+use App\Support\AppResponse;
 use Illuminate\Http\Request;
 
 /**

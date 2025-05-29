@@ -4,9 +4,9 @@ namespace App\Http\Requests\User;
 
 use App\Enums\Country;
 use App\Enums\Gender;
-use App\Logics\RequirementBuilder;
 use App\Rules\Regex\LegalNameRegexRule;
 use App\Rules\Regex\PhoneNumberRegexRule;
+use App\Support\RequirementBuilder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

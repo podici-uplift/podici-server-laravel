@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Logics;
+namespace App\Support;
 
 class RequirementBuilder
 {

@@ -8,7 +8,7 @@ use App\Events\ShopCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Shop\CreateShopRequest;
 use App\Http\Resources\ShopResource;
-use App\Logics\AppResponse;
+use App\Support\AppResponse;
 
 /**
  * Create Shop Controller
