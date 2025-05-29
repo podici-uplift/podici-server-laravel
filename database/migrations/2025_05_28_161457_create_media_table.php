@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('disk');
             $table->string('path');
             $table->string('original_name')->nullable();
-            $table->string('mime_type');
+            $table->string('mime_type')->nullable();
             $table->unsignedBigInteger('size')->nullable()->comment('Size in bytes');
-
+            $table->json('meta')->nullable();
             $table->string('purpose');
             $table->timestamps();
         });

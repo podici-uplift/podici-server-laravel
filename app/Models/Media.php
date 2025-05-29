@@ -23,7 +23,8 @@ class Media extends Model
     protected function casts()
     {
         return [
-            'size' => 'integer',
+            'meta' => 'json',
+            'size' => 'float',
             'purpose' => MediaPurpose::class,
         ];
     }

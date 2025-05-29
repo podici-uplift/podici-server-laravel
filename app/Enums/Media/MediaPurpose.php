@@ -2,6 +2,8 @@
 
 namespace App\Enums\Media;
 
+use Str;
+
 enum MediaPurpose: string
 {
     case PROFILE_PICTURE = 'profile_picture';
@@ -16,5 +18,27 @@ enum MediaPurpose: string
 
     case VERIFICATION_DOCUMENT = 'verification_document';
 
-    case OTEHR = 'other';
+    case OTHER = 'other';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::PROFILE_PICTURE => 'Profile Picture',
+            self::PRODUCT_IMAGE => 'Product Image',
+            self::PRODUCT_VIDEO => 'Product Video',
+            self::REVIEW_ATTACHMENT => 'Review Attachment',
+            self::SHOP_LOGO => 'Shop Logo',
+            self::SHOP_BANNER => 'Shop Banner',
+            self::VERIFICATION_DOCUMENT => 'Verification Document',
+            self::OTHER => 'Other',
+        };
+    }
+
+    public function storageDirectory(): string
+    {
+        $appName = Str::slug(config('app.name'));
+        $env = config('app.env');
+
+        return "$appName/$env/{$this->value}";
+    }
 }

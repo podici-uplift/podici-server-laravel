@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'media' => [
+        'upload' => [
+            'allowed_types' => [],
+            'min_size' => 24, // 24kb
+            'max_size' => 12 * 1024, // 12mb
+        ]
+    ],
+
     'reviews' => [
         'max_no_of_pins' => 3,
     ],

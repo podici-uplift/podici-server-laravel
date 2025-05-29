@@ -11,6 +11,8 @@ Route::name('api.')->group(function () {
 
     Route::prefix('user')->name('user.')->group(base_path('routes/api/user.php'));
 
+    Route::prefix('media')->name('media.')->group(base_path('routes/api/media.php'));
+
     if (config('app.env') == 'local') {
         Route::prefix('local')->name('local.')->group(base_path('routes/api/local.php'));
     }
