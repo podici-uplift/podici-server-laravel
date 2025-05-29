@@ -2,12 +2,12 @@
 
 namespace Tests\Datasets;
 
-use App\Logics\BlacklistedNames;
+use App\Logics\BlacklistedNames\BlacklistedShopNames;
 
 class ShopNameUpdateDatasets
 {
     public static function blacklistedShopnames()
     {
-        return BlacklistedNames::shopnames();
+        return BlacklistedShopNames::blacklist();
     }
 }

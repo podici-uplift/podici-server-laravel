@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Logics\BlacklistedNames;
+use App\Logics\BlacklistedNames\BlacklistedShopNames;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -15,9 +15,7 @@ class BlacklistedShopNameRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $blacklistedNames = new BlacklistedNames($value);
-
-        if ($blacklistedNames->isBlacklistedShopname()) {
+        if (BlacklistedShopNames::isBlacklisted($value)) {
             $fail('validation.shop_name_prohibited')->translate();
         }
     }
