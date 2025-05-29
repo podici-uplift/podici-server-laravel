@@ -21,11 +21,13 @@ class MediaResource extends JsonResource
             'purpose' => $this->purpose,
             'meta' => $this->meta,
             'size' => $this->size,
-            'embed' => [
-                'platform' => $this->embed_platform,
-                'thumbnail' => $this->embed_thumbnail,
-                'code' => $this->embed_code,
-            ],
+            'embed' => $this->when($this->disk == MediaManager::RAW_DISK, function () {
+                return [
+                    'platform' => $this->embed_platform,
+                    'thumbnail' => $this->embed_thumbnail,
+                    'code' => $this->embed_code,
+                ];
+            }),
         ];
     }
 }
