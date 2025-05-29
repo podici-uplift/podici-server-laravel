@@ -166,7 +166,9 @@ return [
 
     // ? Custom Rules
 
-    'embed_video_link_invalid' => 'The provided :attribute is not a valid :platform video link',
+    'embed_video_link_invalid' => 'The provided :attribute is not a valid video link',
+
+    'media_purpose_prohibits_videos' => 'The selected :attribute prohibits videos',
 
     'phone_invalid' => 'The :attribute is not a valid phone number',
     'legal_name_invalid' => 'The provided :attribute is not a valid legal name',

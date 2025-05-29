@@ -2,6 +2,7 @@
 
 namespace App\Managers;
 
+use App\Data\EmbedUrlData;
 use App\Enums\Media\MediaPurpose;
 use App\Models\Media;
 use App\Models\User;
@@ -11,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaManager
 {
+    public const EMBED_DISK = 'embed';
+    public const RAW_DISK = 'raw';
+
     /**
      * Uploads a media file to the specified disk and purpose.
      *
@@ -53,10 +57,31 @@ class MediaManager
     ): Media {
         return Media::create([
             'user_id' => $user->getKey(),
-            'disk' => 'raw',
+            'disk' => self::RAW_DISK,
             'path' => $url,
             'purpose' => $purpose->value,
             'meta' => $meta,
+        ]);
+    }
+
+    public static function storeEmbed(
+        User $user,
+        MediaPurpose $purpose,
+        EmbedUrlData $data,
+        mixed $meta = null,
+    ): Media {
+        return Media::create([
+            'user_id' => $user->getKey(),
+            'disk' => self::EMBED_DISK,
+            'path' => $data->url,
+            'embed_platform' => $data->platform,
+            'embed_thumbnail' => $data->thumbnail,
+            'embed_code' => $data->code,
+            'purpose' => $purpose->value,
+            'meta' => [
+                'title' => $data->title,
+                'author_name' => $data->authorName,
+            ],
         ]);
     }
 
@@ -72,7 +97,7 @@ class MediaManager
      */
     public static function getUrl(Media $media): string
     {
-        return $media->disk === 'raw'
+        return in_array($media->disk, [self::RAW_DISK, self::EMBED_DISK])
             ? $media->path
             : Storage::disk($media->disk)->url($media->path);
     }

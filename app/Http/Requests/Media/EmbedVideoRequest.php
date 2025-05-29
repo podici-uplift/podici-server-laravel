@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Media;
 
 use App\Enums\Media\MediaPurpose;
-use App\Enums\Media\VideoEmbedPlatforms;
-use App\Rules\EmbedVideoUrl;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,8 +24,7 @@ class EmbedVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'platform' => ['required', Rule::in(VideoEmbedPlatforms::cases()),],
-            'url' => ['required', 'url', new EmbedVideoUrl],
+            'url' => ['required', 'url'],
             'purpose' => ['required', 'string', Rule::in(MediaPurpose::cases()),],
         ];
     }

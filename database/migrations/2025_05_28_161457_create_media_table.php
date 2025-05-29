@@ -22,6 +22,11 @@ return new class extends Migration
             $table->unsignedBigInteger('size')->nullable()->comment('Size in bytes');
             $table->json('meta')->nullable();
             $table->string('purpose');
+
+            $table->string('embed_platform')->nullable();
+            $table->text('embed_thumbnail')->nullable();
+            $table->text('embed_code')->nullable();
+
             $table->timestamps();
         });
     }

@@ -42,6 +42,21 @@ class AppResponse
         return (new self)(Response::HTTP_FORBIDDEN, $message, $data);
     }
 
+    public static function badRequest(
+        ?string $message = null,
+        ?array $data = []
+    ): JsonResponse {
+        return (new self)(Response::HTTP_BAD_REQUEST, $message, $data);
+    }
+
+    public static function serverError(
+        ?string $reason = null,
+    ): JsonResponse {
+        return (new self)(Response::HTTP_INTERNAL_SERVER_ERROR, __('response.server_error'), [
+            'reason' => $reason
+        ]);
+    }
+
     public static function resource(
         JsonResource $resource,
         ?string $messsage = null,

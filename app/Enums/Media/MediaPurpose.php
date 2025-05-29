@@ -41,4 +41,12 @@ enum MediaPurpose: string
 
         return "$appName/$env/{$this->value}";
     }
+
+    public function supportsVideo(): bool
+    {
+        return in_array($this, [
+            self::PRODUCT_VIDEO,
+            self::OTHER
+        ]);
+    }
 }
