@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('views', function (Blueprint $table) {
             $table->ulidMorphs('viewable');
-            $table->foreignUlid('user_id');
+            $table->foreignUlid('viewed_by')->constrained('users');
             $table->date('date');
 
-            $table->unique(['viewable_type', 'viewable_id', 'user_id', 'date'], 'views_unique');
+            $table->unique(['viewable_type', 'viewable_id', 'viewed_by', 'date'], 'views_unique');
         });
     }
 

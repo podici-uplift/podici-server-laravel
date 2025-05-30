@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->ulidMorphs('reviewable');
-            $table->foreignUlid('user_id')->constrained('users');
+            $table->foreignUlid('reviewed_by')->constrained('users');
             $table->string('title')->nullable();
             $table->text('review');
             $table->text('response')->nullable();
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->timestamp('dispute_resolved_at')->nullable();
             $table->text('dispute_reason')->nullable();
             $table->text('admin_resolution_note')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

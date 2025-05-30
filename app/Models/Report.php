@@ -6,6 +6,8 @@ use App\Enums\Report\ReportStatus;
 use App\Enums\Report\ReportType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Report extends Model
 {
@@ -22,13 +24,18 @@ class Report extends Model
         ];
     }
 
-    public function reportable()
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
+    public function reportable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function user()
+    public function reportedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'reported_by');
     }
 }

@@ -23,16 +23,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasCategories;
+
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+
     use HasLikes;
     use HasMedia;
-    use HasReviews;
     use HasReports;
-
-    use HasShortUlid, SoftDeletes;
-
+    use HasReviews;
+    use HasShortUlid;
     use HasViews;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -82,6 +83,7 @@ class Product extends Model
     {
         return $this->belongsTo(Shop::class);
     }
+
     /**
      * ? ***********************************************************************
      * ? Methods

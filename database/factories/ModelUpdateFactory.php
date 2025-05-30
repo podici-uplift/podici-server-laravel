@@ -40,7 +40,7 @@ class ModelUpdateFactory extends Factory
         return $this->state(fn (array $attributes) => ['field' => $field]);
     }
 
-    public function withValues(?mixed $oldValue = null, mixed $newValue = null): static
+    public function withValues(mixed $oldValue = null, mixed $newValue = null): static
     {
         return $this->state(fn (array $attributes) => [
             'old_value' => $oldValue ?? fake()->word(),

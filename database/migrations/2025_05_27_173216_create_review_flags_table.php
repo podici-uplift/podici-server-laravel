@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('review_flags', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('review_id')->constrained('reviews');
-            $table->foreignUlid('user_id')->nullable()->constrained('users');
+            $table->foreignUlid('flagged_by')->nullable()->constrained('users');
             $table->string('type', 48);
             $table->integer('submissions')->default(1);
             $table->string('reason')->nullable();

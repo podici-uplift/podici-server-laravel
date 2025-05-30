@@ -17,8 +17,8 @@ class Media extends Model
     use HasFactory;
 
     use HasLikes;
-    use HasShortUlid;
     use HasReports;
+    use HasShortUlid;
 
     protected $guarded = [];
 
@@ -31,13 +31,18 @@ class Media extends Model
         ];
     }
 
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
     public function mediable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function user(): BelongsTo
+    public function uploadedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'uploaded_by');
     }
 }

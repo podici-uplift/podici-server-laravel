@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\UserAction;
 use App\Events\UserActivity;
+use App\Models\Review\Review;
+use App\Models\Review\ReviewFlag;
 use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasMedia;
@@ -13,12 +15,14 @@ use App\Models\Traits\HasReports;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
+use App\Models\View\View;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -34,11 +38,12 @@ class User extends Authenticatable
     use HasLikes;
     use HasMedia;
     use HasModelUpdates;
+    use HasReports;
     use HasReviews;
     use HasShortUlid;
     use HasViews;
     use Notifiable;
-    use HasReports;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -163,13 +168,33 @@ class User extends Authenticatable
      */
 
     /**
-     * Get the media uploaded by the user.
+     * Get the reports that were filed by the user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Media>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Report>
      */
-    public function uploadedMedias(): HasMany
+    public function filedReports(): HasMany
     {
-        return $this->hasMany(Media::class, 'user_id');
+        return $this->hasMany(Report::class, 'reported_by');
+    }
+
+    public function flaggedReviews(): HasMany
+    {
+        return $this->hasMany(ReviewFlag::class, 'flagged_by');
+    }
+
+    public function givenLikes(): HasMany
+    {
+        return $this->hasMany(Like::class, 'liked_by');
+    }
+
+    /**
+     * Get the views registered by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\View\View>
+     */
+    public function registeredViews(): HasMany
+    {
+        return $this->hasMany(View::class, 'viewed_by');
     }
 
     /**
@@ -179,7 +204,27 @@ class User extends Authenticatable
      */
     public function shop(): HasOne
     {
-        return $this->hasOne(Shop::class);
+        return $this->hasOne(Shop::class, 'owned_by');
+    }
+
+    public function submittedReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewed_by');
+    }
+
+    public function updatedModels(): HasMany
+    {
+        return $this->hasMany(ModelUpdate::class, 'updated_by');
+    }
+
+    /**
+     * Get the media uploaded by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Media>
+     */
+    public function uploadedMedias(): HasMany
+    {
+        return $this->hasMany(Media::class, 'uploaded_by');
     }
 
     /**

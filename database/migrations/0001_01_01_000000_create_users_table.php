@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->timestamp('password_last_updated_at')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

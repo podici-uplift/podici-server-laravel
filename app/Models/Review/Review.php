@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Review extends Model
 {
@@ -22,6 +23,7 @@ class Review extends Model
 
     use HasLikes;
     use HasShortUlid;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -35,21 +37,31 @@ class Review extends Model
         ];
     }
 
-    public function reviewable(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
     public function flags(): HasMany
     {
         return $this->hasMany(ReviewFlag::class);
     }
 
+    public function reviewable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function reviewedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    /**
+     * ? ***********************************************************************
+     * ? Scopes
+     * ? ***********************************************************************
+     */
     #[Scope]
     public function isVisibleToPublic(Builder $query): void
     {

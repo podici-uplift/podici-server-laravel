@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
@@ -29,10 +30,11 @@ class Shop extends Model
     use HasLikes;
     use HasMedia;
     use HasModelUpdates;
+    use HasReports;
     use HasReviews;
     use HasShortUlid;
     use HasViews;
-    use HasReports;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -72,9 +74,9 @@ class Shop extends Model
     /**
      * Get the user that owns the Shop
      */
-    public function user(): BelongsTo
+    public function ownedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owned_by');
     }
 
     /**

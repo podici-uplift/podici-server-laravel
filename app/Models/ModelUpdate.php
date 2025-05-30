@@ -17,16 +17,26 @@ class ModelUpdate extends Model
 
     protected $guarded = [];
 
-    public function updatedBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
     public function updateable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    /**
+     * ? ***********************************************************************
+     * ? Methods
+     * ? ***********************************************************************
+     */
     public function hasCooldown(int $duration, string $unit = 'days')
     {
         if ($duration <= 0) {

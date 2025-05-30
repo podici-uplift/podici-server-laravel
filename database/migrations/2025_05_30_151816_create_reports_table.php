@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->ulid('id')->primary();
 
-            $table->foreignUlid('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignUlid('reported_by')->nullable()->constrained()->cascadeOnDelete();
             $table->ulidMorphs('reportable');
 
             $table->string('type'); // [ReportType]

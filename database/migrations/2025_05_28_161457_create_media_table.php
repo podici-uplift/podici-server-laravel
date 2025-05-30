@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('user_id')->constrained('users');
+            $table->foreignUlid('uploaded_by')->constrained('users');
             $table->nullableUlidMorphs('mediable');
             $table->string('disk');
             $table->string('path');

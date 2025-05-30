@@ -23,8 +23,13 @@ class Like extends Model
         ];
     }
 
-    public function user(): BelongsTo
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
+    public function likedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'liked_by');
     }
 }

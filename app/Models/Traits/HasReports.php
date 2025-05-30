@@ -38,7 +38,6 @@ trait HasReports
      * @param  ReportType  $type  The type of the report.
      * @param  string  $report  The actual text of the report.
      * @param  string|null  $title  The title of the report. Optional.
-     *
      * @return Report The newly created report.
      */
     public function recordReport(

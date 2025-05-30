@@ -26,6 +26,11 @@ class Category extends Model
         ];
     }
 
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
     public function parentCategory(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');

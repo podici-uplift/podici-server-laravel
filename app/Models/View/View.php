@@ -53,9 +53,9 @@ class View extends Model
         return $this->morphTo();
     }
 
-    public function user(): BelongsTo
+    public function viewedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'viewed_by');
     }
 
     /**

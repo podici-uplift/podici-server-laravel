@@ -14,10 +14,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LikeFactory extends Factory
 {
+    use HasMediaMorph;
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
-    use HasMediaMorph;
 
     protected function getMorphNameBase(): string
     {

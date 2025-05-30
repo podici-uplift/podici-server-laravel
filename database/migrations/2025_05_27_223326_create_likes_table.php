@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('likeable');
-            $table->foreignUlid('user_id')->constrained()->cascadeOnDelete();
+            $table->ulidMorphs('likeable');
+            $table->foreignUlid('liked_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
