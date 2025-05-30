@@ -5,7 +5,6 @@ namespace App\Support;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppResponse
 {
@@ -53,9 +52,9 @@ class AppResponse
     public static function serverError(
         ?string $reason = null,
     ): JsonResponse {
-        return (new self)(Response::HTTP_INTERNAL_SERVER_ERROR, __('response.server_error'), [
-            'reason' => $reason,
-        ]);
+        $payload = config('app.debug') ? ['reason' => $reason] : [];
+
+        return (new self)(Response::HTTP_INTERNAL_SERVER_ERROR, __('response.server_error'), $payload);
     }
 
     public static function resource(

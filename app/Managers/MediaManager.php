@@ -106,8 +106,7 @@ class MediaManager
                 now()->addMinutes(config('settings.media.temporary_local_url_lifetime')),
             ),
 
-            default => Storage::disk($media->disk)
-                ->url($media->path),
+            default => Storage::disk($media->disk)->url($media->path),
         };
     }
 
@@ -116,7 +115,7 @@ class MediaManager
      */
     public static function delete(Media $media): bool
     {
-        if (! $media->disk == 'raw') {
+        if (! in_array($media->disk, [self::RAW_DISK, self::EMBED_DISK])) {
             Storage::disk($media->disk)->delete($media->path);
         }
 
