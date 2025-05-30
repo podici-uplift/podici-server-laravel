@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Media\MediaPurpose;
 use App\Models\Traits\HasLikes;
+use App\Models\Traits\HasReports;
 use App\Models\Traits\HasShortUlid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Media extends Model
 
     use HasLikes;
     use HasShortUlid;
+    use HasReports;
 
     protected $guarded = [];
 

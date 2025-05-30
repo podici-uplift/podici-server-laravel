@@ -35,7 +35,7 @@ class UpdatePasswordController extends Controller
 
         $this->invalidateOldLogins($request);
 
-        $user->recordFieldUpdate('password');
+        $user->recordFieldUpdate('password', updatedBy: $user);
 
         event(new PasswordUpdated($user));
 

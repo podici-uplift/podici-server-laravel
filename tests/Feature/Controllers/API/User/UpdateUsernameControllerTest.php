@@ -16,7 +16,7 @@ describe('UPDATE USERNAME SUCCESS CASES ✅', function () {
 
         $newUsername = uniqid('user');
 
-        $user->recordFieldUpdate('username');
+        $user->recordFieldUpdate('username', updatedBy: $user);
 
         updateUsernameAs($user, $newUsername)->expectUnauthorized();
 

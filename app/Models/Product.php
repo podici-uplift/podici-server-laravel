@@ -8,6 +8,7 @@ use App\Enums\ProductStatus;
 use App\Models\Traits\HasCategories;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasMedia;
+use App\Models\Traits\HasReports;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
@@ -27,6 +28,7 @@ class Product extends Model
     use HasLikes;
     use HasMedia;
     use HasReviews;
+    use HasReports;
 
     use HasShortUlid, SoftDeletes;
 

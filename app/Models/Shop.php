@@ -8,6 +8,7 @@ use App\Models\Traits\HasContacts;
 use App\Models\Traits\HasLikes;
 use App\Models\Traits\HasMedia;
 use App\Models\Traits\HasModelUpdates;
+use App\Models\Traits\HasReports;
 use App\Models\Traits\HasReviews;
 use App\Models\Traits\HasShortUlid;
 use App\Models\Traits\HasViews;
@@ -31,6 +32,7 @@ class Shop extends Model
     use HasReviews;
     use HasShortUlid;
     use HasViews;
+    use HasReports;
 
     protected $guarded = [];
 
