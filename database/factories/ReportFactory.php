@@ -5,6 +5,10 @@ namespace Database\Factories;
 use App\Enums\Report\ReportStatus;
 use App\Enums\Report\ReportType;
 use App\Models\User;
+use Database\Factories\Traits\Morph\HasMediaMorph;
+use Database\Factories\Traits\Morph\HasProductMorph;
+use Database\Factories\Traits\Morph\HasShopMorph;
+use Database\Factories\Traits\Morph\HasUserMorph;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +16,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ReportFactory extends Factory
 {
+    use HasProductMorph;
+    use HasShopMorph;
+    use HasUserMorph;
+    use HasMediaMorph;
+
+    protected function getMorphNameBase(): string
+    {
+        return 'reportable';
+    }
+
     /**
      * Define the model's default state.
      *

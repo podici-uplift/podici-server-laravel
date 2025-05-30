@@ -2,8 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Enums\Media\MediaStatus;
+use App\Enums\Media\MediaPurpose;
 use App\Models\User;
+use Database\Factories\Traits\Morph\HasProductMorph;
+use Database\Factories\Traits\Morph\HasShopMorph;
+use Database\Factories\Traits\Morph\HasUserMorph;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +14,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MediaFactory extends Factory
 {
+    use HasProductMorph;
+    use HasShopMorph;
+    use HasUserMorph;
+
+    protected function getMorphNameBase(): string
+    {
+        return 'mediable';
+    }
+
     /**
      * Define the model's default state.
      *
@@ -20,13 +32,12 @@ class MediaFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'disk' => 'test',
-            'path' => fake()->filePath(),
+            'disk' => 'raw',
+            'path' => fake()->imageUrl(),
             'original_name' => uniqid(),
             'mime_type' => 'image/jpeg',
             'size' => fake()->randomNumber(4),
-            'status' => fake()->randomElement(MediaStatus::cases()),
-            'purpose' => fake()->realText(),
+            'purpose' => fake()->randomElement(MediaPurpose::cases()),
         ];
     }
 }

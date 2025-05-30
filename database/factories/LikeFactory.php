@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
-use App\Models\Shop;
 use App\Models\User;
+use Database\Factories\Traits\Morph\HasMediaMorph;
+use Database\Factories\Traits\Morph\HasProductMorph;
+use Database\Factories\Traits\Morph\HasShopMorph;
+use Database\Factories\Traits\Morph\HasUserMorph;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +14,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LikeFactory extends Factory
 {
+    use HasProductMorph;
+    use HasShopMorph;
+    use HasUserMorph;
+    use HasMediaMorph;
+
+    protected function getMorphNameBase(): string
+    {
+        return 'likeable';
+    }
+
     /**
      * Define the model's default state.
      *
@@ -22,32 +34,5 @@ class LikeFactory extends Factory
         return [
             'user_id' => User::factory(),
         ];
-    }
-
-    public function product(): static
-    {
-        return $this->forFactory(Product::factory());
-    }
-
-    public function shop(): static
-    {
-        return $this->forFactory(Shop::factory());
-    }
-
-    public function user(): static
-    {
-        return $this->forFactory(User::factory());
-    }
-
-    private function forFactory(Factory $factory): static
-    {
-        return $this->state(function (array $attributes) use ($factory) {
-            $model = $factory->create();
-
-            return [
-                'likeable_type' => $model->getMorphClass(),
-                'likeable_id' => $model->getKey(),
-            ];
-        });
     }
 }
