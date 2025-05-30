@@ -21,15 +21,15 @@ class Shop extends Model
 {
     use HasCategories;
     use HasContacts;
+
     /** @use HasFactory<\Database\Factories\ShopFactory> */
     use HasFactory;
+
     use HasLikes;
     use HasMedia;
     use HasModelUpdates;
     use HasReviews;
-
     use HasShortUlid;
-
     use HasViews;
 
     protected $guarded = [];
@@ -54,7 +54,7 @@ class Shop extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => [
+            set: fn (string $value) => [
                 'name' => $value,
                 'slug' => self::sluggifyName($value),
             ],
@@ -90,7 +90,6 @@ class Shop extends Model
      * ? Methods
      * ? ***********************************************************************
      */
-
     public static function nameLengthLimit(): int
     {
         return config('settings.shop.name_length_limit');

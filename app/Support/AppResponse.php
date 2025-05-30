@@ -53,7 +53,7 @@ class AppResponse
         ?string $reason = null,
     ): JsonResponse {
         return (new self)(Response::HTTP_INTERNAL_SERVER_ERROR, __('response.server_error'), [
-            'reason' => $reason
+            'reason' => $reason,
         ]);
     }
 

@@ -5,5 +5,5 @@ return [
         'success' => 'Action completed successfully',
     ],
 
-    'server_error' => 'Server Error.'
+    'server_error' => 'Server Error.',
 ];

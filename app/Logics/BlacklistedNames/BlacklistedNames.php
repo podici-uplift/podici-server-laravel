@@ -22,6 +22,6 @@ abstract class BlacklistedNames
 
     private static function general(): array
     {
-        return ['admin', 'demo', 'official', 'root', 'sudo', 'test',];
+        return ['admin', 'demo', 'official', 'root', 'sudo', 'test'];
     }
 }

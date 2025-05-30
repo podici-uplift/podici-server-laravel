@@ -9,17 +9,17 @@ class EmbedVideoRequestDatasets
 {
     public static function validUrls()
     {
-        $builder = fn(VideoEmbedPlatforms $platform, string $url) => [
+        $builder = fn (VideoEmbedPlatforms $platform, string $url) => [
             'platform' => $platform->value,
             'url' => $url,
             'purpose' => MediaPurpose::OTHER->value,
         ];
 
-        $youtube = fn(string $url) => $builder(VideoEmbedPlatforms::YOUTUBE, $url);
+        $youtube = fn (string $url) => $builder(VideoEmbedPlatforms::YOUTUBE, $url);
 
-        $tiktok = fn(string $url) => $builder(VideoEmbedPlatforms::TIKTOK, $url);
+        $tiktok = fn (string $url) => $builder(VideoEmbedPlatforms::TIKTOK, $url);
 
-        $vimeo = fn(string $url) => $builder(VideoEmbedPlatforms::VIMEO, $url);
+        $vimeo = fn (string $url) => $builder(VideoEmbedPlatforms::VIMEO, $url);
 
         $uniqueId = uniqid();
 

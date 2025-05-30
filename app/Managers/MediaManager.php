@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Storage;
 class MediaManager
 {
     public const EMBED_DISK = 'embed';
+
     public const RAW_DISK = 'raw';
+
     public const LOCAL_DISK = 'local';
 
     /**
@@ -24,8 +26,7 @@ class MediaManager
      * @param  MediaPurpose  $purpose  The purpose of the uploaded file.
      * @param  mixed  $meta  Optional meta data to be stored with the media file.
      * @param  string|null  $disk  The disk to store the media file on. If not specified, will use the default disk.
-     *
-     * @return Media  The created media instance.
+     * @return Media The created media instance.
      */
     public static function upload(
         User $user,
@@ -93,8 +94,7 @@ class MediaManager
      * Otherwise, it generates a URL using the specified storage disk.
      *
      * @param  Media  $media  The media instance for which to get the URL.
-     *
-     * @return string  The URL or path to the media file.
+     * @return string The URL or path to the media file.
      */
     public static function getUrl(Media $media): string
     {
@@ -113,14 +113,10 @@ class MediaManager
 
     /**
      * Deletes a media file from the storage.
-     *
-     * @param  Media  $media
-     *
-     * @return bool
      */
     public static function delete(Media $media): bool
     {
-        if (!$media->disk == 'raw') {
+        if (! $media->disk == 'raw') {
             Storage::disk($media->disk)->delete($media->path);
         }
 
@@ -131,11 +127,9 @@ class MediaManager
      * Deletes multiple media files from the storage.
      *
      * @param  \Illuminate\Support\Collection<Media>|array<Media>  $files
-     *
-     * @return void
      */
     public static function deleteMany(Collection|array $files): void
     {
-        collect($files)->each(fn($media) => self::delete($media));
+        collect($files)->each(fn ($media) => self::delete($media));
     }
 }

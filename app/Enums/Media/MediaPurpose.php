@@ -46,7 +46,7 @@ enum MediaPurpose: string
     {
         return in_array($this, [
             self::PRODUCT_VIDEO,
-            self::OTHER
+            self::OTHER,
         ]);
     }
 }

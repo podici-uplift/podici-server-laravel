@@ -13,7 +13,7 @@ class ResolveEmbedUrlProcessor
     public function __construct(
         protected string $url
     ) {
-        $this->embed = new Embed();
+        $this->embed = new Embed;
     }
 
     public function execute(): ?EmbedUrlData

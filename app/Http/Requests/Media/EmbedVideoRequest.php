@@ -25,7 +25,7 @@ class EmbedVideoRequest extends FormRequest
     {
         return [
             'url' => ['required', 'url'],
-            'purpose' => ['required', 'string', Rule::in(MediaPurpose::cases()),],
+            'purpose' => ['required', 'string', Rule::in(MediaPurpose::cases())],
         ];
     }
 }

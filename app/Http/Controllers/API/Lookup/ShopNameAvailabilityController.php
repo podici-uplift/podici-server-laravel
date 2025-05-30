@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\Lookup;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
-use App\Support\AppResponse;
 use App\Rules\Regex\ShopNameRegexRule;
+use App\Support\AppResponse;
 use Illuminate\Http\Request;
 
 /**
