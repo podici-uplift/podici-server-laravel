@@ -68,6 +68,7 @@
         "test": [
             "@php artisan config:clear --ansi && php artisan test"
         ],
+        "route-list": "@php artisan route:list --except-vendor",
         "pint": [
             "./vendor/bin/pint"
         ],

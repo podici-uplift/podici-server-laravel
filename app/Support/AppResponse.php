@@ -5,6 +5,7 @@ namespace App\Support;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppResponse
 {
@@ -59,13 +60,15 @@ class AppResponse
 
     public static function resource(
         JsonResource $resource,
-        ?string $messsage = null,
+        ?string $message = null,
         int $statusCode = Response::HTTP_OK
     ): JsonResponse {
+        $statusText = data_get(Response::$statusTexts, $statusCode);
+
         return response()->json([
-            'status' => data_get(Response::$statusTexts, $statusCode),
+            'status' => $statusText,
             'statusCode' => $statusCode,
-            'message' => $messsage ?? data_get(Response::$statusTexts, $statusCode),
+            'message' => $message ?? $statusText,
             'resource' => $resource,
         ], $statusCode);
     }
