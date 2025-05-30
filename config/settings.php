@@ -5,8 +5,9 @@ return [
         'upload' => [
             'allowed_types' => [],
             'min_size' => 24, // 24kb
-            'max_size' => 12 * 1024, // 12mb
-        ]
+            'max_size' => 4 * 1024, // 4mb
+        ],
+        'temporary_local_url_lifetime' => 60 * 5, // 5minutes
     ],
 
     'reviews' => [

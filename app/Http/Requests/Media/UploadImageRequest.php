@@ -27,6 +27,8 @@ class UploadImageRequest extends FormRequest
         return [
             'image' => [
                 'required',
+                'file',
+                'image',
                 File::image()
                     ->min(config('settings.media.upload.min_size'))
                     ->max(config('settings.media.upload.max_size')),

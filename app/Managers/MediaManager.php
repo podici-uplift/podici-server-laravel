@@ -14,6 +14,7 @@ class MediaManager
 {
     public const EMBED_DISK = 'embed';
     public const RAW_DISK = 'raw';
+    public const LOCAL_DISK = 'local';
 
     /**
      * Uploads a media file to the specified disk and purpose.
@@ -97,9 +98,17 @@ class MediaManager
      */
     public static function getUrl(Media $media): string
     {
-        return in_array($media->disk, [self::RAW_DISK, self::EMBED_DISK])
-            ? $media->path
-            : Storage::disk($media->disk)->url($media->path);
+        return match ($media->disk) {
+            self::RAW_DISK, self::EMBED_DISK => $media->path,
+
+            self::LOCAL_DISK => Storage::disk($media->disk)->temporaryUrl(
+                $media->path,
+                now()->addMinutes(config('settings.media.temporary_local_url_lifetime')),
+            ),
+
+            default => Storage::disk($media->disk)
+                ->url($media->path),
+        };
     }
 
     /**
