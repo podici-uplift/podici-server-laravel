@@ -9,10 +9,6 @@ use Tests\Datasets\PasswordUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 use Tests\Helpers\HttpTester;
 
-beforeAll(function () {
-    Http::fake();
-});
-
 describe('Update Password Success Cases', function () {
     it('Sets up new password correctly', function ($validPassword) {
         $user = userFactory()->noPassword()->create();

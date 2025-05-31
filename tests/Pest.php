@@ -23,6 +23,9 @@ pest()->extend(TestCase::class)
 
 pest()->beforeEach(function () {
     Event::fake();
+    Http::fake([
+        'api.pwnedpasswords.com/*'
+    ]);
 })->in('Feature/Controllers');
 
 /*
