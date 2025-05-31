@@ -4,14 +4,16 @@ namespace App\Http\Requests\User;
 
 use App\Enums\Country;
 use App\Enums\Gender;
+use App\Http\Requests\Traits\HasRequirementBuilder;
 use App\Rules\Regex\LegalNameRegexRule;
 use App\Rules\Regex\PhoneNumberRegexRule;
-use App\Support\RequirementBuilder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateProfileRequest extends FormRequest
 {
+    use HasRequirementBuilder;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,50 +23,49 @@ class UpdateProfileRequest extends FormRequest
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected function requirementFields(): array
+    {
+        return ['phone', 'first_name', 'last_name', 'other_names', 'gender', 'bio'];
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
-        $requirementBuilder = new RequirementBuilder([
-            'phone',
-            'first_name',
-            'last_name',
-            'other_names',
-            'gender',
-            'bio',
-        ]);
-
         return [
             'phone' => [
                 'string',
                 new PhoneNumberRegexRule(Country::NIGERIA),
-                $requirementBuilder->requiredWithoutAll('phone'),
+                $this->requiredWithoutAll('phone'),
             ],
             'first_name' => [
                 'string',
                 new LegalNameRegexRule,
-                $requirementBuilder->requiredWithoutAll('first_name'),
+                $this->requiredWithoutAll('first_name'),
             ],
             'last_name' => [
                 'string',
                 new LegalNameRegexRule,
-                $requirementBuilder->requiredWithoutAll('last_name'),
+                $this->requiredWithoutAll('last_name'),
             ],
             'other_names' => [
                 'string',
                 new LegalNameRegexRule(true),
-                $requirementBuilder->requiredWithoutAll('other_names'),
+                $this->requiredWithoutAll('other_names'),
             ],
             'gender' => [
                 Rule::enum(Gender::class),
-                $requirementBuilder->requiredWithoutAll('gender'),
+                $this->requiredWithoutAll('gender'),
             ],
             'bio' => [
                 'string',
                 'max:248',
-                $requirementBuilder->requiredWithoutAll('bio'),
+                $this->requiredWithoutAll('bio'),
             ],
         ];
     }

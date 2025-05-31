@@ -2,9 +2,15 @@
 
 namespace {{ namespace }};
 
+use {{ rootNamespace }}Support\AppResponse;
 use {{ rootNamespace }}Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * {{ class }}
+ *
+ * @tags Untagged
+ */
 class {{ class }} extends Controller
 {
     /**

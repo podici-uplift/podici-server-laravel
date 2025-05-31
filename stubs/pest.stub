@@ -1,7 +1,19 @@
 <?php
 
-test('example', function () {
-    $response = $this->get('/');
-
-    $response->assertStatus(200);
+describe('Success Cases', function () {
+    it('works', function () {
+        $user = userFactory()->create();
+    });
 });
+
+describe('Error Cases', function () {
+    it('does not works', function () {
+        $user = userFactory()->create();
+    });
+});
+
+/**
+ * ? ***********************************************************************
+ * ? Helper Functions
+ * ? ***********************************************************************
+ */

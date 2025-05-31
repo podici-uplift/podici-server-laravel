@@ -5,9 +5,7 @@ namespace App\Http\Controllers\API\Media;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MediaResource;
 use App\Managers\MediaManager;
-use App\Models\Media;
 use App\Support\AppResponse;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 
 /**
@@ -24,7 +22,6 @@ class MediaController extends Controller
     {
         $request->input('cursor');
 
-        /** @var Paginator $medias */
         $medias = $request->user()->uploadedMedias()->cursorPaginate(
             $request->input('per_page', 15)
         );

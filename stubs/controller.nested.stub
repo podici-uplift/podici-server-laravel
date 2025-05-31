@@ -3,10 +3,16 @@
 namespace {{ namespace }};
 
 use {{ namespacedModel }};
+use {{ rootNamespace }}Support\AppResponse;
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedParentModel }};
 use Illuminate\Http\Request;
 
+/**
+ * {{ class }}
+ *
+ * @tags Untagged
+ */
 class {{ class }} extends Controller
 {
     /**

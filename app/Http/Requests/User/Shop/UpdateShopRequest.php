@@ -3,18 +3,17 @@
 namespace App\Http\Requests\User\Shop;
 
 use App\Enums\ShopStatus;
+use App\Http\Requests\Traits\HasRequirementBuilder;
 use App\Rules\BlacklistedShopNameRule;
 use App\Rules\Regex\ShopNameRegexRule;
 use App\Rules\UniqueShopNameRule;
-use App\Support\RequirementBuilder;
 use App\Validation\User\Shop\ValidateShopUpdate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Concerns\InteractsWithInput;
 use Illuminate\Validation\Rule;
 
 class UpdateShopRequest extends FormRequest
 {
-    // use InteractsWithInput;
+    use HasRequirementBuilder;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,35 +30,27 @@ class UpdateShopRequest extends FormRequest
      */
     public function rules(): array
     {
-        $requirementBuilder = new RequirementBuilder([
-            'name',
-            'description',
-            'tags',
-            'is_adult_shop',
-            'status',
-        ]);
-
         return [
             'name' => [
-                $requirementBuilder->requiredWithoutAll('name'),
+                $this->requiredWithoutAll('name'),
                 'string',
                 new ShopNameRegexRule,
                 new BlacklistedShopNameRule,
                 new UniqueShopNameRule,
             ],
             'description' => [
-                $requirementBuilder->requiredWithoutAll('description'),
+                $this->requiredWithoutAll('description'),
                 'nullable',
                 'string',
                 'min:1',
                 'max:255',
             ],
             'is_adult_shop' => [
-                $requirementBuilder->requiredWithoutAll('is_adult_shop'),
+                $this->requiredWithoutAll('is_adult_shop'),
                 'boolean',
             ],
             'status' => [
-                $requirementBuilder->requiredWithoutAll('status'),
+                $this->requiredWithoutAll('status'),
                 Rule::enum(ShopStatus::class),
             ],
         ];
@@ -73,5 +64,13 @@ class UpdateShopRequest extends FormRequest
         return [
             new ValidateShopUpdate,
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function requirementFields(): array
+    {
+        return ['name', 'description', 'tags', 'is_adult_shop', 'status'];
     }
 }

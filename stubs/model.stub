@@ -2,10 +2,84 @@
 
 namespace {{ namespace }};
 
+use {{ rootNamespace }}Models\Traits\HasShortUlid;
 {{ factoryImport }}
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class {{ class }} extends Model
 {
     {{ factory }}
+
+    // use HasShortUlid;
+    // use SoftDeletes;
+
+    /**
+     * The attributes that should not be mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $guarded = [];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        //
+    ];
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        //
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * ? ***********************************************************************
+     * ? Attributes
+     * ? ***********************************************************************
+     */
+
+    //
+
+    /**
+     * ? ***********************************************************************
+     * ? Scopes
+     * ? ***********************************************************************
+     */
+
+    //
+
+    /**
+     * ? ***********************************************************************
+     * ? Relationships
+     * ? ***********************************************************************
+     */
+
+    //
+
+    /**
+     * ? ***********************************************************************
+     * ? Methods
+     * ? ***********************************************************************
+     */
+
+    //
 }
