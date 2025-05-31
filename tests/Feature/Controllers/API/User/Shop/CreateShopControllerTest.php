@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Tests\Datasets\ShopNameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
-describe('SUCCESS CASES ✅', function () {
+describe('Create Shop Success Cases', function () {
     it('can create non adult shop shop', function () {
         $user = createUser();
 
@@ -38,7 +38,7 @@ describe('SUCCESS CASES ✅', function () {
     });
 });
 
-describe('ERROR CASES 🔴', function () {
+describe('Create Shop Error Cases', function () {
     it('requires auth to create shop', function () {
         HttpEndpoints::SELF_SHOP_CREATE->tester()->send([
             'name' => fake()->company(),

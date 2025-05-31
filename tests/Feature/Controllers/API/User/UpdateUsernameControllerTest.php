@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Tests\Datasets\UsernameUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 
-describe('UPDATE USERNAME SUCCESS CASES ✅', function () {
+describe('Update username success cases', function () {
     it("Doesn't update when recently updated", function () {
         $cooldown = fake()->numberBetween(1, 100);
         Config::set('settings.user.username_update_cooldown', $cooldown);
@@ -38,7 +38,7 @@ describe('UPDATE USERNAME SUCCESS CASES ✅', function () {
     })->with(UsernameUpdateDatasets::validUsernames());
 });
 
-describe('UPDATE USERNAME FAIL CASES ❌', function () {
+describe('Update username error cases', function () {
     it('Requires auth', function () {
         HttpEndpoints::SELF_USERNAME_UPDATE->tester()->send()->expectAuthenticationError();
     });

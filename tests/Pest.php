@@ -25,19 +25,6 @@ pest()->beforeEach(function () {
     Event::fake();
 })->in('Feature/Controllers');
 
-pest()->beforeEach(function () {
-    $this->startMemory = memory_get_usage(true);
-})->afterEach(function () {
-    $endMemory = memory_get_peak_usage(true);
-    $usedMemory = ($endMemory - $this->startMemory) / 1024 / 1024;
-
-    fwrite(STDOUT, sprintf(
-        "\nMemory used: %.2f MB - Peak Memory: %.2f MB\n",
-        $usedMemory,
-        memory_get_peak_usage(true) / 1024 / 1024
-    ));
-});
-
 /*
 |--------------------------------------------------------------------------
 | Expectations

@@ -4,9 +4,14 @@ use App\Events\PasswordUpdated;
 use App\Events\UserActivity;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Tests\Datasets\PasswordUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 use Tests\Helpers\HttpTester;
+
+beforeAll(function () {
+    Http::fake();
+});
 
 describe('Update Password Success Cases', function () {
     it('Sets up new password correctly', function ($validPassword) {
