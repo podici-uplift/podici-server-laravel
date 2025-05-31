@@ -13,7 +13,7 @@ use App\Support\AppResponse;
 /**
  * Create Shop Controller
  *
- * @tags User
+ * @tags My Shop
  */
 class CreateShopController extends Controller
 {

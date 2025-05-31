@@ -12,7 +12,7 @@ use App\Support\AppResponse;
 /**
  * Update Shop Controller
  *
- * @tags User
+ * @tags My Shop
  */
 class UpdateShopController extends Controller
 {
