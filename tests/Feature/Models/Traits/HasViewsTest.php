@@ -236,7 +236,7 @@ test('Total view count', function () {
 function recordView(User $user, string $date): void
 {
     $user->views()->firstOrCreate([
-        'user_id' => createUser()->id,
+        'viewed_by' => createUser()->id,
         'date' => $date,
     ]);
 }

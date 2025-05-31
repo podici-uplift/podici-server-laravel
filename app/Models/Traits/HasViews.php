@@ -180,7 +180,7 @@ trait HasViews
         }
 
         $this->views()->firstOrCreate([
-            'user_id' => $viewer->id,
+            'viewed_by' => $viewer->id,
             'date' => now()->format('Y-m-d'),
         ]);
     }

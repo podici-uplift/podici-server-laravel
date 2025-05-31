@@ -25,7 +25,7 @@ class ShopNameAvailabilityController extends Controller
         ]);
 
         return AppResponse::ok(__('response.action.success'), [
-            'is_available' => Shop::nameUsed($request->name),
+            'is_available' => ! Shop::nameUsed($request->name),
             'slug' => Shop::sluggifyName($request->name),
         ]);
     }

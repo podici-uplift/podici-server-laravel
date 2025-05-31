@@ -47,7 +47,7 @@ trait HasReports
         ?string $title = null,
     ) {
         return $this->reports()->create([
-            'user_id' => $reporter->id,
+            'reported_by' => $reporter->id,
             'type' => $type,
             'title' => $title,
             'report' => $report,

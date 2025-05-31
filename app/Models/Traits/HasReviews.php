@@ -73,7 +73,7 @@ trait HasReviews
         ?string $title = null,
     ) {
         return $this->reviews()->create([
-            'user_id' => $reviewer->id,
+            'reviewed_by' => $reviewer->id,
             'title' => $title,
             'review' => $review,
             'rating' => $rating,

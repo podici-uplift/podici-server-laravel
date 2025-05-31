@@ -31,7 +31,7 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'reviewed_by' => User::factory(),
             'title' => fake()->realText(24),
             'review' => fake()->realText(),
             'response' => fake()->realText(),

@@ -6,12 +6,12 @@ abstract class BlacklistedNames
 {
     public static function blacklist(): array
     {
-        return array_merge(self::general(), self::blacklistedNames());
+        return array_merge(self::general(), static::blacklistedNames());
     }
 
     public static function isBlacklisted(string $name): bool
     {
-        $blacklist = self::blacklist();
+        $blacklist = static::blacklist();
 
         return collect($blacklist)->filter(function ($blacklistedName) use ($name) {
             return strtolower($blacklistedName) === strtolower($name);

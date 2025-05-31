@@ -108,7 +108,7 @@ function assertShopNotCreated(User $user, int $expectedCount = 0)
     Event::assertNotDispatched(UserActivity::class);
 
     test()->assertDatabaseCount('shops', $expectedCount);
-    test()->assertDatabaseMissing('shops', ['user_id' => $user->id]);
+    test()->assertDatabaseMissing('shops', ['owned_by' => $user->id]);
 }
 
 function assertShopCreated(User $user, string $name, int $expectedCount = 1)
@@ -117,7 +117,7 @@ function assertShopCreated(User $user, string $name, int $expectedCount = 1)
     Event::assertDispatched(UserActivity::class);
 
     test()->assertDatabaseCount('shops', $expectedCount);
-    test()->assertDatabaseHas('shops', ['user_id' => $user->id, 'name' => $name]);
+    test()->assertDatabaseHas('shops', ['owned_by' => $user->id, 'name' => $name]);
 }
 
 function resourceExpectation(string $name, bool $isAdult)

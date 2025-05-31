@@ -32,7 +32,7 @@ class LikeFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'liked_by' => User::factory(),
         ];
     }
 }

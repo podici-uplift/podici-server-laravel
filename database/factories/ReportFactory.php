@@ -34,7 +34,7 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'reported_by' => User::factory(),
             'type' => fake()->randomElement(ReportType::cases()),
             'title' => fake()->realText(24),
             'reason' => fake()->realText(256),

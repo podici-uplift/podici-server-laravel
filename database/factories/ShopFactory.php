@@ -20,7 +20,7 @@ class ShopFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'owned_by' => User::factory(),
             'name' => str(fake()->company())->limit(
                 Shop::nameLengthLimit(),
                 end: ''

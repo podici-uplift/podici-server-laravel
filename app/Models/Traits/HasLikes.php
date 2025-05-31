@@ -52,7 +52,7 @@ trait HasLikes
     public function recordLike(User $liker): void
     {
         $this->likes()->firstOrCreate([
-            'user_id' => $liker->id,
+            'liked_by' => $liker->id,
         ]);
     }
 
@@ -64,6 +64,6 @@ trait HasLikes
      */
     public function isLikedBy(User $user): bool
     {
-        return $this->likes()->where('user_id', $user->id)->exists();
+        return $this->likes()->where('liked_by', $user->id)->exists();
     }
 }

@@ -31,7 +31,7 @@ class MediaFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'uploaded_by' => User::factory(),
             'disk' => 'raw',
             'path' => fake()->imageUrl(),
             'original_name' => uniqid(),

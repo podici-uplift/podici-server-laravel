@@ -40,7 +40,7 @@ class MediaManager
         $path = $file->store($purpose->storageDirectory(), $disk);
 
         return Media::create([
-            'user_id' => $user->getKey(),
+            'uploaded_by' => $user->getKey(),
             'disk' => $disk,
             'path' => $path,
             'original_name' => $file->getClientOriginalName(),
@@ -58,7 +58,7 @@ class MediaManager
         mixed $meta = null,
     ): Media {
         return Media::create([
-            'user_id' => $user->getKey(),
+            'uploaded_by' => $user->getKey(),
             'disk' => self::RAW_DISK,
             'path' => $url,
             'purpose' => $purpose->value,
@@ -73,7 +73,7 @@ class MediaManager
         mixed $meta = null,
     ): Media {
         return Media::create([
-            'user_id' => $user->getKey(),
+            'uploaded_by' => $user->getKey(),
             'disk' => self::EMBED_DISK,
             'path' => $data->url,
             'embed_platform' => $data->platform,
