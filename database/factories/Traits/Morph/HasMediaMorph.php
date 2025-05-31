@@ -14,7 +14,7 @@ trait HasMediaMorph
      *
      * @param  MediaFactory|null  $factory  An optional MediaFactory instance to create the Media model.
      */
-    public function morphMedia(?MediaFactory $factory = null): static
+    final public function morphMedia(?MediaFactory $factory = null): static
     {
         return $this->forFactory($factory ?? Media::factory());
     }

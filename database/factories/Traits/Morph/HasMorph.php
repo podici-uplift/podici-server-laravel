@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasMorph
 {
-    public function forModel(Model $model): static
+    final public function forModel(Model $model): static
     {
         $baseName = $this->getMorphNameBase();
 
@@ -19,7 +19,7 @@ trait HasMorph
 
     abstract protected function getMorphNameBase(): string;
 
-    protected function forFactory(Factory $factory): static
+    final protected function forFactory(Factory $factory): static
     {
         return $this->state(function (array $attributes) use ($factory) {
             $model = $factory->create();

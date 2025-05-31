@@ -14,7 +14,7 @@ trait HasShopMorph
      *
      * @param  ShopFactory|null  $factory  An optional ShopFactory instance to create the Shop model.
      */
-    public function morphShop(?ShopFactory $factory = null): static
+    final public function morphShop(?ShopFactory $factory = null): static
     {
         return $this->forFactory($factory ?? Shop::factory());
     }

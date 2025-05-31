@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Database\Factories\Traits\Morph\HasMediaMorph;
 use Database\Factories\Traits\Morph\HasProductMorph;
 use Database\Factories\Traits\Morph\HasShopMorph;
@@ -18,10 +19,16 @@ class LikeFactory extends Factory
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
+    use HasBelongsTo;
 
     protected function getMorphNameBase(): string
     {
         return 'likeable';
+    }
+
+    protected function belongsToKey(): string
+    {
+        return 'liked_by';
     }
 
     /**

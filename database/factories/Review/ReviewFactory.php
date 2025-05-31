@@ -4,6 +4,7 @@ namespace Database\Factories\Review;
 
 use App\Enums\Review\ReviewRating;
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Database\Factories\Traits\Morph\HasProductMorph;
 use Database\Factories\Traits\Morph\HasShopMorph;
 use Database\Factories\Traits\Morph\HasUserMorph;
@@ -17,10 +18,16 @@ class ReviewFactory extends Factory
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
+    use HasBelongsTo;
 
     protected function getMorphNameBase(): string
     {
         return 'reviewable';
+    }
+
+    protected function belongsToKey(): string
+    {
+        return 'reviewed_by';
     }
 
     /**

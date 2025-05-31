@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Media\MediaPurpose;
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Database\Factories\Traits\Morph\HasProductMorph;
 use Database\Factories\Traits\Morph\HasShopMorph;
 use Database\Factories\Traits\Morph\HasUserMorph;
@@ -17,10 +18,16 @@ class MediaFactory extends Factory
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
+    use HasBelongsTo;
 
     protected function getMorphNameBase(): string
     {
         return 'mediable';
+    }
+
+    protected function belongsToKey(): string
+    {
+        return 'uploaded_by';
     }
 
     /**
@@ -35,8 +42,8 @@ class MediaFactory extends Factory
             'disk' => 'raw',
             'path' => fake()->imageUrl(),
             'original_name' => uniqid(),
-            'mime_type' => 'image/jpeg',
-            'size' => fake()->randomNumber(4),
+            'mime_type' => null,
+            'size' => null,
             'purpose' => fake()->randomElement(MediaPurpose::cases()),
         ];
     }

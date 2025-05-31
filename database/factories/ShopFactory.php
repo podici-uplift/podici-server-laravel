@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\ShopStatus;
 use App\Models\Shop;
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +13,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ShopFactory extends Factory
 {
+    use HasBelongsTo;
+
+    protected function belongsToKey(): string
+    {
+        return 'owned_by';
+    }
+
     /**
      * Define the model's default state.
      *

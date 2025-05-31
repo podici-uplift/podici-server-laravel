@@ -14,7 +14,7 @@ trait HasUserMorph
      *
      * @param  UserFactory|null  $factory  An optional UserFactory instance to create the User model.
      */
-    public function morphUser(?UserFactory $factory = null): static
+    final public function morphUser(?UserFactory $factory = null): static
     {
         return $this->forFactory($factory ?? User::factory());
     }

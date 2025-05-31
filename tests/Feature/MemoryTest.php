@@ -11,6 +11,10 @@ describe("All Memory Test", function () {
     }, "Fake Paragraph");
 
     memoryBoxAction(function () {
+        fake()->unique()->userName();
+    }, 'Unique Username');
+
+    memoryBoxAction(function () {
         fake()->paragraphs();
     }, "Fake Paragraphs");
 

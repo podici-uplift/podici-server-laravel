@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\Report\ReportStatus;
 use App\Enums\Report\ReportType;
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Database\Factories\Traits\Morph\HasMediaMorph;
 use Database\Factories\Traits\Morph\HasProductMorph;
 use Database\Factories\Traits\Morph\HasShopMorph;
@@ -20,10 +21,16 @@ class ReportFactory extends Factory
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
+    use HasBelongsTo;
 
     protected function getMorphNameBase(): string
     {
         return 'reportable';
+    }
+
+    protected function belongsToKey(): string
+    {
+        return 'reported_by';
     }
 
     /**

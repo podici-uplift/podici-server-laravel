@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Currency;
 use App\Models\Shop;
+use Database\Factories\Traits\HasBelongsTo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +12,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProductFactory extends Factory
 {
+    use HasBelongsTo;
+
+    protected function belongsToKey(): string
+    {
+        return 'shop_id';
+    }
+
     /**
      * Define the model's default state.
      *

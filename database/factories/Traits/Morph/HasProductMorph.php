@@ -14,7 +14,7 @@ trait HasProductMorph
      *
      * @param  ProductFactory|null  $factory  An optional ProductFactory instance to create the Product model.
      */
-    public function morphProduct(?ProductFactory $factory = null): static
+    final public function morphProduct(?ProductFactory $factory = null): static
     {
         return $this->forFactory($factory ?? Product::factory());
     }

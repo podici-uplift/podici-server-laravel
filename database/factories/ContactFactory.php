@@ -4,6 +4,10 @@ namespace Database\Factories;
 
 use App\Enums\ContactType;
 use App\Models\Shop;
+use Database\Factories\Traits\Morph\HasMediaMorph;
+use Database\Factories\Traits\Morph\HasProductMorph;
+use Database\Factories\Traits\Morph\HasShopMorph;
+use Database\Factories\Traits\Morph\HasUserMorph;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +15,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ContactFactory extends Factory
 {
+    use HasMediaMorph;
+    use HasProductMorph;
+    use HasShopMorph;
+    use HasUserMorph;
+
+    protected function getMorphNameBase(): string
+    {
+        return 'contactable';
+    }
+
     /**
      * Define the model's default state.
      *

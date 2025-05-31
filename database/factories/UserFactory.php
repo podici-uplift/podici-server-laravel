@@ -25,8 +25,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => fake()->unique()->safeEmail(),
-            'username' => fake()->unique()->userName(),
+            'email' => uniqid() . "@podici.user",
+            'username' => uniqid('user_'),
             'phone' => fake()->bothify('+234##########'),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),

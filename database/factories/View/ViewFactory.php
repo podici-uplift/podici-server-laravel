@@ -3,6 +3,7 @@
 namespace Database\Factories\View;
 
 use App\Models\User;
+use Database\Factories\Traits\HasBelongsTo;
 use Database\Factories\Traits\Morph\HasProductMorph;
 use Database\Factories\Traits\Morph\HasShopMorph;
 use Database\Factories\Traits\Morph\HasUserMorph;
@@ -16,10 +17,16 @@ class ViewFactory extends Factory
     use HasProductMorph;
     use HasShopMorph;
     use HasUserMorph;
+    use HasBelongsTo;
 
     protected function getMorphNameBase(): string
     {
         return 'viewable';
+    }
+
+    protected function belongsToKey(): string
+    {
+        return 'viewed_by';
     }
 
     /**
