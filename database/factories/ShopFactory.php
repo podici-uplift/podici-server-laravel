@@ -25,7 +25,7 @@ class ShopFactory extends Factory
                 Shop::nameLengthLimit(),
                 end: ''
             ),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence(),
             'is_adult_shop' => fake()->boolean(),
             'status' => fake()->randomElement(ShopStatus::cases()),
         ];

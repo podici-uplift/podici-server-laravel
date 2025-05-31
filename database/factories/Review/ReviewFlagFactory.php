@@ -24,7 +24,7 @@ class ReviewFlagFactory extends Factory
             'flagged_by' => User::factory(),
             'type' => fake()->randomElement(ReviewFlagType::cases()),
             'submissions' => fake()->randomNumber(),
-            'reason' => fake()->realText(),
+            'reason' => fake()->sentence(),
         ];
     }
 }

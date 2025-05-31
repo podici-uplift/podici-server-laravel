@@ -32,9 +32,9 @@ class ReviewFactory extends Factory
     {
         return [
             'reviewed_by' => User::factory(),
-            'title' => fake()->realText(24),
-            'review' => fake()->realText(),
-            'response' => fake()->realText(),
+            'title' => fake()->sentence(),
+            'review' => fake()->sentence(),
+            'response' => fake()->sentence(),
             'rating' => fake()->randomElement(ReviewRating::cases()),
         ];
     }

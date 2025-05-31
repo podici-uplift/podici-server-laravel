@@ -21,7 +21,7 @@ class ContactFactory extends Factory
         return [
             'contactable' => Shop::factory(),
             'type' => fake()->randomElement(ContactType::cases()),
-            'label' => fake()->realText(24),
+            'label' => fake()->sentence(),
             'value' => fake()->url(),
             'is_primary' => fake()->boolean(),
         ];

@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->words(3, true),
             'slug' => fake()->slug(3),
-            'description' => fake()->realText(),
+            'description' => fake()->sentence(),
             'status' => fake()->randomElement(CategoryStatus::cases()),
             'is_adult' => fake()->boolean(),
         ];

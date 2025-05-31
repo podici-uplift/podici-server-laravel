@@ -8,7 +8,7 @@ use Tests\Datasets\PasswordUpdateDatasets;
 use Tests\Helpers\Enums\HttpEndpoints;
 use Tests\Helpers\HttpTester;
 
-describe('UPDATE PASSWORD SUCCESS CASES ✅', function () {
+describe('Update Password Success Cases', function () {
     it('Sets up new password correctly', function ($validPassword) {
         $user = userFactory()->noPassword()->create();
 
@@ -54,7 +54,7 @@ describe('UPDATE PASSWORD SUCCESS CASES ✅', function () {
     });
 });
 
-describe('UPDATE PASSWORD ERROR CASES 🔴', function () {
+describe('Update Password Error Cases', function () {
     it('Requires auth', function () {
         HttpEndpoints::SELF_PASSWORD_UPDATE->tester()->send()->expectAuthenticationError();
     });

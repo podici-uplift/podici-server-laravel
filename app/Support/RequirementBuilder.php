@@ -9,8 +9,7 @@ class RequirementBuilder
     public function __construct(
         protected array $fields
     ) {
-        Log::info('Initializing RequirementBuilder');
-        Log::debug($this->fields);
+        //
     }
 
     /**

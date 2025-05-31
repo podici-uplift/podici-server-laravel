@@ -69,7 +69,7 @@ class HttpPayload
             'last_name' => fake()->lastName(),
             'other_names' => fake()->lastName(),
             'gender' => fake()->randomElement(Gender::cases()),
-            'bio' => fake()->realText(),
+            'bio' => fake()->sentence(),
         ]);
     }
 }

@@ -36,8 +36,8 @@ class ReportFactory extends Factory
         return [
             'reported_by' => User::factory(),
             'type' => fake()->randomElement(ReportType::cases()),
-            'title' => fake()->realText(24),
-            'reason' => fake()->realText(256),
+            'title' => fake()->sentence(),
+            'reason' => fake()->sentence(),
             'status' => fake()->randomElement(ReportStatus::cases()),
         ];
     }
@@ -57,7 +57,7 @@ class ReportFactory extends Factory
             return [
                 'status' => $status,
                 'resolved_at' => now(),
-                'resolution_note' => fake()->realText(256),
+                'resolution_note' => fake()->sentence(),
                 'resolved_by' => User::factory(),
             ];
         });
