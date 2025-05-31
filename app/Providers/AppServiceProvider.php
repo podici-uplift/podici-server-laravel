@@ -42,9 +42,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Model::shouldBeStrict(! $this->app->environment(['prod', 'production']));
-
-        Model::preventSilentlyDiscardingAttributes($this->app->environment('local'));
+        Model::shouldBeStrict(! app()->isProduction());
     }
 
     private function setupTelescope()
